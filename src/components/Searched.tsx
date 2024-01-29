@@ -32,6 +32,16 @@ function Searched() {
 
   console.log(params.search);
   const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleNextPage = () => {
+    console.log("next");
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,8 +49,9 @@ function Searched() {
         const response = await fetch(
           `http://localhost:3000/products/?searchTerm=${encodeURIComponent(
             params.search!
-          )}&page=1&limit=5`
+          )}&page=${currentPage}&limit=5`
         );
+
         const data = await response.json();
         setSearchResults(data);
       } catch (error) {
@@ -51,7 +62,14 @@ function Searched() {
     if (params.search) {
       fetchData();
     }
-  }, [params.search]);
+  }, [params.search, currentPage]);
+
+  const totalPages = 10;
+  const pageNumber = currentPage;
+
+  const generatePaginationLink = (page: number) => {
+    return `/products/?page=${page}`;
+  };
 
   return (
     <div>
@@ -87,37 +105,41 @@ function Searched() {
           </div>
         ))}
       </ul>
-      <PaginationSection />
-    </div>
-  );
-}
 
-export function PaginationSection() {
-  return (
-    <Pagination>
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious href="#" />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">1</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
+      <Pagination>
+        <PaginationContent>
+          {pageNumber !== 1 ? (
+            <PaginationPrevious href="#" onClick={handlePreviousPage} />
+          ) : null}
+          {pageNumber - 1 > 1 ? (
+            <PaginationLink href={generatePaginationLink(1)}>
+              <PaginationEllipsis />
+            </PaginationLink>
+          ) : null}
+          {pageNumber > 1 ? (
+            <PaginationLink href={generatePaginationLink(pageNumber - 1)}>
+              {pageNumber - 1}
+            </PaginationLink>
+          ) : null}
           <PaginationLink href="#" isActive>
-            2
+            {pageNumber}
           </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationLink href="#">3</PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationEllipsis />
-        </PaginationItem>
-        <PaginationItem>
-          <PaginationNext href="#" />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+          {pageNumber < totalPages ? (
+            <PaginationLink href={generatePaginationLink(pageNumber + 1)}>
+              {pageNumber + 1}
+            </PaginationLink>
+          ) : null}
+          {totalPages - pageNumber > 1 ? (
+            <PaginationLink href={generatePaginationLink(totalPages)}>
+              <PaginationEllipsis />
+            </PaginationLink>
+          ) : null}
+          {pageNumber < totalPages ? (
+            <PaginationNext href="#" onClick={handleNextPage} />
+          ) : null}
+        </PaginationContent>
+      </Pagination>
+    </div>
   );
 }
 

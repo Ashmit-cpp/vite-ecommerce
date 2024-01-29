@@ -7,6 +7,7 @@ import Profile from "./components/Profile";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/LogIn";
 import Searched from "./components/Searched";
+import Footer from "./components/footer";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/login" element={<SignIn />} />
           <Route path="/searched/:search" element={<Searched />} />
         </Routes>
+        <Footer />
       </ThemeProvider>
     </BrowserRouter>
   );
