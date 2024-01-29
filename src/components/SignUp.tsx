@@ -1,3 +1,5 @@
+import { useState, ChangeEvent, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -11,20 +13,73 @@ import {
   CardTitle,
 } from "./ui/card";
 
-export default function Component() {
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export default function Component(): JSX.Element {
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const navigate = useNavigate();
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setFormData({
+      ...formData,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+
+    fetch("http://localhost:3000/users/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: formData.name,
+        email: formData.email,
+        password: formData.password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data) {
+          console.log("Signup response:", data);
+          navigate("/login  ");
+        } else {
+          console.error("Signup failed:", data.error);
+        }
+      })
+      .catch((error) => {
+        console.error("Error during signup:", error);
+      });
+  };
+
   return (
     <Card className="my-10 mx-auto max-w-[350px] space-y-6">
       <CardHeader className="space-y-2 text-center">
         <CardTitle className="text-2xl font-bold">Signup</CardTitle>
-        <CardDescription>
-          Enter your credenetials to signup
-        </CardDescription>{" "}
+        <CardDescription>Enter your credentials to signup</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="space-y-4">
+        <form className="space-y-4" onSubmit={handleFormSubmit}>
           <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
-            <Input id="name" placeholder="John Doe" required />
+            <Input
+              id="name"
+              placeholder="John Doe"
+              required
+              value={formData.name}
+              onChange={handleInputChange}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
@@ -33,11 +88,19 @@ export default function Component() {
               placeholder="yourmail@example.com"
               required
               type="email"
+              value={formData.email}
+              onChange={handleInputChange}
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
-            <Input id="password" required type="password" />
+            <Input
+              id="password"
+              required
+              type="password"
+              value={formData.password}
+              onChange={handleInputChange}
+            />
           </div>
           <Button className="w-full" type="submit">
             Sign Up
@@ -49,7 +112,7 @@ export default function Component() {
               Login
             </Link>
           </div>
-        </div>
+        </form>
       </CardContent>
     </Card>
   );
