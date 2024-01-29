@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import MobileNav from "./MobileNav";
 import { Dog } from "lucide-react";
@@ -10,9 +11,12 @@ const Header = () => {
     <div className="m-2 border-b">
       <div className="wrapper flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <Dog />
+          <Dog size={32} />
+
           <ul className="hidden md:flex items-start gap-5">
-            <li>Home</li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
           </ul>
         </div>
         <Separator />
@@ -23,13 +27,18 @@ const Header = () => {
 
         <div className=" flex justify-end gap-3 items-center">
           <ul className="mx-1 hidden md:flex items-start gap-5">
-            <li>Cart</li>
-            <li>Profile</li>
+            <li>
+              <Link to="/cart">Cart</Link>
+            </li>
+            <li>
+              <Link to="/profile">Profile</Link>
+            </li>
           </ul>
           <ModeToggle />
 
-          <Button className="my-1">Sign In</Button>
-
+          <Button className="my-1">
+            <Link to="/signup">Sign In</Link>
+          </Button>
           <MobileNav />
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
 import { ChevronRightIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 function MobileNav() {
   return (
     <nav className="md:hidden">
@@ -12,9 +13,9 @@ function MobileNav() {
         </SheetTrigger>
         <SheetContent className="flex flex-col gap-6 bg:white md:hidden">
           <ul className="flex items-start gap-5 md:flex-between md:flex-row flex-col">
-            <li>Home</li>
-            <li>Cart</li>
-            <li>Profile</li>
+            <Link to="/home">Home</Link>
+            <Link to="/cart">Cart</Link>
+            <Link to="/profile">Profile</Link>
           </ul>
         </SheetContent>
       </Sheet>
