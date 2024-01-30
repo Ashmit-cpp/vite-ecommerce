@@ -1,14 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "./components/Header";
-import Home from "./components/Home";
-import Cart from "./components/Cart";
-import Profile from "./components/Profile";
+import Home from "./components/pages/Home";
+import Cart from "./components/pages/Cart";
+import Profile from "./components/pages/Profile";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/LogIn";
-import Searched from "./components/Searched";
+import Searched from "./components/pages/Searched";
 import Footer from "./components/Footer";
 import { AuthProvider } from "./contexts/AuthContext";
+import Wishlist from "./components/pages/Wishlist";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<SignIn />} />
+                <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/searched/:search" element={<Searched />} />
               </Routes>
               <Footer />

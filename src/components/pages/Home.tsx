@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 export default function Component() {
   const targetContainerRef = useRef<HTMLDivElement>(null);
@@ -10,10 +10,10 @@ export default function Component() {
   return (
     <div className="flex flex-col min-h-screen   ">
       <main className="flex-1 	 ">
-        <section className="w-full py-12 md:py-24 lg:py-36">
+        <section className="w-full py-24 md:py-24 lg:py-40">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
+              <div className="space-y-4">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
                   Welcome to Acme Mice
                 </h1>

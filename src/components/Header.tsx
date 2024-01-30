@@ -27,8 +27,8 @@ const Header = () => {
               <Dog size={32} />
             </Link>
             <ul className="hidden md:flex items-start gap-5">
-              <li>
-                <Link to="/">Home</Link>
+              <li className="text-xl font-bold pr-2">
+                <Link to="/">Acme</Link>
               </li>
             </ul>
           </div>
@@ -39,7 +39,8 @@ const Header = () => {
           <Separator />
 
           <div className=" flex justify-end gap-3 items-center">
-            <ul className="mx-1 hidden md:flex items-start gap-5">
+            <ul className="mx-1 hidden md:flex items-start font-semibold gap-5">
+              <li>{token ? <Link to="/wishlist">Wishlist</Link> : <></>}</li>
               <li>
                 <Link to="/cart">Cart</Link>
               </li>
@@ -49,12 +50,10 @@ const Header = () => {
             </ul>
             <ModeToggle />
             {token ? (
-              // If token exists, show Logout button
               <Button className="my-1" onClick={logout}>
                 Logout
               </Button>
             ) : (
-              // If token doesn't exist, show Sign In button
               <Button className="my-1">
                 <Link to="/signup">Sign In</Link>
               </Button>

@@ -9,7 +9,8 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
+import ProductItem from "../ProductItem";
 
 interface Review {
   id: number;
@@ -77,36 +78,9 @@ function Searched() {
       <h2 className="p-2 font-semibold	">
         Search Results for "{params.search}"
       </h2>
-      <ul className="grid grid-cols-4 gap-4 py-8 px-4">
+      <ul className="flex flex-wrap justify-between py-8 px-4">
         {searchResults.map((result) => (
-          <div key={result.id} className="border p-2 mb-4">
-            <img
-              src={result.imageUrl}
-              alt={result.name}
-              className="mb-4 max-w-full"
-            />
-            <h3 className="text-lg font-bold">{result.name}</h3>
-            <p className="text-gray-600">{result.description}</p>
-            <p className="text-green-600 font-bold">${result.price}</p>
-            <p>Stock: {result.stock}</p>
-            <p>Created By: {result.createdBy}</p>
-            <Button variant={"secondary"} className="mt-2 p-2">
-              Add to Cart
-            </Button>
-            {result.reviews.length > 0 && (
-              <div>
-                <h4 className="font-bold mt-2">Reviews:</h4>
-                <ul>
-                  {result.reviews.map((review) => (
-                    <li key={review.id} className="mb-2">
-                      <p>{review.text}</p>
-                      <p>Rating: {review.rating}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
+          <ProductItem key={result.id} product={result} />
         ))}
       </ul>
 
