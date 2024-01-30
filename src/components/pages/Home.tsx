@@ -30,7 +30,7 @@ export default function Component() {
                 </Button>
                 <Link
                   to={"/login"}
-                  className="inline-flex h-9 items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
+                  className="inline-flex h-9 items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50 dark:focus-visible:ring-gray-300"
                 >
                   Contact
                 </Link>
@@ -52,30 +52,22 @@ export default function Component() {
               </p>
             </div>
             <div className="grid gap-8 md:grid-cols-2 lg:gap-12 ">
-              <div className="flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
                 <h3 className="text-lg font-bold">High Quality</h3>
-                <p className="   dark:text-gray-400">
-                  Our mice are made with the highest quality materials.
-                </p>
+                <p>Our mice are made with the highest quality materials.</p>
               </div>
 
-              <div className="flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
                 <h3 className="text-lg font-bold">Fast</h3>
-                <p className="   dark:text-gray-400">
-                  Our mice are designed for speed and efficiency.
-                </p>
+                <p>Our mice are designed for speed and efficiency.</p>
               </div>
-              <div className="flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
                 <h3 className="text-lg font-bold">Reliable</h3>
-                <p className="   dark:text-gray-400">
-                  Our mice are built to last.
-                </p>
+                <p>Our mice are built to last.</p>
               </div>
-              <div className="flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
                 <h3 className="text-lg font-bold">Comfortable</h3>
-                <p className="   dark:text-gray-400">
-                  Our mice are designed for comfort.
-                </p>
+                <p>Our mice are designed for comfort.</p>
               </div>
             </div>
           </div>

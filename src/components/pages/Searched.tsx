@@ -65,7 +65,7 @@ function Searched() {
 
   return (
     <div>
-      <h2 className="p-2 font-semibold	">
+      <h2 className="p-2 mt-4 font-bold	">
         Search Results for "{params.search}"
       </h2>
       <ul className="flex flex-wrap justify-between py-8 px-4">
