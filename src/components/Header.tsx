@@ -6,10 +6,15 @@ import { ModeToggle } from "./mode-toggle";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SearchField } from "./SearchBar";
 import { useScrollPosition } from "./hooks/useScrollPosition";
+import { useState } from "react";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
-
+  const [token, setToken] = useState(localStorage.getItem("JWT"));
+  const handleLogout = () => {
+    localStorage.removeItem("JWT");
+    setToken(null);
+  };
   return (
     <header
       className={`sticky top-0 z-50 transition-shadow ${
@@ -21,8 +26,9 @@ const Header = () => {
       <div className="px-4 py-2 border-b">
         <div className="wrapper flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Dog size={32} />
-
+            <Link to="/">
+              <Dog size={32} />
+            </Link>
             <ul className="hidden md:flex items-start gap-5">
               <li>
                 <Link to="/">Home</Link>
@@ -45,10 +51,15 @@ const Header = () => {
               </li>
             </ul>
             <ModeToggle />
-
-            <Button className="my-1">
-              <Link to="/signup">Sign In</Link>
-            </Button>
+            {token ? (
+              <Button className="my-1" onClick={handleLogout}>
+                Logout
+              </Button>
+            ) : (
+              <Button className="my-1">
+                <Link to="/signup">Sign In</Link>
+              </Button>
+            )}
             <MobileNav />
           </div>
         </div>

@@ -14,7 +14,7 @@ function App() {
     <BrowserRouter>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <div className=" bg-hero-pattern bg-cove  ">
-          <div className="backdrop-blur-sm backdrop-brightness-80">
+          <div className="backdrop-blur-sm backdrop-brightness-80 dark:backdrop-brightness-95">
             <Header />
             <Routes>
               <Route path="/" element={<Home />} />

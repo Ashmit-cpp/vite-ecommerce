@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 
 interface FormData {
   email: string;
@@ -21,8 +21,8 @@ export default function Component(): JSX.Element {
     email: "",
     password: "",
   });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null); // New state for error message
   const navigate = useNavigate();
-
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setFormData({
       ...formData,
@@ -45,18 +45,19 @@ export default function Component(): JSX.Element {
     })
       .then((response) => response.json())
       .then((data: any) => {
-        /* Status code 200 */
-        console.log("aaaaas", data);
-        if (data) {
-          console.log("Signup response:", data);
+        if (data?.statusCode === 200) {
+          console.log("hehehe");
+          localStorage.setItem("JWT", data?.accessToken);
           navigate("/");
+        } else if (data?.statusCode === 404 || data?.statusCode === 401) {
+          setErrorMessage(data?.message);
         } else {
-          console.error("Signup failed:", data.error);
+          setErrorMessage("Unexpected error occurred");
         }
       })
       .catch((error) => {
-        /* Status 400 */
-        console.error("Error during signup:", error);
+        console.error("Error during login:", error);
+        setErrorMessage("Unexpected error occurred");
       });
   };
 
@@ -70,6 +71,7 @@ export default function Component(): JSX.Element {
       </CardHeader>
       <CardContent>
         <form className="space-y-4" onSubmit={handleFormSubmit}>
+          {errorMessage && <div className="text-red-500">{errorMessage}</div>}
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input
