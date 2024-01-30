@@ -8,27 +8,30 @@ import SignUp from "./components/SignUp";
 import SignIn from "./components/LogIn";
 import Searched from "./components/Searched";
 import Footer from "./components/Footer";
+import { AuthProvider } from "./contexts/AuthContext";
 
 function App() {
   return (
-    <BrowserRouter>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <div className=" bg-hero-pattern bg-cove  ">
-          <div className="backdrop-blur-sm backdrop-brightness-80 dark:backdrop-brightness-95">
-            <Header />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/login" element={<SignIn />} />
-              <Route path="/searched/:search" element={<Searched />} />
-            </Routes>
-            <Footer />
+    <AuthProvider>
+      <BrowserRouter>
+        <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+          <div className=" bg-hero-pattern bg-cove  ">
+            <div className="backdrop-blur-sm backdrop-brightness-80 dark:backdrop-brightness-95">
+              <Header />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/login" element={<SignIn />} />
+                <Route path="/searched/:search" element={<Searched />} />
+              </Routes>
+              <Footer />
+            </div>
           </div>
-        </div>
-      </ThemeProvider>
-    </BrowserRouter>
+        </ThemeProvider>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

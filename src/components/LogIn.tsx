@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { redirect, useNavigate } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface FormData {
   email: string;
@@ -21,8 +22,9 @@ export default function Component(): JSX.Element {
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = useState<string | null>(null); // New state for error message
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
+  const { login } = useAuth();
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setFormData({
       ...formData,
@@ -48,6 +50,7 @@ export default function Component(): JSX.Element {
         if (data?.statusCode === 200) {
           console.log("hehehe");
           localStorage.setItem("JWT", data?.accessToken);
+          login(data?.accessToken);
           navigate("/");
         } else if (data?.statusCode === 404 || data?.statusCode === 401) {
           setErrorMessage(data?.message);

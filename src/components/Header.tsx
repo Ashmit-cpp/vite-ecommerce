@@ -6,15 +6,12 @@ import { ModeToggle } from "./mode-toggle";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SearchField } from "./SearchBar";
 import { useScrollPosition } from "./hooks/useScrollPosition";
-import { useState } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
-  const [token, setToken] = useState(localStorage.getItem("JWT"));
-  const handleLogout = () => {
-    localStorage.removeItem("JWT");
-    setToken(null);
-  };
+  const { token, logout } = useAuth();
+
   return (
     <header
       className={`sticky top-0 z-50 transition-shadow ${
@@ -52,10 +49,12 @@ const Header = () => {
             </ul>
             <ModeToggle />
             {token ? (
-              <Button className="my-1" onClick={handleLogout}>
+              // If token exists, show Logout button
+              <Button className="my-1" onClick={logout}>
                 Logout
               </Button>
             ) : (
+              // If token doesn't exist, show Sign In button
               <Button className="my-1">
                 <Link to="/signup">Sign In</Link>
               </Button>
