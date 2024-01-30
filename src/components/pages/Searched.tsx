@@ -1,16 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
-import { Button } from "../ui/button";
 import ProductItem from "../ProductItem";
+import CustomPagination from "../CustomPagination";
 
 interface Review {
   id: number;
@@ -67,7 +58,6 @@ function Searched() {
   }, [params.search, currentPage]);
 
   const totalPages = 10;
-  const pageNumber = currentPage;
 
   const generatePaginationLink = (page: number) => {
     return `/products/?page=${page}`;
@@ -83,40 +73,13 @@ function Searched() {
           <ProductItem key={result.id} product={result} />
         ))}
       </ul>
-
-      <Pagination className="p-8">
-        <PaginationContent>
-          {pageNumber !== 1 ? (
-            <PaginationPrevious href="#" onClick={handlePreviousPage} />
-          ) : null}
-          {pageNumber - 1 > 1 ? (
-            <PaginationLink href={generatePaginationLink(1)}>
-              <PaginationEllipsis />
-            </PaginationLink>
-          ) : null}
-          {pageNumber > 1 ? (
-            <PaginationLink href={generatePaginationLink(pageNumber - 1)}>
-              {pageNumber - 1}
-            </PaginationLink>
-          ) : null}
-          <PaginationLink href="#" isActive>
-            {pageNumber}
-          </PaginationLink>
-          {pageNumber < totalPages ? (
-            <PaginationLink href={generatePaginationLink(pageNumber + 1)}>
-              {pageNumber + 1}
-            </PaginationLink>
-          ) : null}
-          {totalPages - pageNumber > 1 ? (
-            <PaginationLink href={generatePaginationLink(totalPages)}>
-              <PaginationEllipsis />
-            </PaginationLink>
-          ) : null}
-          {pageNumber < totalPages ? (
-            <PaginationNext href="#" onClick={handleNextPage} />
-          ) : null}
-        </PaginationContent>
-      </Pagination>
+      <CustomPagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePreviousPage={handlePreviousPage}
+        handleNextPage={handleNextPage}
+        generatePaginationLink={generatePaginationLink}
+      />
     </div>
   );
 }
