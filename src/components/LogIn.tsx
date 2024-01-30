@@ -44,7 +44,9 @@ export default function Component(): JSX.Element {
       }),
     })
       .then((response) => response.json())
-      .then((data) => {
+      .then((data: any) => {
+        /* Status code 200 */
+        console.log("aaaaas", data);
         if (data) {
           console.log("Signup response:", data);
           navigate("/");
@@ -53,12 +55,13 @@ export default function Component(): JSX.Element {
         }
       })
       .catch((error) => {
+        /* Status 400 */
         console.error("Error during signup:", error);
       });
   };
 
   return (
-    <Card className="my-16 mx-auto max-w-[350px] space-y-6">
+    <Card className="my-16 mx-auto max-w-[350px] space-y-6 ">
       <CardHeader className="space-y-1">
         <CardTitle className="text-2xl font-bold">Login</CardTitle>
         <CardDescription>

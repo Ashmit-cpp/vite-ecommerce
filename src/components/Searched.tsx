@@ -9,6 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Button } from "./ui/button";
 
 interface Review {
   id: number;
@@ -49,7 +50,7 @@ function Searched() {
         const response = await fetch(
           `http://localhost:3000/products/?searchTerm=${encodeURIComponent(
             params.search!
-          )}&page=${currentPage}&limit=5`
+          )}&page=${currentPage}&limit=4`
         );
 
         const data = await response.json();
@@ -76,7 +77,7 @@ function Searched() {
       <h2 className="p-2 font-semibold	">
         Search Results for "{params.search}"
       </h2>
-      <ul>
+      <ul className="grid grid-cols-4 gap-4 py-8 px-4">
         {searchResults.map((result) => (
           <div key={result.id} className="border p-2 mb-4">
             <img
@@ -89,6 +90,9 @@ function Searched() {
             <p className="text-green-600 font-bold">${result.price}</p>
             <p>Stock: {result.stock}</p>
             <p>Created By: {result.createdBy}</p>
+            <Button variant={"secondary"} className="mt-2 p-2">
+              Add to Cart
+            </Button>
             {result.reviews.length > 0 && (
               <div>
                 <h4 className="font-bold mt-2">Reviews:</h4>
@@ -106,7 +110,7 @@ function Searched() {
         ))}
       </ul>
 
-      <Pagination>
+      <Pagination className="p-8">
         <PaginationContent>
           {pageNumber !== 1 ? (
             <PaginationPrevious href="#" onClick={handlePreviousPage} />
