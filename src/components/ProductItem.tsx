@@ -24,6 +24,27 @@ interface ProductItemProps {
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
+  const handleAddToWishlist = () => {
+    const token = localStorage.getItem("JWT");
+    if (!token) {
+      console.error("JWT token not found in localStorage");
+      return;
+    }
+    
+    fetch(`http://localhost:3000/wishlist/add/${product.id}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        console.log("Wishlist item added successfully");
+      })
+      .catch((error) => {
+        console.error("Error adding item to wishlist", error);
+      });
+  };
+
   return (
     <Card key={product.id} className="border p-2 mb-4">
       <CardContent>
@@ -40,7 +61,11 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
         <Button variant={"default"} className="mt-2 mr-2 p-2">
           Add to Cart
         </Button>{" "}
-        <Button variant={"secondary"} className="mt-2 p-2">
+        <Button
+          variant={"secondary"}
+          className="mt-2 p-2"
+          onClick={handleAddToWishlist}
+        >
           Add to Wishlist
         </Button>
         {product.reviews.length > 0 && (
