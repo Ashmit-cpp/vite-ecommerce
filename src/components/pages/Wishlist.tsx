@@ -86,8 +86,8 @@ function Wishlist() {
   }
 
   return (
-    <div className="p-2 min-h-screen flex flex-col">
-      <h1 className="pt-4 pl-4 text-foreground text-xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-4xl/none">
+    <div className="">
+      <h1 className="pt-4 pl-4 text-foreground text-xl font-bold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
         Your Wishlist
       </h1>
       {wishlistItems.length === 0 ? (

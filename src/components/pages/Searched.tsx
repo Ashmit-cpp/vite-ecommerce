@@ -76,7 +76,7 @@ function Searched() {
         </div>
       ) : (
         <>
-          <ul className="flex flex-wrap justify-between py-8 px-4">
+          <ul className="flex flex-wrap justify-between py-4 px-4">
             {searchResults.map((result) => (
               <ProductItem key={result.id} product={result} />
             ))}

@@ -1,14 +1,14 @@
 // CustomPagination.tsx
 import React from "react";
 import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-  } from "@/components/ui/pagination";
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 interface CustomPaginationProps {
   currentPage: number;
   totalPages: number;
@@ -25,7 +25,7 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
   generatePaginationLink,
 }) => {
   return (
-    <Pagination className="p-8">
+    <Pagination className="p-2">
       <PaginationContent>
         {currentPage !== 1 ? (
           <PaginationPrevious href="#" onClick={handlePreviousPage} />
