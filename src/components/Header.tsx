@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import MobileNav from "./MobileNav";
-import { Dog } from "lucide-react";
+import { BookHeart, Dog, ShoppingCart } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SearchField } from "./SearchBar";
@@ -16,18 +16,18 @@ const Header = () => {
     <header
       className={`sticky top-0 z-50 transition-shadow ${
         scrollPosition > 0
-          ? "bg-slate-500 bg-opacity-20 shadow-none backdrop-blur-lg backdrop-filter"
-          : "bg-slate-500 bg-opacity-20  shadow-lg shadow-slate-500/50	"
+          ? "bg-slate-500 bg-opacity-30 shadow-none backdrop-blur-2xl backdrop-filter"
+          : "bg-slate-500 bg-opacity-20  shadow-lg  shadow-slate-500/50	"
       }`}
     >
       <div className="px-4 py-2 border-b">
         <div className="wrapper flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link to="/">
-              <Dog size={32} />
+              <Dog className="text-primary" size={32} />
             </Link>
             <ul className="hidden md:flex items-start gap-5">
-              <li className="text-xl font-bold pr-2">
+              <li className="text-xl font-bold pr-2 text-primary ">
                 <Link to="/">Acme</Link>
               </li>
             </ul>
@@ -40,17 +40,33 @@ const Header = () => {
 
           <div className=" flex justify-end gap-3 items-center">
             <ul className="mx-1 hidden md:flex items-start font-semibold gap-5">
-              <li>{token ? <Link to="/wishlist">Wishlist</Link> : <></>}</li>
               <li>
-                <Link to="/cart">Cart</Link>
+                {token ? (
+                  <Link to="/wishlist">
+                    <Button variant={"outline"}>
+                      {" "}
+                      <BookHeart />
+                    </Button>
+                  </Link>
+                ) : (
+                  <></>
+                )}
               </li>
               <li>
+                <Link to="/cart">
+                  {" "}
+                  <Button variant={"outline"}>
+                    <ShoppingCart />
+                  </Button>
+                </Link>
+              </li>
+              {/* <li>
                 <Link to="/profile">Profile</Link>
-              </li>
+              </li> */}
             </ul>
             <ModeToggle />
             {token ? (
-              <Button className="my-1" onClick={logout} >
+              <Button className="my-1" onClick={logout}>
                 Logout
               </Button>
             ) : (

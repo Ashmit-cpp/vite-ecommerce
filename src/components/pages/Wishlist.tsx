@@ -126,7 +126,7 @@ function Wishlist() {
 
   return (
     <div className="min-h-screen">
-      <h1 className="pt-4 pl-4 text-foreground text-xl font-bold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
+      <h1 className="p-4 mt-8 text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
         Your Wishlist
       </h1>
       {wishlistItems.length === 0 ? (

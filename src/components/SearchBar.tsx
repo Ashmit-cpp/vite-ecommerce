@@ -20,7 +20,7 @@ export function SearchField() {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <Button variant="secondary" className="p-1" onClick={handleSearch}>
+      <Button variant="outline" className="p-1" onClick={handleSearch}>
         <div className="p-1 flex items-center space-x-2">
           <Search size={18} />
         </div>

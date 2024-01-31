@@ -17,6 +17,7 @@ interface CustomPaginationProps {
   generatePaginationLink: (page: number) => string;
 }
 
+
 const CustomPagination: React.FC<CustomPaginationProps> = ({
   currentPage,
   totalPages,
@@ -30,7 +31,7 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
         {currentPage !== 1 ? (
           <PaginationPrevious href="#" onClick={handlePreviousPage} />
         ) : null}
-        {currentPage - 1 > 1 ? (
+        {/* {currentPage - 1 > 1 ? (
           <PaginationLink href={generatePaginationLink(1)}>
             <PaginationEllipsis />
           </PaginationLink>
@@ -49,10 +50,10 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
           </PaginationLink>
         ) : null}
         {totalPages - currentPage > 1 ? (
-          <PaginationLink href={generatePaginationLink(totalPages)}>
+          <PaginationLink onclick={handlePageClick(currenypage)}>
             <PaginationEllipsis />
           </PaginationLink>
-        ) : null}
+        ) : null} */}
         {currentPage < totalPages ? (
           <PaginationNext href="#" onClick={handleNextPage} />
         ) : null}

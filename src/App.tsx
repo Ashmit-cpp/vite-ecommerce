@@ -29,10 +29,9 @@ function App() {
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/searched/:search" element={<Searched />} />
               </Routes>
-              <Toaster />
-
               <Footer />
             </div>
+            <Toaster />
           </div>
         </ThemeProvider>
       </BrowserRouter>

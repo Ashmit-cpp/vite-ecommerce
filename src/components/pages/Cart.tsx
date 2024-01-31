@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
-import { MinusCircle, PlusCircle, XSquare } from "lucide-react";
+import { MinusCircle, PlusCircle, Trash2, XSquare } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -169,8 +169,8 @@ const CartComponent: React.FC = () => {
 
   return (
     <div className="min-h-screen">
-      <h1 className="p-4 mt-8 text-primary opacity-75 text-xl font-bold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
-        Cart Information
+      <h1 className="p-4 mt-8 text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
+        Your Cart
       </h1>{" "}
       {cartData && cartData.items.length > 0 ? (
         <div className="m-4 ">
@@ -179,7 +179,7 @@ const CartComponent: React.FC = () => {
               {" "}
               <div>
                 <h1 className="text-xl font-semibold p-2 mb-4 text-primary ">
-                  Total Sum: ${getTotalSum()}
+                  Total : ${getTotalSum()}
                 </h1>
                 <Button>Checkout</Button>
               </div>
@@ -189,7 +189,7 @@ const CartComponent: React.FC = () => {
                 <TableHead className="w-[300px] ">Product</TableHead>
                 <TableHead className="text-center">Quantity</TableHead>
                 <TableHead>Price</TableHead>
-                <TableHead>Total</TableHead>
+                <TableHead>Sub Total</TableHead>
                 <TableHead className="w-[8px] text-right">Remove</TableHead>
               </TableRow>
             </TableHeader>
@@ -233,7 +233,7 @@ const CartComponent: React.FC = () => {
                   <TableCell className="w-[80px] text-right">
                     {" "}
                     <Button
-                      variant={"destructive"}
+                      variant={"outline"}
                       className="mt-2 p-2"
                       onClick={() => {
                         handleRemoveFromCart(item.product.id);
@@ -243,7 +243,7 @@ const CartComponent: React.FC = () => {
                         });
                       }}
                     >
-                      <XSquare />{" "}
+                      <Trash2 />
                     </Button>
                   </TableCell>
                 </TableRow>
