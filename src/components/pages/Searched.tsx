@@ -64,22 +64,32 @@ function Searched() {
   };
 
   return (
-    <div>
-      <h2 className="p-2 mt-4 font-bold	">
+    <div className="min-h-screen flex flex-col">
+      <h2 className="p-2 mt-4 font-bold">
         Search Results for "{params.search}"
       </h2>
-      <ul className="flex flex-wrap justify-between py-8 px-4">
-        {searchResults.map((result) => (
-          <ProductItem key={result.id} product={result} />
-        ))}
-      </ul>
-      <CustomPagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        handlePreviousPage={handlePreviousPage}
-        handleNextPage={handleNextPage}
-        generatePaginationLink={generatePaginationLink}
-      />
+      {searchResults.length === 0 ? (
+        <div className="flex-grow flex flex-col items-center justify-center">
+          <h1 className="text-foreground text-xl font-semibold tracking-tighter sm:text-2xl md:text-3xl lg:text-2xl/none">
+            No results found for "{params.search}"
+          </h1>
+        </div>
+      ) : (
+        <>
+          <ul className="flex flex-wrap justify-between py-8 px-4">
+            {searchResults.map((result) => (
+              <ProductItem key={result.id} product={result} />
+            ))}
+          </ul>
+          <CustomPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePreviousPage={handlePreviousPage}
+            handleNextPage={handleNextPage}
+            generatePaginationLink={generatePaginationLink}
+          />
+        </>
+      )}
     </div>
   );
 }

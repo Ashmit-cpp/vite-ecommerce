@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
 
 interface WishlistItem {
   id: number;
@@ -13,6 +14,8 @@ interface WishlistItem {
 }
 
 function Wishlist() {
+  const { toast } = useToast();
+
   const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
   const [loading, setLoading] = useState(true);
   const fetchWishlist = async () => {
@@ -73,43 +76,63 @@ function Wishlist() {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className=" min-h-screen flex flex-col items-center justify-center ">
+        <h1 className="text-foreground text-xl font-semibold tracking-tighter sm:text-2xl md:text-3xl lg:text-2xl/none">
+          Loading....
+        </h1>
+      </div>
+    );
   }
 
   return (
-    <div className="p-2">
-      <h1 className="py-8 pl-4 text-xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-4xl/none">
+    <div className="p-2 min-h-screen flex flex-col">
+      <h1 className="pt-4 pl-4 text-foreground text-xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-4xl/none">
         Your Wishlist
       </h1>
-      <ul className="flex flex-wrap justify-between py-4 px-4">
-        {wishlistItems.reverse().map((product: WishlistItem) => (
-          <Card key={product.id} className="border p-2 mb-4">
-            <CardContent>
-              <img
-                src={product.imageUrl}
-                alt={product.name}
-                className="mb-4 max-w-full"
-              />
-              <h3 className="text-lg font-bold">{product.name}</h3>
-              <p className="text-gray-600">{product.description}</p>
-              <p className="text-green-600 font-bold">${product.price}</p>
-              <p>Stock: {product.stock}</p>
-              <p>Created By: {product.createdBy}</p>
-              <Button variant={"default"} className="mt-2 mr-2 p-2">
-                Add to Cart
-              </Button>{" "}
-              <Button
-                variant={"secondary"}
-                className="mt-2 p-2"
-                onClick={() => handleRemoveFromWishlist(product.id)}
-              >
-                {" "}
-                Remove from wishlist
-              </Button>{" "}
-            </CardContent>
-          </Card>
-        ))}
-      </ul>
+      {wishlistItems.length === 0 ? (
+        <div className="flex-grow flex flex-col items-center justify-center">
+          <h1 className="text-foreground text-xl font-semibold tracking-tighter sm:text-2xl md:text-3xl lg:text-2xl/none">
+            Your wishlist is empty.
+          </h1>
+        </div>
+      ) : (
+        <ul className="flex flex-wrap justify-between py-4 px-4">
+          {wishlistItems.reverse().map((product: WishlistItem) => (
+            <Card key={product.id} className="border p-2 mb-4">
+              <CardContent>
+                <img
+                  src={product.imageUrl}
+                  alt={product.name}
+                  className="mb-4 max-w-full"
+                />
+                <h3 className="text-lg font-bold">{product.name}</h3>
+                <p className="text-gray-600">{product.description}</p>
+                <p className="text-green-600 font-bold">${product.price}</p>
+                <p>Stock: {product.stock}</p>
+                <p>Created By: {product.createdBy}</p>
+                <Button variant={"default"} className="mt-2 mr-2 p-2">
+                  Add to Cart
+                </Button>{" "}
+                <Button
+                  variant={"secondary"}
+                  className="mt-2 p-2"
+                  onClick={() => {
+                    handleRemoveFromWishlist(product.id);
+                    toast({
+                      title: "Removed from Wishlist",
+                      description: product.name + " Removed",
+                    });
+                  }}
+                >
+                  {" "}
+                  Remove from wishlist
+                </Button>{" "}
+              </CardContent>
+            </Card>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }

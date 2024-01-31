@@ -2,6 +2,7 @@
 import React from "react";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
+import { useToast } from "./ui/use-toast";
 
 interface Review {
   id: number;
@@ -24,13 +25,15 @@ interface ProductItemProps {
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
+  const { toast } = useToast();
+
   const handleAddToWishlist = () => {
     const token = localStorage.getItem("JWT");
     if (!token) {
       console.error("JWT token not found in localStorage");
       return;
     }
-    
+
     fetch(`http://localhost:3000/wishlist/add/${product.id}`, {
       method: "POST",
       headers: {
@@ -64,10 +67,17 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
         <Button
           variant={"secondary"}
           className="mt-2 p-2"
-          onClick={handleAddToWishlist}
+          onClick={() => {
+            handleAddToWishlist();
+            toast({
+              title: "Added to Wishlist",
+              description: product.name + " Added",
+            });
+          }}
         >
-          Add to Wishlist
-        </Button>
+          {" "}
+          Add to wishlist
+        </Button>{" "}
         {product.reviews.length > 0 && (
           <div>
             <h4 className="font-bold mt-2">Reviews:</h4>
