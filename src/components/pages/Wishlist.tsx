@@ -124,13 +124,13 @@ function Wishlist() {
   }
 
   return (
-    <div className="">
+    <div className="min-h-screen">
       <h1 className="pt-4 pl-4 text-foreground text-xl font-bold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
         Your Wishlist
       </h1>
       {wishlistItems.length === 0 ? (
         <div className="flex-grow flex flex-col items-center justify-center">
-          <h1 className="text-foreground text-xl font-semibold tracking-tighter sm:text-2xl md:text-3xl lg:text-2xl/none">
+          <h1 className="p-8 text-foreground text-xl font-semibold tracking-tighter sm:text-2xl md:text-3xl lg:text-2xl/none">
             Your wishlist is empty.
           </h1>
         </div>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
+import { MinusCircle, PlusCircle } from "lucide-react";
 
 interface Product {
   id: number;
@@ -81,12 +82,74 @@ const CartComponent: React.FC = () => {
         console.error("Error removing item from Cart", error);
       });
   };
+  const handleIncreaseQuantity = async (productId: number) => {
+    const token = localStorage.getItem("JWT");
+
+    if (!token) {
+      console.error("JWT token not found in localStorage");
+      return;
+    }
+
+    const quantity = 1; // replace with the desired quantity
+
+    const apiUrl = `http://localhost:3000/cart/increase/${productId}`;
+    const requestBody = {
+      quantity: quantity.toString(),
+    };
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to add item to cart. Status: ${response.status}`
+        );
+      }
+
+      const responseData = await response.json();
+      console.log("Item added to cart:", responseData);
+      fetchCartData();
+    } catch (error) {
+      console.error("Error adding item to cart:");
+    }
+  };
+  const handleDecreaseQuantity = (productId: number) => {
+    const token = localStorage.getItem("JWT");
+    if (!token) {
+      console.error("JWT token not found in localStorage");
+      return;
+    }
+    fetch(`http://localhost:3000/cart/reduce/${productId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          fetchCartData();
+          console.log("One item removed successfully");
+        } else {
+          console.error("Error removing one item from Cart");
+        }
+      })
+      .catch((error) => {
+        console.error("Error removing item from Cart", error);
+      });
+  };
   useEffect(() => {
     fetchCartData();
   }, [token]);
 
   return (
-    <div>
+    <div className="min-h-screen">
       <h1 className="p-4  text-foreground text-xl font-bold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
         Cart Information
       </h1>{" "}
@@ -98,7 +161,20 @@ const CartComponent: React.FC = () => {
                 <p>Product: {item.product.name}</p>
                 <p>Quantity: {item.quantity}</p>
                 <p>Price: {item.product.price}</p>
-                {/* Add more information as needed */}
+                <div className="flex">
+                  <Button
+                    className="mt-2 p-2 mr-2"
+                    onClick={() => handleDecreaseQuantity(item.product.id)}
+                  >
+                    <MinusCircle />
+                  </Button>
+                  <Button
+                    className="mt-2 p-2"
+                    onClick={() => handleIncreaseQuantity(item.product.id)}
+                  >
+                    <PlusCircle />{" "}
+                  </Button>
+                </div>
                 <Button
                   variant={"secondary"}
                   className="mt-2 p-2"
