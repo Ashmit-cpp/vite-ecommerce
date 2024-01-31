@@ -27,7 +27,7 @@ interface ProductItemProps {
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   const { toast } = useToast();
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async (productId: number, productPrice: number) => {
     const token = localStorage.getItem("JWT");
 
     if (!token) {
@@ -37,8 +37,9 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
 
     const quantity = 1; // replace with the desired quantity
 
-    const apiUrl = `http://localhost:3000/cart/add/${product.id}`;
+    const apiUrl = `http://localhost:3000/cart/add/${productId}`;
     const requestBody = {
+      totalPrice: productPrice,
       quantity: quantity.toString(),
     };
 
@@ -104,7 +105,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           variant={"default"}
           className="mt-2 mr-2 p-2"
           onClick={() => {
-            handleAddToCart();
+            handleAddToCart(product.id, product.price);
             toast({
               title: "Added to Cart",
               description: product.name + " Added",

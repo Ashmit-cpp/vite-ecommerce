@@ -16,6 +16,7 @@ interface Product {
 
 interface CartItem {
   id: number;
+  totalPrice: number;
   quantity: number;
   product: Product;
 }
@@ -160,7 +161,7 @@ const CartComponent: React.FC = () => {
               <CardContent>
                 <p>Product: {item.product.name}</p>
                 <p>Quantity: {item.quantity}</p>
-                <p>Price: {item.product.price}</p>
+                <p>Price: {item.totalPrice}</p>
                 <div className="flex">
                   <Button
                     className="mt-2 p-2 mr-2"

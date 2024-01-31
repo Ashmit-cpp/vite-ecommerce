@@ -71,7 +71,7 @@ function Wishlist() {
       });
   };
 
-  const handleAddToCart = async (productId: number) => {
+  const handleAddToCart = async (productId: number, productPrice: number) => {
     const token = localStorage.getItem("JWT");
 
     if (!token) {
@@ -83,6 +83,7 @@ function Wishlist() {
 
     const apiUrl = `http://localhost:3000/cart/add/${productId}`;
     const requestBody = {
+      totalPrice: productPrice,
       quantity: quantity.toString(),
     };
 
@@ -153,7 +154,7 @@ function Wishlist() {
                   variant={"default"}
                   className="mt-2 mr-2 p-2"
                   onClick={() => {
-                    handleAddToCart(product.id);
+                    handleAddToCart(product.id, product.price);
                     toast({
                       title: "Added to Cart",
                       description: product.name + " Added",
