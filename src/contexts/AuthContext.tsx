@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 interface AuthContextType {
   token: string | null;
@@ -24,6 +25,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem("JWT");
+    window.location.href = "/";
     setToken(null);
   };
 

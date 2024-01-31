@@ -50,7 +50,7 @@ const Header = () => {
             </ul>
             <ModeToggle />
             {token ? (
-              <Button className="my-1" onClick={logout}>
+              <Button className="my-1" onClick={logout} >
                 Logout
               </Button>
             ) : (
