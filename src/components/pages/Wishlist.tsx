@@ -71,6 +71,44 @@ function Wishlist() {
       });
   };
 
+  const handleAddToCart = async (productId: number) => {
+    const token = localStorage.getItem("JWT");
+
+    if (!token) {
+      console.error("JWT token not found in localStorage");
+      return;
+    }
+
+    const quantity = 1; // replace with the desired quantity
+
+    const apiUrl = `http://localhost:3000/cart/add/${productId}`;
+    const requestBody = {
+      quantity: quantity.toString(),
+    };
+
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Failed to add item to cart. Status: ${response.status}`
+        );
+      }
+
+      const responseData = await response.json();
+      // Handle the response data as needed (update state, show success message, etc.)
+      console.log("Item added to cart:", responseData);
+    } catch (error) {
+      console.error("Error adding item to cart:");
+    }
+  };
   useEffect(() => {
     fetchWishlist();
   }, []);
@@ -111,7 +149,18 @@ function Wishlist() {
                 <p className="text-green-600 font-bold">${product.price}</p>
                 <p>Stock: {product.stock}</p>
                 <p>Created By: {product.createdBy}</p>
-                <Button variant={"default"} className="mt-2 mr-2 p-2">
+                <Button
+                  variant={"default"}
+                  className="mt-2 mr-2 p-2"
+                  onClick={() => {
+                    handleAddToCart(product.id);
+                    toast({
+                      title: "Added to Cart",
+                      description: product.name + " Added",
+                    });
+                  }}
+                >
+                  {" "}
                   Add to Cart
                 </Button>{" "}
                 <Button
