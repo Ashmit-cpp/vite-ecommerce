@@ -1,16 +1,21 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import MobileNav from "./MobileNav";
-import { Badge, BookHeart, Dog, ShoppingCart } from "lucide-react";
+import { BookHeart, Dog, ShoppingCart } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SearchField } from "./SearchBar";
 import { useScrollPosition } from "./hooks/useScrollPosition";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store/store";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
   const { token, logout } = useAuth();
+  const notificationCount = useSelector(
+    (state: RootState) => state.notification.notificationCount
+  );
 
   return (
     <header
@@ -52,13 +57,16 @@ const Header = () => {
                   <></>
                 )}
               </li>
-              <li>
-                <Link to="/cart" className="position-relative">
-                  <Button variant="outline">
-                    {/* <Badge className="position-absolute top-0 end-0"> */}
+              <li className="relative">
+                <Link to="/cart" className="relative block">
+                  <Button variant="outline" className="">
                     <ShoppingCart />
-                    {/* </Badge> */}
                   </Button>
+                  {notificationCount > 0 && (
+                    <span className="absolute top-0 right-0 bg-primary text-white rounded-full px-2 py-1 text-xs -mt-2 -mr-2">
+                      {notificationCount}
+                    </span>
+                  )}
                 </Link>
               </li>
               {/* <li>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
+import AddToCart from "../buttons/addToCart";
 import { useToast } from "../ui/use-toast";
 
 interface WishlistItem {
@@ -14,10 +15,10 @@ interface WishlistItem {
 }
 
 function Wishlist() {
-  const { toast } = useToast();
-
   const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const { toast } = useToast();
+
   const fetchWishlist = async () => {
     const token = localStorage.getItem("JWT");
     if (!token) {
@@ -71,45 +72,6 @@ function Wishlist() {
       });
   };
 
-  const handleAddToCart = async (productId: number, productPrice: number) => {
-    const token = localStorage.getItem("JWT");
-
-    if (!token) {
-      console.error("JWT token not found in localStorage");
-      return;
-    }
-
-    const quantity = 1; // replace with the desired quantity
-
-    const apiUrl = `http://localhost:3000/cart/add/${productId}`;
-    const requestBody = {
-      totalPrice: productPrice,
-      quantity: quantity.toString(),
-    };
-
-    try {
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      if (!response.ok) {
-        throw new Error(
-          `Failed to add item to cart. Status: ${response.status}`
-        );
-      }
-
-      const responseData = await response.json();
-      // Handle the response data as needed (update state, show success message, etc.)
-      console.log("Item added to cart:", responseData);
-    } catch (error) {
-      console.error("Error adding item to cart:");
-    }
-  };
   useEffect(() => {
     fetchWishlist();
   }, []);
@@ -150,20 +112,13 @@ function Wishlist() {
                 <p className="text-green-600 font-bold">${product.price}</p>
                 <p>Stock: {product.stock}</p>
                 <p>Created By: {product.createdBy}</p>
-                <Button
-                  variant={"default"}
-                  className="mt-2 mr-2 p-2"
-                  onClick={() => {
-                    handleAddToCart(product.id, product.price);
-                    toast({
-                      title: "Added to Cart",
-                      description: product.name + " Added",
-                    });
+                <AddToCart
+                  product={{
+                    id: product.id,
+                    price: product.price,
+                    name: product.name,
                   }}
-                >
-                  {" "}
-                  Add to Cart
-                </Button>{" "}
+                />
                 <Button
                   variant={"secondary"}
                   className="mt-2 p-2"
