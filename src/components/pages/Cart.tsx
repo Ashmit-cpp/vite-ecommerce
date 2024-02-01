@@ -260,7 +260,7 @@ const CartComponent: React.FC = () => {
       ) : (
         <div className=" min-h-screen flex flex-col items-center justify-center ">
           <h1 className="text-foreground text-xl font-semibold tracking-tighter sm:text-2xl md:text-3xl lg:text-2xl/none">
-            Loading your Cart....
+            Add items to you Cart.
           </h1>
         </div>
       )}

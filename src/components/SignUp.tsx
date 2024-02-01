@@ -64,7 +64,7 @@ export default function Component(): JSX.Element {
   };
 
   return (
-    <Card className="my-10 mx-auto max-w-[350px] space-y-6">
+    <Card className="my-10 mx-auto max-w-[350px] space-y-6 opacity-80">
       <CardHeader className="space-y-2 text-center">
         <CardTitle className="text-2xl font-bold">Signup</CardTitle>
         <CardDescription>Enter your credentials to signup</CardDescription>

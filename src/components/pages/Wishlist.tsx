@@ -118,7 +118,7 @@ function Wishlist() {
     return (
       <div className=" min-h-screen flex flex-col items-center justify-center ">
         <h1 className="text-foreground text-xl font-semibold tracking-tighter sm:text-2xl md:text-3xl lg:text-2xl/none">
-          Loading....
+          Add items to you Wishlist.
         </h1>
       </div>
     );
@@ -136,7 +136,7 @@ function Wishlist() {
           </h1>
         </div>
       ) : (
-        <ul className="flex flex-wrap justify-between py-4 px-4">
+        <ul className="flex flex-wrap justify-evenly gap-2 py-4 px-4">
           {wishlistItems.reverse().map((product: WishlistItem) => (
             <Card key={product.id} className="border p-2 mb-4">
               <CardContent>

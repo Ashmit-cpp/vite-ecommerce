@@ -14,48 +14,39 @@ interface CustomPaginationProps {
   totalPages: number;
   handlePreviousPage: () => void;
   handleNextPage: () => void;
-  generatePaginationLink: (page: number) => string;
 }
-
 
 const CustomPagination: React.FC<CustomPaginationProps> = ({
   currentPage,
   totalPages,
   handlePreviousPage,
   handleNextPage,
-  generatePaginationLink,
 }) => {
   return (
-    <Pagination className="p-2">
+    <Pagination className="p-2 cursor-pointer	">
       <PaginationContent>
         {currentPage !== 1 ? (
-          <PaginationPrevious href="#" onClick={handlePreviousPage} />
-        ) : null}
-        {/* {currentPage - 1 > 1 ? (
-          <PaginationLink href={generatePaginationLink(1)}>
-            <PaginationEllipsis />
-          </PaginationLink>
+          <PaginationPrevious onClick={handlePreviousPage} />
         ) : null}
         {currentPage > 1 ? (
-          <PaginationLink href={generatePaginationLink(currentPage - 1)}>
+          <PaginationLink onClick={handlePreviousPage}>
             {currentPage - 1}
           </PaginationLink>
         ) : null}
-        <PaginationLink href="#" isActive>
-          {currentPage}
-        </PaginationLink>
+        <PaginationLink isActive>{currentPage}</PaginationLink>
         {currentPage < totalPages ? (
-          <PaginationLink href={generatePaginationLink(currentPage + 1)}>
+          <PaginationLink onClick={handleNextPage}>
+            {" "}
             {currentPage + 1}
           </PaginationLink>
         ) : null}
-        {totalPages - currentPage > 1 ? (
-          <PaginationLink onclick={handlePageClick(currenypage)}>
-            <PaginationEllipsis />
+        {currentPage > totalPages ? (
+          <PaginationLink onClick={handlePreviousPage}>
+            {currentPage + 1}
           </PaginationLink>
-        ) : null} */}
+        ) : null}
         {currentPage < totalPages ? (
-          <PaginationNext href="#" onClick={handleNextPage} />
+          <PaginationNext onClick={handleNextPage} />
         ) : null}
       </PaginationContent>
     </Pagination>

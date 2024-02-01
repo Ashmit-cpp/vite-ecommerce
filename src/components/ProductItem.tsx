@@ -89,7 +89,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   };
 
   return (
-    <Card key={product.id} className="border p-2 mb-4">
+    <Card key={product.id} className="border p-2 mb-4 ">
       <CardContent>
         <img
           src={product.imageUrl}

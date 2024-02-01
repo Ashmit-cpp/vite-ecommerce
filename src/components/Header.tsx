@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import MobileNav from "./MobileNav";
-import { BookHeart, Dog, ShoppingCart } from "lucide-react";
+import { Badge, BookHeart, Dog, ShoppingCart } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SearchField } from "./SearchBar";
@@ -14,13 +14,13 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-shadow ${
+      className={`sticky top-0 z-50 transition-shadow  ${
         scrollPosition > 0
-          ? "bg-slate-500 bg-opacity-30 shadow-none backdrop-blur-2xl backdrop-filter"
-          : "bg-slate-500 bg-opacity-20  shadow-lg  shadow-slate-500/50	"
+          ? "bg-gray-300 bg-opacity-20 shadow-none backdrop-blur-sm backdrop-brightness-80 dark:backdrop-brightness-95"
+          : "bg-gray-400 bg-opacity-20  shadow-lg  shadow-slate-500/50	"
       }`}
     >
-      <div className="px-4 py-2 border-b">
+      <div className="px-4 py-2 border-b opacity-80">
         <div className="wrapper flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Link to="/">
@@ -53,10 +53,11 @@ const Header = () => {
                 )}
               </li>
               <li>
-                <Link to="/cart">
-                  {" "}
-                  <Button variant={"outline"}>
+                <Link to="/cart" className="position-relative">
+                  <Button variant="outline">
+                    {/* <Badge className="position-absolute top-0 end-0"> */}
                     <ShoppingCart />
+                    {/* </Badge> */}
                   </Button>
                 </Link>
               </li>

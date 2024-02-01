@@ -25,10 +25,10 @@ function Searched() {
 
   console.log(params.search);
   const [searchResults, setSearchResults] = useState<Product[]>([]);
+  const [totalItems, setTotalItems] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState(1);
 
   const handleNextPage = () => {
-    console.log("next");
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
@@ -52,16 +52,28 @@ function Searched() {
       }
     };
 
+    const fetchTotalData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/products/?searchTerm=${encodeURIComponent(
+            params.search!
+          )}`
+        );
+        const totalData = await response.json();
+        setTotalItems(totalData.length); // Assuming the total count is available as the length of the array
+      } catch (error) {
+        console.error("Error fetching total data:", error);
+      }
+    };
+
     if (params.search) {
       fetchData();
+      fetchTotalData();
     }
   }, [params.search, currentPage]);
 
-  const totalPages = 10;
-
-  const generatePaginationLink = (page: number) => {
-    return `/products/?page=${page}`;
-  };
+  const itemsPerPage = 4;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -76,7 +88,7 @@ function Searched() {
         </div>
       ) : (
         <>
-          <ul className="flex flex-wrap justify-between py-4 px-4">
+          <ul className="flex flex-wrap justify-evenly gap-4 py-4 px-4">
             {searchResults.map((result) => (
               <ProductItem key={result.id} product={result} />
             ))}
@@ -86,7 +98,6 @@ function Searched() {
             totalPages={totalPages}
             handlePreviousPage={handlePreviousPage}
             handleNextPage={handleNextPage}
-            generatePaginationLink={generatePaginationLink}
           />
         </>
       )}
