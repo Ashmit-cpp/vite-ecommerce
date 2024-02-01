@@ -37,6 +37,7 @@ export default function Component(): JSX.Element {
 
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
+    console.log(formData);
 
     fetch("http://localhost:3000/users/register", {
       method: "POST",

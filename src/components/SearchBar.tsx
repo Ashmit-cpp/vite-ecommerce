@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
-
 export function SearchField() {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+
   const handleSearch = () => {
-    // navigate(`/products/?name=${encodeURIComponent(searchTerm)}&page=1&limit=4`);
-    navigate("/searched/" + searchTerm);
+    if (searchTerm.trim() === "") {
+      // Handle the case where searchTerm is empty
+      alert("Please enter a search term");
+    } else {
+      // Navigate only if searchTerm is not empty
+      // navigate(`/products/?name=${encodeURIComponent(searchTerm)}&page=1&limit=4`);
+      navigate("/searched/" + encodeURIComponent(searchTerm));
+    }
   };
 
   return (

@@ -51,6 +51,15 @@ const Header = () => {
 
           <div className=" flex justify-end gap-3 items-center">
             <ul className="mx-1 hidden md:flex items-start font-semibold gap-5">
+              {token ? (
+                <li>
+                  <Link to="/addproduct">
+                    <Button variant={"outline"}>Sell</Button>
+                  </Link>
+                </li>
+              ) : (
+                <></>
+              )}
               <li>
                 {token ? (
                   <Link to="/wishlist">
@@ -75,9 +84,6 @@ const Header = () => {
                   )}
                 </Link>
               </li>
-              {/* <li>
-                <Link to="/profile">Profile</Link>
-              </li> */}
             </ul>
             <ModeToggle />
             {token ? (

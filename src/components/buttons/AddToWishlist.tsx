@@ -1,16 +1,5 @@
-import { useState } from "react";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
-
-interface WishlistItem {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  createdBy: string;
-  imageUrl: string;
-}
 
 interface AddToWishlistProps {
   product: {
@@ -22,8 +11,6 @@ interface AddToWishlistProps {
 
 function AddToWishlist({ product }: AddToWishlistProps) {
   const { toast } = useToast();
-  const [wishlistItems, setWishlistItems] = useState<WishlistItem[]>([]);
-  const [loading, setLoading] = useState(true);
 
   const handleAddToWishlist = () => {
     const token = localStorage.getItem("JWT");

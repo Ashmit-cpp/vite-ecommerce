@@ -1,8 +1,8 @@
 // ProductItem.tsx
 import React from "react";
 import { Card, CardContent } from "./ui/card";
-import AddToCart from "./buttons/addToCart";
 import AddToWishlist from "./buttons/AddToWishlist";
+import AddToCart from "./buttons/AddToCart";
 
 interface Review {
   id: number;
@@ -31,7 +31,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
         <img
           src={product.imageUrl}
           alt={product.name}
-          className="mb-4 max-w-full"
+          className="my-4 max-w-[300px] max-h-[500px]"
         />
         <h3 className="text-lg font-bold">{product.name}</h3>
         <p className="text-gray-600">{product.description}</p>

@@ -11,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useDispatch } from "react-redux";
 interface Product {
   id: number;
   name: string;

@@ -3,7 +3,6 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Header from "./components/Header";
 import Home from "./components/pages/Home";
 import Cart from "./components/pages/Cart";
-import Profile from "./components/pages/Profile";
 import SignUp from "./components/SignUp";
 import SignIn from "./components/LogIn";
 import Searched from "./components/pages/Searched";
@@ -11,6 +10,7 @@ import Footer from "./components/Footer";
 import { AuthProvider } from "./contexts/AuthContext";
 import Wishlist from "./components/pages/Wishlist";
 import { Toaster } from "./components/ui/toaster";
+import AddProduct from "./components/pages/AddProduct";
 
 function App() {
   return (
@@ -23,7 +23,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/addproduct" element={<AddProduct />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<SignIn />} />
                 <Route path="/wishlist" element={<Wishlist />} />

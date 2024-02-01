@@ -6,7 +6,6 @@ import notificationReducer from "@/redux/slices/notificationSlice";
 const store = configureStore({
   reducer: {
     notification: notificationReducer,
-    // Add other reducers if needed
   },
 });
 
