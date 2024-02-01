@@ -7,8 +7,9 @@ import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SearchField } from "./SearchBar";
 import { useScrollPosition } from "./hooks/useScrollPosition";
 import { useAuth } from "@/contexts/AuthContext";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store/store";
+import { resetNotification } from "@/redux/slices/notificationSlice";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
@@ -16,6 +17,11 @@ const Header = () => {
   const notificationCount = useSelector(
     (state: RootState) => state.notification.notificationCount
   );
+  const dispatch = useDispatch();
+
+  const resetNotiState = () => {
+    dispatch(resetNotification());
+  };
 
   return (
     <header
@@ -59,7 +65,7 @@ const Header = () => {
               </li>
               <li className="relative">
                 <Link to="/cart" className="relative block">
-                  <Button variant="outline" className="">
+                  <Button variant="outline" onClick={resetNotiState}>
                     <ShoppingCart />
                   </Button>
                   {notificationCount > 0 && (

@@ -11,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { decrementNotification } from "@/redux/slices/notificationSlice";
 import { useDispatch } from "react-redux";
 interface Product {
   id: number;
@@ -39,7 +38,6 @@ const CartComponent: React.FC = () => {
   const [cartData, setCartData] = useState<CartData | null>(null);
   const token = localStorage.getItem("JWT");
   const { toast } = useToast();
-  const dispatch = useDispatch();
 
   const getTotalSum = (): number => {
     if (!cartData) {
@@ -93,7 +91,6 @@ const CartComponent: React.FC = () => {
       .then((response) => {
         if (response.ok) {
           fetchCartData();
-          dispatch(decrementNotification());
           console.log("Cart item removed successfully");
         } else {
           console.error("Error removing item from Cart");

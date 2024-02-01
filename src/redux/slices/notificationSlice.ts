@@ -22,9 +22,15 @@ const notificationSlice = createSlice({
         state.notificationCount -= 1;
       }
     },
+    resetNotification: (state) => {
+      state.notificationCount = 0;
+    },
   },
 });
 
-export const { incrementNotification, decrementNotification } =
-  notificationSlice.actions;
+export const {
+  incrementNotification,
+  decrementNotification,
+  resetNotification,
+} = notificationSlice.actions;
 export default notificationSlice.reducer;
