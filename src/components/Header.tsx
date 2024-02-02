@@ -28,7 +28,7 @@ const Header = () => {
     <header
       className={`sticky top-0 z-50 transition-shadow  ${
         scrollPosition > 0
-          ? "bg-gray-300 bg-opacity-20 shadow-none backdrop-blur-sm backdrop-brightness-80 dark:backdrop-brightness-95"
+          ? "bg-gray-600 bg-opacity-20 shadow-none backdrop-blur-sm backdrop-brightness-80 dark:backdrop-brightness-95"
           : "bg-gray-400 bg-opacity-20  shadow-lg  shadow-slate-500/50	"
       }`}
     >

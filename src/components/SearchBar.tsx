@@ -9,10 +9,8 @@ export function SearchField() {
 
   const handleSearch = () => {
     if (searchTerm.trim() === "") {
-      // Handle the case where searchTerm is empty
       alert("Please enter a search term");
     } else {
-      // Navigate only if searchTerm is not empty
       // navigate(`/products/?name=${encodeURIComponent(searchTerm)}&page=1&limit=4`);
       navigate("/searched/" + encodeURIComponent(searchTerm));
     }

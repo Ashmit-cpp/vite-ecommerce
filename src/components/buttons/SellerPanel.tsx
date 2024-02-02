@@ -19,7 +19,7 @@ function SellerPanel() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="pr-2">
-                Seller
+                Sell on Acme
                 <ChevronDown className="mt-1" size={"24"} />
               </Button>
             </DropdownMenuTrigger>
@@ -31,7 +31,7 @@ function SellerPanel() {
                     className="min-w-32 border-b-4"
                     size={"sm"}
                   >
-                    My Products
+                    Manage Products
                   </Button>
                 </DropdownMenuItem>
               </Link>
@@ -42,14 +42,14 @@ function SellerPanel() {
                     className="min-w-32 border-b-4"
                     size={"sm"}
                   >
-                    Add Products
+                    Help & Support
                   </Button>
                 </DropdownMenuItem>
               </Link>
               <Link to="/deleteproducts">
                 <DropdownMenuItem>
                   <Button variant={"ghost"} className="min-w-32" size={"sm"}>
-                    Delete Products
+                    Manage Account
                   </Button>
                 </DropdownMenuItem>
               </Link>

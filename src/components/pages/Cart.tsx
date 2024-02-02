@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Separator } from "../ui/separator";
 interface Product {
   id: number;
   name: string;
@@ -171,9 +172,10 @@ const CartComponent: React.FC = () => {
       <h1 className="p-4 mt-8 text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
         Your Cart
       </h1>{" "}
+      <Separator className="bg-slate-800" />
       {cartData && cartData.items.length > 0 ? (
         <div className="m-4 ">
-          <Table className="rounded-3xl bg-slate-100 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">
+          <Table className="rounded-3xl bg-slate-300 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">
             <TableCaption>
               {" "}
               <div>
@@ -195,14 +197,22 @@ const CartComponent: React.FC = () => {
             <TableBody>
               {cartData.items.map((item) => (
                 <TableRow key={item.id}>
-                  <TableCell className="font-medium">
-                    <div className="flex gap-4">
+                  <TableCell
+                    className="font-medium cursor-pointer"
+                    onClick={() =>
+                      window.open(`/product/${item.product.id}`, "_blank")
+                    }
+                  >
+                    <div className="flex justify-center gap-8">
                       <img
                         src={item.product.imageUrl}
                         alt={item.product.name}
-                        className="mb-4 rounded-3xl max-w-[50px]"
+                        className="flex items-center justify-center rounded-3xl max-w-[50px]"
                       />
-                      <h1 className="align-middle"> {item.product.name}</h1>
+                      <h1 className="flex items-center justify-center text-lg">
+                        {" "}
+                        {item.product.name}
+                      </h1>
                       {/* <h1>{item.product.description}</h1> */}
                     </div>
                   </TableCell>
@@ -229,11 +239,10 @@ const CartComponent: React.FC = () => {
                   <TableCell className="px-4 text-xl">
                     ${item.totalPrice}
                   </TableCell>
-                  <TableCell className="w-[80px] text-right">
+                  <TableCell className="text-right">
                     {" "}
                     <Button
                       variant={"outline"}
-                      className="mt-2 p-2"
                       onClick={() => {
                         handleRemoveFromCart(item.product.id);
                         toast({

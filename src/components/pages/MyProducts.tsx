@@ -2,15 +2,29 @@ import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "../ui/button";
+import { Link } from "react-router-dom";
+
 import { MinusCircle, PlusCircle, Trash2 } from "lucide-react";
-import { toast, useToast } from "../ui/use-toast";
+import { useToast } from "../ui/use-toast";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { Separator } from "@/components/ui/separator";
+
 interface Review {
   id: number;
   text: string;
@@ -32,7 +46,30 @@ function MyProducts() {
   const [myproducts, setmyProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
-
+  const handleDeleteProduct = async (productId: number) => {
+    const token = localStorage.getItem("JWT");
+    if (!token) {
+      console.error("JWT token not found in localStorage");
+      return;
+    }
+    fetch(`http://localhost:3000/products/${productId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          fetchMyProducts();
+          console.log("Product deleted successfully");
+        } else {
+          console.error("Error deleting my product");
+        }
+      })
+      .catch((error) => {
+        console.error("Error deleting product", error);
+      });
+  };
   const fetchMyProducts = async () => {
     const token = localStorage.getItem("JWT");
     if (!token) {
@@ -67,35 +104,55 @@ function MyProducts() {
 
   return (
     <div className="p-2">
-      <h1 className="p-4 mt-4 text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
-        Manage your products
-      </h1>
+      <div className="flex p-4 mt-4 justify-between">
+        <h1 className=" text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
+          Manage your products
+        </h1>
+        <Link to="/addproducts">
+          {" "}
+          <Button>
+            {" "}
+            <PlusCircle className="mr-2" /> Add Product
+          </Button>
+        </Link>
+      </div>
+      <Separator />
+      <Separator />
+
       {loading ? (
         <p>Loading...</p>
       ) : myproducts && myproducts.length > 0 ? (
-        <Table className="rounded-3xl bg-slate-100 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">
+        <Table className="flex-wrap mt-4 table-auto rounded-3xl bg-slate-300 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">
           <TableHeader>
             <TableRow className="text-xl">
-              <TableHead className="w-[300px] ">Your Products</TableHead>
-              <TableHead className="text-center">Available Stock</TableHead>
+              <TableHead className="">Your Products</TableHead>
+              <TableHead className="">Description</TableHead>
+              <TableHead className="text-center">Left Stock</TableHead>
               <TableHead>Price</TableHead>
-              <TableHead className="w-[8px] text-right">Remove</TableHead>
+              <TableHead className="text-right">Delete</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {myproducts.map((item: Product) => (
               <TableRow key={item.id}>
                 <TableCell className="font-medium">
-                  <div className="flex gap-4">
+                  <div
+                    className="flex gap-4 cursor-pointer"
+                    onClick={() => window.open(`/product/${item.id}`, "_blank")}
+                  >
                     <img
                       src={item.imageUrl}
                       alt={item.name}
-                      className="mb-4 rounded-3xl max-w-[50px]"
+                      className="flex items-center justify-center rounded-3xl max-w-[50px] "
                     />
-                    <h1 className="align-middle"> {item.name}</h1>
-                    {/* <h1>{item.description}</h1> */}
+                    <h1 className="flex items-center justify-center text-lg">
+                      {" "}
+                      {item.name}
+                    </h1>
                   </div>
                 </TableCell>
+                <TableCell className=" text-lg">{item.description}</TableCell>
+
                 <TableCell>
                   <div className="flex items-center	justify-center">
                     <Button
@@ -104,7 +161,7 @@ function MyProducts() {
                     >
                       <MinusCircle />
                     </Button>
-                    <h1 className="px-4 text-xl"> {item.stock}</h1>
+                    <h1 className="px-2 text-xl"> {item.stock}</h1>
                     <Button
                       className="p-2"
                       // onClick={() => handleIncreaseQuantity(item.id)}
@@ -113,23 +170,44 @@ function MyProducts() {
                     </Button>
                   </div>
                 </TableCell>
-                <TableCell className="px-4 text-xl">${item.price}</TableCell>
+                <TableCell className="px-2 text-xl">${item.price}</TableCell>
 
-                <TableCell className="w-[80px] text-right">
+                <TableCell className="text-right">
                   {" "}
-                  <Button
-                    variant={"outline"}
-                    className="mt-2 p-2"
-                    onClick={() => {
-                      // handleRemoveFromCart(item.product.id);
-                      toast({
-                        title: "Removed from Cart",
-                        description: item.name + " Removed",
-                      });
-                    }}
-                  >
-                    <Trash2 />
-                  </Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger>
+                      <Button variant={"outline"}>
+                        <Trash2 />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you absolutely sure?
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          This action cannot be undone. This will permanently
+                          delete your product and can not be restored.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => {
+                            handleDeleteProduct(item.id);
+                            toast({
+                              title: "Item permanently deleted",
+                              description: item.name + " deleted",
+                            });
+                          }}
+                        >
+                          {" "}
+                          Continue
+                          <Trash2 className="ml-1" />
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </TableCell>
               </TableRow>
             ))}

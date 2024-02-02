@@ -32,10 +32,11 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           <img
             src={product.imageUrl}
             alt={product.name}
-            className="my-4 px-8 min-h-32"
+            className="my-4 px-8 min-h-32 cursor-pointer"
+            onClick={() => window.open(`/product/${product.id}`, "_blank")}
           />
           <h3 className="text-lg font-bold">{product.name}</h3>
-          <p className="text-gray-600">{product.description}</p>
+          <p>{product.description}</p>
           <p className="text-green-600 font-bold">${product.price}</p>
           <p>Stock: {product.stock}</p>
           <p>Created By: {product.createdBy}</p>

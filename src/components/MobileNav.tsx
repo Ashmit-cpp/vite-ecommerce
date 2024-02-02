@@ -19,10 +19,10 @@ function MobileNav() {
             <h1 className="font-semibold text-xl ">Navigate</h1>
             {token ? (
               <li>
-                <Link to="/addproduct">
+                <Link to="/myproducts">
                   <Button variant={"link"} className=" min-w-32">
                     <Receipt />
-                    Sell
+                    My Products
                   </Button>
                 </Link>
               </li>

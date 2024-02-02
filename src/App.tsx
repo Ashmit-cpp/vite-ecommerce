@@ -13,6 +13,7 @@ import { Toaster } from "./components/ui/toaster";
 import AddProduct from "./components/pages/AddProduct";
 import MyProducts from "./components/pages/MyProducts";
 import DeleteProducts from "./components/pages/DeleteProducts";
+import ProductPage from "./components/pages/ProductPage";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<SignIn />} />
                 <Route path="/wishlist" element={<Wishlist />} />
+                <Route path="/product/:id" element={<ProductPage />} />
                 <Route path="/searched/:search" element={<Searched />} />
               </Routes>
               <Footer />

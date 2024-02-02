@@ -8,7 +8,7 @@ export default function Component() {
     targetContainerRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className="flex flex-col min-h-screen   ">
+    <div className="mt-8 flex flex-col justify-center min-h-screen   ">
       <main className="flex-1 	 ">
         <section className="w-full py-24 md:py-24 lg:py-40">
           <div className="container px-4 md:px-6">
@@ -47,25 +47,25 @@ export default function Component() {
               >
                 Our Features
               </h2>
-              <p className="max-w-[600px]    md:text-xl dark:text-gray-400">
+              <p className="max-w-[600px] md:text-xl dark:text-gray-400 ">
                 We provide the best mice for all your needs.
               </p>
             </div>
-            <div className="grid gap-8 md:grid-cols-2 lg:gap-12 ">
-              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
+            <div className="mt-8 grid gap-4 md:grid-cols-2 lg:gap-8 ">
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-2 ">
                 <h3 className="text-lg font-bold">High Quality</h3>
                 <p>Our mice are made with the highest quality materials.</p>
               </div>
 
-              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
                 <h3 className="text-lg font-bold">Fast</h3>
                 <p>Our mice are designed for speed and efficiency.</p>
               </div>
-              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
                 <h3 className="text-lg font-bold">Reliable</h3>
                 <p>Our mice are built to last.</p>
               </div>
-              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-4 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
                 <h3 className="text-lg font-bold">Comfortable</h3>
                 <p>Our mice are designed for comfort.</p>
               </div>

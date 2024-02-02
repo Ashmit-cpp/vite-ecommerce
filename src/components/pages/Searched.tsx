@@ -23,7 +23,7 @@ interface Product {
 function Searched() {
   let params = useParams();
 
-  console.log(params.search);
+  console.log(params);
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState(1);
