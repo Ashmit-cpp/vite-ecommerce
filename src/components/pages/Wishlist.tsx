@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
-import AddToCart from "../buttons/addToCart";
+import AddToCart from "../buttons/AddToCart";
 import { useToast } from "../ui/use-toast";
 
 interface WishlistItem {
@@ -100,12 +100,12 @@ function Wishlist() {
       ) : (
         <ul className="flex flex-wrap justify-evenly gap-2 py-4 px-4">
           {wishlistItems.reverse().map((product: WishlistItem) => (
-            <Card key={product.id} className="border p-2 mb-4">
-              <CardContent>
+            <Card key={product.id} className="border p-1 mb-4 ">
+              <CardContent className="flex flex-col flex-wrap ">
                 <img
                   src={product.imageUrl}
                   alt={product.name}
-                  className="mb-4 max-w-full"
+                  className="my-4 px-8 min-h-32"
                 />
                 <h3 className="text-lg font-bold">{product.name}</h3>
                 <p className="text-gray-600">{product.description}</p>

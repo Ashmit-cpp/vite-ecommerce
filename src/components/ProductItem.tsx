@@ -26,49 +26,51 @@ interface ProductItemProps {
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   return (
-    <Card key={product.id} className="border p-2 mb-4 ">
-      <CardContent>
-        <img
-          src={product.imageUrl}
-          alt={product.name}
-          className="my-4 max-w-[300px] max-h-[500px]"
-        />
-        <h3 className="text-lg font-bold">{product.name}</h3>
-        <p className="text-gray-600">{product.description}</p>
-        <p className="text-green-600 font-bold">${product.price}</p>
-        <p>Stock: {product.stock}</p>
-        <p>Created By: {product.createdBy}</p>
-        <div>
-          <AddToWishlist
-            product={{
-              id: product.id,
-              price: product.price,
-              name: product.name,
-            }}
+    <ul className="flex flex-wrap justify-evenly gap-2 py-4 ">
+      <Card key={product.id} className="border p-1 mb-4 ">
+        <CardContent className="flex flex-col flex-wrap ">
+          <img
+            src={product.imageUrl}
+            alt={product.name}
+            className="my-4 px-8 min-h-32"
           />
-          <AddToCart
-            product={{
-              id: product.id,
-              price: product.price,
-              name: product.name,
-            }}
-          />{" "}
-        </div>
-        {product.reviews.length > 0 && (
+          <h3 className="text-lg font-bold">{product.name}</h3>
+          <p className="text-gray-600">{product.description}</p>
+          <p className="text-green-600 font-bold">${product.price}</p>
+          <p>Stock: {product.stock}</p>
+          <p>Created By: {product.createdBy}</p>
           <div>
-            <h4 className="font-bold mt-2">Reviews:</h4>
-            <ul>
-              {product.reviews.map((review) => (
-                <li key={review.id} className="mb-2">
-                  <p>{review.text}</p>
-                  <p>Rating: {review.rating}</p>
-                </li>
-              ))}
-            </ul>
+            <AddToWishlist
+              product={{
+                id: product.id,
+                price: product.price,
+                name: product.name,
+              }}
+            />
+            <AddToCart
+              product={{
+                id: product.id,
+                price: product.price,
+                name: product.name,
+              }}
+            />{" "}
           </div>
-        )}
-      </CardContent>
-    </Card>
+          {product.reviews.length > 0 && (
+            <div>
+              <h4 className="font-bold mt-2">Reviews:</h4>
+              <ul>
+                {product.reviews.map((review) => (
+                  <li key={review.id} className="mb-2">
+                    <p>{review.text}</p>
+                    <p>Rating: {review.rating}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </ul>
   );
 };
 

@@ -11,6 +11,8 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Wishlist from "./components/pages/Wishlist";
 import { Toaster } from "./components/ui/toaster";
 import AddProduct from "./components/pages/AddProduct";
+import MyProducts from "./components/pages/MyProducts";
+import DeleteProducts from "./components/pages/DeleteProducts";
 
 function App() {
   return (
@@ -23,7 +25,9 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
-                <Route path="/addproduct" element={<AddProduct />} />
+                <Route path="/addproducts" element={<AddProduct />} />
+                <Route path="/myproducts" element={<MyProducts />} />
+                <Route path="/deleteproducts" element={<DeleteProducts />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<SignIn />} />
                 <Route path="/wishlist" element={<Wishlist />} />

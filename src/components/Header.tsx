@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import MobileNav from "./MobileNav";
-import { BookHeart, Dog, ShoppingCart } from "lucide-react";
+import { Dog, ShoppingCart } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SearchField } from "./SearchBar";
@@ -10,6 +10,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store/store";
 import { resetNotification } from "@/redux/slices/notificationSlice";
+import SellerPanel from "./buttons/SellerPanel";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
@@ -34,9 +35,11 @@ const Header = () => {
       <div className="px-4 py-2 border-b opacity-80">
         <div className="wrapper flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Link to="/">
-              <Dog className="text-primary" size={32} />
-            </Link>
+            <Button size={"icon"} variant={"ghost"}>
+              <Link to="/">
+                <Dog className="text-primary" size={32} />
+              </Link>
+            </Button>
             <ul className="hidden md:flex items-start gap-5">
               <li className="text-xl font-bold pr-2 text-primary ">
                 <Link to="/">Acme</Link>
@@ -49,41 +52,23 @@ const Header = () => {
           </nav>
           <Separator />
 
-          <div className=" flex justify-end gap-3 items-center">
-            <ul className="mx-1 hidden md:flex items-start font-semibold gap-5">
-              {token ? (
-                <li>
-                  <Link to="/addproduct">
-                    <Button variant={"outline"}>Sell</Button>
-                  </Link>
-                </li>
-              ) : (
-                <></>
-              )}
-              <li>
-                {token ? (
-                  <Link to="/wishlist">
-                    <Button variant={"outline"}>
-                      {" "}
-                      <BookHeart />
-                    </Button>
-                  </Link>
-                ) : (
-                  <></>
+          <div className=" flex justify-end gap-4 items-center">
+            <SellerPanel />
+            <ul className="relative">
+              <Link to="/cart" className="relative block">
+                <Button
+                  size={"icon"}
+                  variant="outline"
+                  onClick={resetNotiState}
+                >
+                  <ShoppingCart />
+                </Button>
+                {notificationCount > 0 && (
+                  <span className="absolute top-0 right-0 bg-primary text-white rounded-full px-2 py-1 text-xs -mt-2 -mr-2">
+                    {notificationCount}
+                  </span>
                 )}
-              </li>
-              <li className="relative">
-                <Link to="/cart" className="relative block">
-                  <Button variant="outline" onClick={resetNotiState}>
-                    <ShoppingCart />
-                  </Button>
-                  {notificationCount > 0 && (
-                    <span className="absolute top-0 right-0 bg-primary text-white rounded-full px-2 py-1 text-xs -mt-2 -mr-2">
-                      {notificationCount}
-                    </span>
-                  )}
-                </Link>
-              </li>
+              </Link>
             </ul>
             <ModeToggle />
             {token ? (
