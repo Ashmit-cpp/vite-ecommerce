@@ -88,7 +88,7 @@ function Wishlist() {
 
   return (
     <div className="min-h-screen">
-      <h1 className="p-4 mt-8 text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
+      <h1 className="p-4 mt-2 text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
         Your Wishlist
       </h1>
       {wishlistItems.length === 0 ? (
@@ -102,14 +102,16 @@ function Wishlist() {
           {wishlistItems.reverse().map((product: WishlistItem) => (
             <Card key={product.id} className="border p-1 mb-4 ">
               <CardContent className="flex flex-col flex-wrap ">
-                <img
-                  src={product.imageUrl}
-                  alt={product.name}
-                  className="my-4 px-8 min-h-32 cursor-pointer"
-                  onClick={() =>
-                    window.open(`/product/${product.id}`, "_blank")
-                  }
-                />
+                <div className="p-2 mr-4  ">
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
+                    className="my-4 px-8 min-h-32 cursor-pointer"
+                    onClick={() =>
+                      window.open(`/product/${product.id}`, "_blank")
+                    }
+                  />
+                </div>
                 <h3 className="text-lg font-bold">{product.name}</h3>
                 <p>{product.description}</p>
                 <p className="text-green-600 font-bold">${product.price}</p>

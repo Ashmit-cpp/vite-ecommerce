@@ -155,19 +155,19 @@ function MyProducts() {
 
                 <TableCell>
                   <div className="flex items-center	justify-center">
-                    <Button
+                    {/* <Button
                       className="p-2"
                       // onClick={() => handleDecreaseQuantity(item.id)}
                     >
                       <MinusCircle />
-                    </Button>
+                    </Button> */}
                     <h1 className="px-2 text-xl"> {item.stock}</h1>
-                    <Button
+                    {/* <Button
                       className="p-2"
                       // onClick={() => handleIncreaseQuantity(item.id)}
                     >
                       <PlusCircle />{" "}
-                    </Button>
+                    </Button> */}
                   </div>
                 </TableCell>
                 <TableCell className="px-2 text-xl">${item.price}</TableCell>

@@ -27,14 +27,17 @@ interface ProductItemProps {
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   return (
     <ul className="flex flex-wrap justify-evenly gap-2 py-4 ">
-      <Card key={product.id} className="border p-1 mb-4 ">
+      <Card key={product.id} className="border mb-2 ">
         <CardContent className="flex flex-col flex-wrap ">
-          <img
-            src={product.imageUrl}
-            alt={product.name}
-            className="my-4 px-8 min-h-32 cursor-pointer"
-            onClick={() => window.open(`/product/${product.id}`, "_blank")}
-          />
+          <div className="p-2 mr-4  ">
+            <img
+              src={product.imageUrl}
+              alt={product.name}
+              className="my-4 px-8 min-h-32 cursor-pointer"
+              onClick={() => window.open(`/product/${product.id}`, "_blank")}
+            />
+          </div>
+
           <h3 className="text-lg font-bold">{product.name}</h3>
           <p>{product.description}</p>
           <p className="text-green-600 font-bold">${product.price}</p>
