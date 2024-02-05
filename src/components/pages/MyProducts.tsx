@@ -9,21 +9,18 @@ import {
 } from "@/components/ui/table";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
-
-import { MinusCircle, PlusCircle, Trash2 } from "lucide-react";
-import { useToast } from "../ui/use-toast";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { PlusCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import DeleteProduct from "../buttons/DeleteProduct";
+import EditProduct from "../buttons/EditProduct";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@radix-ui/react-dialog";
+import { DialogHeader } from "../ui/dialog";
 
 interface Review {
   id: number;
@@ -45,32 +42,59 @@ interface Product {
 function MyProducts() {
   const [myproducts, setmyProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  
+  const updateProduct = (updatedData: {
+    id: number;
+    name: string;
+    description: string;
+    price: number;
+    stock: number;
+  }) => {
+    // Find the index of the updated product in the state
+    const updatedIndex = myproducts.findIndex(
+      (product) => product.id == updatedData.id
+    );
 
-  const { toast } = useToast();
-  const handleDeleteProduct = async (productId: number) => {
-    const token = localStorage.getItem("JWT");
-    if (!token) {
-      console.error("JWT token not found in localStorage");
-      return;
-    }
-    fetch(`http://localhost:3000/products/${productId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          fetchMyProducts();
-          console.log("Product deleted successfully");
-        } else {
-          console.error("Error deleting my product");
-        }
+    if (updatedIndex !== -1) {
+      // Create a copy of the state array
+      const updatedProducts = [...myproducts];
+      // Update the product at the found index
+      updatedProducts[updatedIndex] = {
+        ...updatedProducts[updatedIndex],
+        ...updatedData,
+      };
+      // Update the state with the new array
+      setmyProducts(updatedProducts);
+      const token = localStorage.getItem("JWT");
+      if (!token) {
+        console.error("JWT token not found in localStorage");
+        return;
+      }
+
+      fetch(`http://localhost:3000/products/${updatedData.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: updatedData.name,
+          description: updatedData.description,
+          price: updatedData.price,
+          stock: updatedData.stock,
+        }),
       })
-      .catch((error) => {
-        console.error("Error deleting product", error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          if (data) {
+            console.log("Product added:", data);
+          } else {
+            console.error("Adding product failed:", data.error);
+          }
+        })
+        .catch((error) => {
+          console.error("Error while adding product:", error);
+        });
+    }
   };
   const fetchMyProducts = async () => {
     const token = localStorage.getItem("JWT");
@@ -135,6 +159,7 @@ function MyProducts() {
                 <TableHead className="text-center">Left Stock</TableHead>
                 <TableHead className="text-center">Price</TableHead>
                 <TableHead className="text-right">Delete</TableHead>
+                <TableHead className="text-right">Edit</TableHead>
               </TableRow>
             </TableHeader>
 
@@ -165,19 +190,7 @@ function MyProducts() {
 
                   <TableCell>
                     <div className="flex items-center	justify-center">
-                      {/* <Button
-                      className="p-2"
-                      // onClick={() => handleDecreaseQuantity(item.id)}
-                    >
-                      <MinusCircle />
-                    </Button> */}
                       <h1 className=" text-base"> {item.stock}</h1>
-                      {/* <Button
-                      className="p-2"
-                      // onClick={() => handleIncreaseQuantity(item.id)}
-                    >
-                      <PlusCircle />{" "}
-                    </Button> */}
                     </div>
                   </TableCell>
                   <TableCell className="text-xl">
@@ -189,40 +202,14 @@ function MyProducts() {
 
                   <TableCell className="text-right">
                     {" "}
-                    <AlertDialog>
-                      <AlertDialogTrigger>
-                        <Button variant={"outline"}>
-                          <Trash2 />
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>
-                            Are you absolutely sure?
-                          </AlertDialogTitle>
-                          <AlertDialogDescription>
-                            This action cannot be undone. This will permanently
-                            delete your product and can not be restored.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
-                          <AlertDialogAction
-                            onClick={() => {
-                              handleDeleteProduct(item.id);
-                              toast({
-                                title: "Item permanently deleted",
-                                description: item.name + " deleted",
-                              });
-                            }}
-                          >
-                            {" "}
-                            Continue
-                            <Trash2 className="ml-1" />
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
+                    <DeleteProduct
+                      id={item.id}
+                      name={item.name}
+                      onDelete={fetchMyProducts}
+                    />
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <EditProduct initialData={item} onUpdate={updateProduct} />
                   </TableCell>
                 </TableRow>
               ))}

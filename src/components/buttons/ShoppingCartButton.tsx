@@ -15,7 +15,7 @@ import {
 } from "../ui/drawer";
 import CartComponent from "../pages/Cart";
 
-function ShoppingCartButton() {
+function ShoppingCartButton() {``
   const notificationCount = useSelector(
     (state: RootState) => state.notification.notificationCount
   );

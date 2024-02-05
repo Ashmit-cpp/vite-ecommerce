@@ -59,19 +59,6 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
               }}
             />{" "}
           </div>
-          {product.reviews.length > 0 && (
-            <div>
-              <h4 className="font-bold mt-2">Reviews:</h4>
-              <ul>
-                {product.reviews.map((review) => (
-                  <li key={review.id} className="mb-2">
-                    <p>{review.text}</p>
-                    <p>Rating: {review.rating}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
         </CardContent>
       </Card>
     </ul>
