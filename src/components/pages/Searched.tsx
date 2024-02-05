@@ -77,7 +77,7 @@ function Searched() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <h2 className="p-2 mt-4 font-bold">
+      <h2 className="p-2 ml-6 mt-4 font-bold">
         Search Results for "{params.search}"
       </h2>
       {searchResults.length === 0 ? (

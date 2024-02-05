@@ -50,12 +50,16 @@ function NavComponents() {
                 </Link>
                 <Link to="/manageaccount">
                   <DropdownMenuItem>
-                    <Button variant={"ghost"} className="min-w-32" size={"sm"}>
+                    <Button
+                      variant={"ghost"}
+                      className="min-w-32 border-b-4"
+                      size={"sm"}
+                    >
                       Manage Account
                     </Button>
                   </DropdownMenuItem>
                 </Link>
-                <Link to="/support">
+                <Link to="/contact">
                   <DropdownMenuItem>
                     <Button
                       variant={"ghost"}

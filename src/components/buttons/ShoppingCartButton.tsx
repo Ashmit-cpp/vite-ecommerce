@@ -1,8 +1,6 @@
-import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store/store";
 import { resetNotification } from "@/redux/slices/notificationSlice";
-import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
 import {
@@ -58,7 +56,6 @@ function ShoppingCartButton() {
           </DrawerHeader>
           <CartComponent />
           <DrawerFooter className="p-2">
-            
             <DrawerClose>
               <Button>Checkout</Button>
             </DrawerClose>

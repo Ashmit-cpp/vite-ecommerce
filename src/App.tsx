@@ -14,6 +14,8 @@ import AddProduct from "./components/pages/AddProduct";
 import MyProducts from "./components/pages/MyProducts";
 import DeleteProducts from "./components/pages/DeleteProducts";
 import ProductPage from "./components/pages/ProductPage";
+import Contact from "./components/pages/Contact";
+import ManageAccount from "./components/pages/ManageAccount";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
                 <Route path="/deleteproducts" element={<DeleteProducts />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<SignIn />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/manageaccount" element={<ManageAccount />} />
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/product/:id" element={<ProductPage />} />
                 <Route path="/searched/:search" element={<Searched />} />

@@ -45,6 +45,8 @@ interface Product {
 function MyProducts() {
   const [myproducts, setmyProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  
+
   const { toast } = useToast();
   const handleDeleteProduct = async (productId: number) => {
     const token = localStorage.getItem("JWT");

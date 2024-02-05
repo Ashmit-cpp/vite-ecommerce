@@ -11,7 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Separator } from "../ui/separator";
 
 interface Product {
   id: number;
@@ -230,7 +229,7 @@ const CartComponent: React.FC = () => {
                     </div>
                   </TableCell>
 
-                  <TableCell className="p-2 font-semibold text-left text-xs md:text-base lg:text-lg xl:text-lg">
+                  <TableCell className="text-center p-2 font-semibold text-xs md:text-base lg:text-lg xl:text-lg">
                     ${item.product.price} X {item.quantity}= ${item.totalPrice}
                   </TableCell>
                   <TableCell className="text-right text-xs sm:sm md:text-md lg:text-lg xl:text-lg">
@@ -260,7 +259,7 @@ const CartComponent: React.FC = () => {
           </h1>
         </div>
       ) : (
-        <div className=" flex flex-col items-center justify-center ">
+        <div className="p-4 flex flex-col items-center justify-center ">
           <h1 className="text-foreground text-xl font- sm:text-2xl md:text-3xl lg:text-2xl/none">
             Log in and Add items to you Cart.
           </h1>

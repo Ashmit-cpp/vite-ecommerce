@@ -78,8 +78,8 @@ const ProductCarousel: React.FC = () => {
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="hidden md:block" />
-        <CarouselNext className="hidden md:block" />
+        <CarouselPrevious />
+        <CarouselNext />
       </Carousel>
     </div>
   );
