@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Separator } from "../ui/separator";
+
 interface Product {
   id: number;
   name: string;
@@ -172,7 +173,7 @@ const CartComponent: React.FC = () => {
       <h1 className="p-4 mt-8 text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
         Your Cart
       </h1>{" "}
-      <Separator decorative={true} orientation="horizontal"/>
+      <Separator decorative={true} orientation="horizontal" />
       {cartData && cartData.items.length > 0 ? (
         <div className="m-4 ">
           <Table className="rounded-3xl bg-slate-300 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">

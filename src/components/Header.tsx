@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import MobileNav from "./MobileNav";
 import { Dog, ShoppingCart } from "lucide-react";
-import { ModeToggle } from "./mode-toggle";
+import { ModeToggle } from "./buttons/mode-toggle";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SearchField } from "./SearchBar";
 import { useScrollPosition } from "./hooks/useScrollPosition";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store/store";
 import { resetNotification } from "@/redux/slices/notificationSlice";
-import SellerPanel from "./buttons/SellerPanel";
+import NavComponents from "./buttons/NavComponents";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
@@ -71,7 +71,7 @@ const Header = () => {
                 )}
               </Link>
             </ul>
-            <SellerPanel />
+            <NavComponents />
             <ul>
               <MobileNav />
             </ul>

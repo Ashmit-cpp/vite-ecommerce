@@ -9,12 +9,12 @@ import {
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 
-function SellerPanel() {
+function NavComponents() {
   const { token, logout } = useAuth();
 
   return (
     <div>
-      <ul className="mx-2 hidden md:flex items-center gap-4 font-semibold mx-4">
+      <ul className="mx-2 hidden md:flex items-center gap-4 font-semibold">
         <li>
           {token ? (
             <Link to="/wishlist">
@@ -90,4 +90,4 @@ function SellerPanel() {
   );
 }
 
-export default SellerPanel;
+export default NavComponents;

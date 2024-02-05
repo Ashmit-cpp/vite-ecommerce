@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { Drawer, DrawerTrigger } from "./ui/drawer";
 function MobileNav() {
   const { token, logout } = useAuth();
 
@@ -29,7 +30,7 @@ function MobileNav() {
                 <Link to="/myproducts">
                   <Button variant={"link"} className=" min-w-32">
                     <Receipt />
-                    My Products
+                    <h1 className="ml-2">My Products</h1>
                   </Button>
                 </Link>
               </li>
@@ -48,19 +49,6 @@ function MobileNav() {
               ) : (
                 <></>
               )}
-            </li>
-            <li className="relative">
-              <Link to="/cart" className="relative block">
-                <Button variant="link" className="min-w-32">
-                  <ShoppingCart />
-                  <h1 className="ml-2">Cart</h1>
-                </Button>
-                {/* {notificationCount > 0 && (
-                    <span className="absolute top-0 right-0 bg-primary text-white rounded-full px-2 py-1 text-xs -mt-2 -mr-2">
-                      {notificationCount}
-                    </span>
-                  )} */}
-              </Link>
             </li>
             <li className="">
               {" "}
