@@ -6,21 +6,11 @@ import { ModeToggle } from "./buttons/mode-toggle";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SearchField } from "./SearchBar";
 import { useScrollPosition } from "./hooks/useScrollPosition";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store/store";
-import { resetNotification } from "@/redux/slices/notificationSlice";
 import NavComponents from "./buttons/NavComponents";
+import ShoppingCartButton from "./buttons/ShoppingCartButton";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
-  const notificationCount = useSelector(
-    (state: RootState) => state.notification.notificationCount
-  );
-  const dispatch = useDispatch();
-
-  const resetNotiState = () => {
-    dispatch(resetNotification());
-  };
 
   return (
     <header
@@ -55,21 +45,8 @@ const Header = () => {
               {" "}
               <ModeToggle />
             </ul>
-            <ul className="relative">
-              <Link to="/cart" className="relative block">
-                <Button
-                  size={"icon"}
-                  variant="outline"
-                  onClick={resetNotiState}
-                >
-                  <ShoppingCart />
-                </Button>
-                {notificationCount > 0 && (
-                  <span className="absolute top-0 right-0 bg-primary text-white rounded-full px-2 py-1 text-xs -mt-2 -mr-2">
-                    {notificationCount}
-                  </span>
-                )}
-              </Link>
+            <ul>
+              <ShoppingCartButton />
             </ul>
             <NavComponents />
             <ul>

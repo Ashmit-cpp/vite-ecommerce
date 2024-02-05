@@ -122,97 +122,111 @@ function MyProducts() {
       {loading ? (
         <p>Loading...</p>
       ) : myproducts && myproducts.length > 0 ? (
-        <Table className="flex-wrap mt-4 table-auto rounded-3xl bg-slate-300 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">
-          <TableHeader>
-            <TableRow className="text-xl">
-              <TableHead className="">Your Products</TableHead>
-              <TableHead className="">Description</TableHead>
-              <TableHead className="text-center">Left Stock</TableHead>
-              <TableHead>Price</TableHead>
-              <TableHead className="text-right">Delete</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {myproducts.map((item: Product) => (
-              <TableRow key={item.id}>
-                <TableCell className="font-medium">
-                  <div
-                    className="flex gap-4 cursor-pointer"
+        <div className="min-h-screen m-2 max-h-[420px] flex flex-col items-center justify-center ">
+          <Table className="rounded-3xl bg-slate-300 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">
+            <TableHeader>
+              <TableRow className=" text-sm  md:text-base lg:text-lg">
+                <TableHead className="text-center sm:w-[500px] sm:text-left">
+                  Your Products
+                </TableHead>
+                <TableHead className="text-center">Description</TableHead>
+                <TableHead className="text-center">Left Stock</TableHead>
+                <TableHead className="text-center">Price</TableHead>
+                <TableHead className="text-right">Delete</TableHead>
+              </TableRow>
+            </TableHeader>
+
+            <TableBody>
+              {myproducts.map((item: Product) => (
+                <TableRow key={item.id}>
+                  <TableCell
+                    className="font-medium cursor-pointer"
                     onClick={() => window.open(`/product/${item.id}`, "_blank")}
                   >
-                    <img
-                      src={item.imageUrl}
-                      alt={item.name}
-                      className="flex items-center justify-center rounded-3xl max-w-[50px] "
-                    />
-                    <h1 className="flex items-center justify-center text-lg">
-                      {" "}
-                      {item.name}
+                    {" "}
+                    <div className="flex flex-col sm:flex-row items-center gap-2">
+                      <img
+                        src={item.imageUrl}
+                        alt={item.name}
+                        className="w-12 h-12 sm:w-16 sm:h-16 rounded-3xl mb-2 sm:mb-0"
+                      />
+                      <h1 className="text-xs sm:sm md:text-base lg:text-lg xl:text-lg">
+                        {item.name}
+                      </h1>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <h1 className="p-1 text-sm md:p-2 lg:text-lg xl:text-lg">
+                      {item.description}
                     </h1>
-                  </div>
-                </TableCell>
-                <TableCell className=" text-lg">{item.description}</TableCell>
+                  </TableCell>
 
-                <TableCell>
-                  <div className="flex items-center	justify-center">
-                    {/* <Button
+                  <TableCell>
+                    <div className="flex items-center	justify-center">
+                      {/* <Button
                       className="p-2"
                       // onClick={() => handleDecreaseQuantity(item.id)}
                     >
                       <MinusCircle />
                     </Button> */}
-                    <h1 className=" text-xl"> {item.stock}</h1>
-                    {/* <Button
+                      <h1 className=" text-base"> {item.stock}</h1>
+                      {/* <Button
                       className="p-2"
                       // onClick={() => handleIncreaseQuantity(item.id)}
                     >
                       <PlusCircle />{" "}
                     </Button> */}
-                  </div>
-                </TableCell>
-                <TableCell className="text-xl">${item.price}</TableCell>
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-xl">
+                    <h1 className="text-center p-1 text-base md:p-2 lg:text-lg xl:text-lg">
+                      {" "}
+                      ${item.price}
+                    </h1>
+                  </TableCell>
 
-                <TableCell className="text-right">
-                  {" "}
-                  <AlertDialog>
-                    <AlertDialogTrigger>
-                      <Button variant={"outline"}>
-                        <Trash2 />
-                      </Button>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogHeader>
-                        <AlertDialogTitle>
-                          Are you absolutely sure?
-                        </AlertDialogTitle>
-                        <AlertDialogDescription>
-                          This action cannot be undone. This will permanently
-                          delete your product and can not be restored.
-                        </AlertDialogDescription>
-                      </AlertDialogHeader>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction
-                          onClick={() => {
-                            handleDeleteProduct(item.id);
-                            toast({
-                              title: "Item permanently deleted",
-                              description: item.name + " deleted",
-                            });
-                          }}
-                        >
-                          {" "}
-                          Continue
-                          <Trash2 className="ml-1" />
-                        </AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+                  <TableCell className="text-right">
+                    {" "}
+                    <AlertDialog>
+                      <AlertDialogTrigger>
+                        <Button variant={"outline"}>
+                          <Trash2 />
+                        </Button>
+                      </AlertDialogTrigger>
+                      <AlertDialogContent>
+                        <AlertDialogHeader>
+                          <AlertDialogTitle>
+                            Are you absolutely sure?
+                          </AlertDialogTitle>
+                          <AlertDialogDescription>
+                            This action cannot be undone. This will permanently
+                            delete your product and can not be restored.
+                          </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogAction
+                            onClick={() => {
+                              handleDeleteProduct(item.id);
+                              toast({
+                                title: "Item permanently deleted",
+                                description: item.name + " deleted",
+                              });
+                            }}
+                          >
+                            {" "}
+                            Continue
+                            <Trash2 className="ml-1" />
+                          </AlertDialogAction>
+                        </AlertDialogFooter>
+                      </AlertDialogContent>
+                    </AlertDialog>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
       ) : (
         <p>No products found.</p>
       )}

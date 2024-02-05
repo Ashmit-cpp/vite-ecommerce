@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import CarouselCard from "../Carousel";
+import CarouselCard from "../ProductCarousel";
 
 export default function Component() {
   const targetContainerRef = useRef<HTMLDivElement>(null);
@@ -9,7 +9,7 @@ export default function Component() {
     targetContainerRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className="mt-8 flex flex-col justify-center min-h-screen   ">
+    <div className="mt-16 flex flex-col justify-center min-h-screen   ">
       <main className="flex-1 	 ">
         <section className="w-full py-24 md:py-24 lg:py-40">
           <div className="container px-4 md:px-6">
@@ -39,7 +39,10 @@ export default function Component() {
             </div>
           </div>
         </section>
-        <section className=" flex w-full py-8 md:py-16 lg:py-24">
+        <section
+          className=" flex w-full py-8 md:py-16 lg:py-32"
+          ref={targetContainerRef}
+        >
           <div className="container flex-grid items-center justify-center gap-4 px-4 md:px-6 ">
             <div className="space-y-3">
               <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter">

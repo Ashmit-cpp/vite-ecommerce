@@ -60,7 +60,10 @@ const ProductCarousel: React.FC = () => {
                     <img
                       src={product.imageUrl}
                       alt={product.name}
-                      className="mb-4 object-cover max-w-full"
+                      className="mb-4 object-cover max-w-full cursor-pointer"
+                      onClick={() =>
+                        window.open(`/product/${product.id}`, "_blank")
+                      }
                     />
                     <div className="text-center">
                       <h2 className="text-xl font-semibold mb-2">
