@@ -6,7 +6,6 @@ import { ModeToggle } from "./mode-toggle";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { SearchField } from "./SearchBar";
 import { useScrollPosition } from "./hooks/useScrollPosition";
-import { useAuth } from "@/contexts/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store/store";
 import { resetNotification } from "@/redux/slices/notificationSlice";
@@ -14,7 +13,6 @@ import SellerPanel from "./buttons/SellerPanel";
 
 const Header = () => {
   const scrollPosition = useScrollPosition();
-  const { token, logout } = useAuth();
   const notificationCount = useSelector(
     (state: RootState) => state.notification.notificationCount
   );
@@ -32,7 +30,7 @@ const Header = () => {
           : "bg-gray-400 bg-opacity-20  shadow-lg  shadow-slate-500/50	"
       }`}
     >
-      <div className="px-4 py-2 border-b opacity-80">
+      <div className="px-1 py-2 border-b opacity-80 lg:px-4">
         <div className="wrapper flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Button size={"icon"} variant={"ghost"}>
@@ -40,7 +38,7 @@ const Header = () => {
                 <Dog className="text-primary" size={32} />
               </Link>
             </Button>
-            <ul className="hidden md:flex items-start gap-5">
+            <ul className="hidden md:flex items-start gap-2">
               <li className="text-xl font-bold pr-2 text-primary ">
                 <Link to="/">Acme</Link>
               </li>
@@ -52,8 +50,11 @@ const Header = () => {
           </nav>
           <Separator />
 
-          <div className=" flex justify-end gap-4 items-center">
-            <SellerPanel />
+          <div className=" flex justify-start items-center md:flex gap-1">
+            <ul className="mx-2">
+              {" "}
+              <ModeToggle />
+            </ul>
             <ul className="relative">
               <Link to="/cart" className="relative block">
                 <Button
@@ -70,17 +71,10 @@ const Header = () => {
                 )}
               </Link>
             </ul>
-            <ModeToggle />
-            {token ? (
-              <Button className="my-1" onClick={logout}>
-                Logout
-              </Button>
-            ) : (
-              <Button className="my-1">
-                <Link to="/signup">Sign In</Link>
-              </Button>
-            )}
-            <MobileNav />
+            <SellerPanel />
+            <ul>
+              <MobileNav />
+            </ul>
           </div>
         </div>
       </div>

@@ -1,6 +1,13 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import { BookHeart, Menu, Receipt, ShoppingCart } from "lucide-react";
+import {
+  BookHeart,
+  LogIn,
+  LogOut,
+  Menu,
+  Receipt,
+  ShoppingCart,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 function MobileNav() {
@@ -54,6 +61,22 @@ function MobileNav() {
                     </span>
                   )} */}
               </Link>
+            </li>
+            <li className="">
+              {" "}
+              {token ? (
+                <Button variant="link" className="my-1" onClick={logout}>
+                  <LogOut />
+                  <h1 className="ml-2">Logout</h1>
+                </Button>
+              ) : (
+                <Button variant="link" className="my-1">
+                  <LogIn />
+                  <Link to="/signup">
+                    <h1 className="ml-2"> Sign In</h1>
+                  </Link>
+                </Button>
+              )}
             </li>
           </ul>
         </SheetContent>

@@ -10,54 +10,11 @@ import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 
 function SellerPanel() {
-  const { token } = useAuth();
+  const { token, logout } = useAuth();
 
   return (
     <div>
-      <ul className="mx-1 hidden md:flex items-start font-semibold gap-5">
-        {token ? (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="pr-2">
-                Sell on Acme
-                <ChevronDown className="mt-1" size={"24"} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className=" gap-3 rounded-lg mt-3 border-4 bg-gray-100 dark:bg-slate-950  m-w-20 transition-transform duration-300 ease-in-out transform">
-              <Link to="/myproducts">
-                <DropdownMenuItem>
-                  <Button
-                    variant={"ghost"}
-                    className="min-w-32 border-b-4"
-                    size={"sm"}
-                  >
-                    Manage Products
-                  </Button>
-                </DropdownMenuItem>
-              </Link>
-              <Link to="/addproducts">
-                <DropdownMenuItem>
-                  <Button
-                    variant={"ghost"}
-                    className="min-w-32 border-b-4"
-                    size={"sm"}
-                  >
-                    Help & Support
-                  </Button>
-                </DropdownMenuItem>
-              </Link>
-              <Link to="/deleteproducts">
-                <DropdownMenuItem>
-                  <Button variant={"ghost"} className="min-w-32" size={"sm"}>
-                    Manage Account
-                  </Button>
-                </DropdownMenuItem>
-              </Link>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ) : (
-          <></>
-        )}
+      <ul className="mx-2 hidden md:flex items-center gap-4 font-semibold mx-4">
         <li>
           {token ? (
             <Link to="/wishlist">
@@ -68,6 +25,64 @@ function SellerPanel() {
             </Link>
           ) : (
             <></>
+          )}
+        </li>
+        <li>
+          {token ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="pr-2">
+                  Sell on Acme
+                  <ChevronDown className="mt-1" size={"24"} />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className=" gap-3 rounded-lg mt-3 border-4 bg-gray-100 dark:bg-slate-950  m-w-20 transition-transform duration-300 ease-in-out transform">
+                <Link to="/myproducts">
+                  <DropdownMenuItem>
+                    <Button
+                      variant={"ghost"}
+                      className="min-w-32 border-b-4"
+                      size={"sm"}
+                    >
+                      Manage Products
+                    </Button>
+                  </DropdownMenuItem>
+                </Link>
+                <Link to="/manageaccount">
+                  <DropdownMenuItem>
+                    <Button variant={"ghost"} className="min-w-32" size={"sm"}>
+                      Manage Account
+                    </Button>
+                  </DropdownMenuItem>
+                </Link>
+                <Link to="/support">
+                  <DropdownMenuItem>
+                    <Button
+                      variant={"ghost"}
+                      className="min-w-32 border-b-4"
+                      size={"sm"}
+                    >
+                      Help & Support
+                    </Button>
+                  </DropdownMenuItem>
+                </Link>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <></>
+          )}
+        </li>
+
+        <li className="">
+          {" "}
+          {token ? (
+            <Button className="my-1" onClick={logout}>
+              Logout
+            </Button>
+          ) : (
+            <Button className="my-1">
+              <Link to="/signup">Sign In</Link>
+            </Button>
           )}
         </li>
       </ul>

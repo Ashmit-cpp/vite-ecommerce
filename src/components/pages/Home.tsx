@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
+import CarouselCard from "../Carousel";
 
 export default function Component() {
   const targetContainerRef = useRef<HTMLDivElement>(null);
@@ -38,38 +39,55 @@ export default function Component() {
             </div>
           </div>
         </section>
-        <section className="w-full py-12 md:py-24 lg:py-36">
-          <div className="container grid items-center justify-center gap-4 px-4 md:px-6">
+        <section className=" flex w-full py-8 md:py-16 lg:py-24">
+          <div className="container flex-grid items-center justify-center gap-4 px-4 md:px-6 ">
             <div className="space-y-3">
-              <h2
-                className="text-3xl font-bold tracking-tighter md:text-4xl"
-                ref={targetContainerRef}
-              >
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter">
                 Our Features
               </h2>
-              <p className="max-w-[600px] md:text-xl dark:text-gray-400 ">
+              <p className="max-w-[600px] text-sm md:text-base lg:text-xl dark:text-gray-400">
                 We provide the best mice for all your needs.
               </p>
             </div>
-            <div className="mt-8 grid gap-4 md:grid-cols-2 lg:gap-8 ">
-              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-2 ">
-                <h3 className="text-lg font-bold">High Quality</h3>
-                <p>Our mice are made with the highest quality materials.</p>
+            <div className="mt-2 grid gap-4 md:grid-cols-2 lg:gap-8 ">
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-2 md:p-4">
+                <h3 className="text-base md:text-lg lg:text-xl font-bold">
+                  High Quality
+                </h3>
+                <p className="text-xs md:text-sm lg:text-base">
+                  Our mice are made with the highest quality materials.
+                </p>
               </div>
 
-              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
-                <h3 className="text-lg font-bold">Fast</h3>
-                <p>Our mice are designed for speed and efficiency.</p>
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-2 md:p-4">
+                <h3 className="text-base md:text-lg lg:text-xl font-bold">
+                  Fast
+                </h3>
+                <p className="text-xs md:text-sm lg:text-base">
+                  Our mice are designed for speed and efficiency.
+                </p>
               </div>
-              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
-                <h3 className="text-lg font-bold">Reliable</h3>
-                <p>Our mice are built to last.</p>
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-2 md:p-4">
+                <h3 className="text-base md:text-lg lg:text-xl font-bold">
+                  Reliable
+                </h3>
+                <p className="text-xs md:text-sm lg:text-base">
+                  Our mice are built to last.
+                </p>
               </div>
-              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-4 ">
-                <h3 className="text-lg font-bold">Comfortable</h3>
-                <p>Our mice are designed for comfort.</p>
+              <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-2 md:p-4">
+                <h3 className="text-base md:text-lg lg:text-xl font-bold">
+                  Comfortable
+                </h3>
+                <p className="text-xs md:text-sm lg:text-base">
+                  Our mice are designed for comfort.
+                </p>
               </div>
             </div>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter mt-6 md:mt-8 p-4">
+              Explore New Products
+            </h2>
+            <CarouselCard />
           </div>
         </section>
       </main>

@@ -161,7 +161,7 @@ function MyProducts() {
                     >
                       <MinusCircle />
                     </Button> */}
-                    <h1 className="px-2 text-xl"> {item.stock}</h1>
+                    <h1 className=" text-xl"> {item.stock}</h1>
                     {/* <Button
                       className="p-2"
                       // onClick={() => handleIncreaseQuantity(item.id)}
@@ -170,7 +170,7 @@ function MyProducts() {
                     </Button> */}
                   </div>
                 </TableCell>
-                <TableCell className="px-2 text-xl">${item.price}</TableCell>
+                <TableCell className="text-xl">${item.price}</TableCell>
 
                 <TableCell className="text-right">
                   {" "}
