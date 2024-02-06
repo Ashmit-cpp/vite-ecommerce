@@ -1,13 +1,16 @@
 import { BookHeart, ChevronDown } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@radix-ui/react-dropdown-menu";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
+
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 
 function NavComponents() {
   const { token, logout } = useAuth();
@@ -29,49 +32,36 @@ function NavComponents() {
         </li>
         <li>
           {token ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="pr-2">
-                  Sell on Acme
-                  <ChevronDown className="mt-1" size={"24"} />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className=" gap-3 rounded-lg mt-3 border-4 bg-gray-100 dark:bg-slate-950  m-w-20 transition-transform duration-300 ease-in-out transform">
-                <Link to="/myproducts">
-                  <DropdownMenuItem>
-                    <Button
-                      variant={"ghost"}
-                      className="min-w-32 border-b-4"
-                      size={"sm"}
-                    >
-                      Manage Products
-                    </Button>
-                  </DropdownMenuItem>
-                </Link>
-                <Link to="/manageaccount">
-                  <DropdownMenuItem>
-                    <Button
-                      variant={"ghost"}
-                      className="min-w-32 border-b-4"
-                      size={"sm"}
-                    >
-                      Manage Account
-                    </Button>
-                  </DropdownMenuItem>
-                </Link>
-                <Link to="/contact">
-                  <DropdownMenuItem>
-                    <Button
-                      variant={"ghost"}
-                      className="min-w-32 border-b-4"
-                      size={"sm"}
-                    >
-                      Help & Support
-                    </Button>
-                  </DropdownMenuItem>
-                </Link>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            <NavigationMenu>
+              <NavigationMenuList>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Sell on Acme</NavigationMenuTrigger>
+                  <NavigationMenuContent className="flex flex-wrap align-middle justify-center">
+                    <NavigationMenuLink>
+                      <Link to="/myproducts">
+                        <Button variant={"ghost"} className="m-w-20 border-b-2">
+                          Manage Products
+                        </Button>
+                      </Link>
+                    </NavigationMenuLink>
+
+                    <NavigationMenuLink>
+                      <Link to="/manageaccount">
+                        <Button variant={"ghost"} className="m-w-20 border-b-2">
+                          Manage Account
+                        </Button>
+                      </Link>
+                    </NavigationMenuLink>
+                    <NavigationMenuLink>
+                      <Link to="/contact">
+                        <Button variant={"ghost"}>Help & Support</Button>
+                      </Link>
+                    </NavigationMenuLink>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                
+              </NavigationMenuList>
+            </NavigationMenu>
           ) : (
             <></>
           )}
