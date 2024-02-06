@@ -1,16 +1,14 @@
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Button } from "./ui/button";
 import {
-  BookHeart,
-  LogIn,
-  LogOut,
-  Menu,
-  Receipt,
-  ShoppingCart,
-} from "lucide-react";
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "./ui/button";
+import { BookHeart, LogIn, LogOut, Menu, TableProperties } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { Drawer, DrawerTrigger } from "./ui/drawer";
+
 function MobileNav() {
   const { token, logout } = useAuth();
 
@@ -28,10 +26,11 @@ function MobileNav() {
             {token ? (
               <li>
                 <Link to="/myproducts">
-                  <Button variant={"link"} className=" min-w-32">
-                    <Receipt />
-                    <h1 className="ml-2">My Products</h1>
-                  </Button>
+                  <SheetClose>
+                    <Button variant={"link"} className=" min-w-32">
+                      <TableProperties /> <h1 className="ml-2">My Products</h1>
+                    </Button>
+                  </SheetClose>
                 </Link>
               </li>
             ) : (
@@ -40,11 +39,13 @@ function MobileNav() {
             <li>
               {token ? (
                 <Link to="/wishlist">
-                  <Button variant={"link"} className="min-w-32">
-                    {" "}
-                    <BookHeart />
-                    <h1 className="ml-2">Wishlist</h1>
-                  </Button>
+                  <SheetClose>
+                    <Button variant={"link"} className="min-w-32">
+                      {" "}
+                      <BookHeart />
+                      <h1 className="ml-2">Wishlist</h1>
+                    </Button>
+                  </SheetClose>
                 </Link>
               ) : (
                 <></>
@@ -53,15 +54,19 @@ function MobileNav() {
             <li className="">
               {" "}
               {token ? (
-                <Button variant="link" className="my-1" onClick={logout}>
-                  <LogOut />
-                  <h1 className="ml-2">Logout</h1>
-                </Button>
+                <SheetClose>
+                  <Button variant="link" className="my-1" onClick={logout}>
+                    <LogOut />
+                    <h1 className="ml-2">Logout</h1>
+                  </Button>
+                </SheetClose>
               ) : (
                 <Button variant="link" className="my-1">
                   <LogIn />
                   <Link to="/signup">
-                    <h1 className="ml-2"> Sign In</h1>
+                    <SheetClose>
+                      <h1 className="ml-2"> Sign In</h1>
+                    </SheetClose>
                   </Link>
                 </Button>
               )}
