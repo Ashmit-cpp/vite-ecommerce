@@ -115,17 +115,6 @@ export default function Component(): JSX.Element {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="imageUrl">Image URL</Label>
-            <Input
-              id="imageUrl"
-              placeholder="Product Image URL"
-              required
-              type="url"
-              value={formData.imageUrl}
-              onChange={handleInputChange}
-            />
-          </div>
-          <div className="space-y-2">
             <Label htmlFor="stock">Stock</Label>
             <Input
               id="stock"
@@ -136,6 +125,18 @@ export default function Component(): JSX.Element {
               onChange={handleInputChange}
             />
           </div>
+          <div className="space-y-2">
+            <Label htmlFor="imageUrl">Image URL</Label>
+            <Input
+              id="imageUrl"
+              placeholder="Product Image URL"
+              required
+              type="url"
+              value={formData.imageUrl}
+              onChange={handleInputChange}
+            />
+          </div>
+
           {/* <div className="space-y-2">
             <Label htmlFor="categories">Categories</Label>
             <Input

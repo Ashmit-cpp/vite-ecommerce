@@ -13,14 +13,6 @@ import { PlusCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import DeleteProduct from "../buttons/DeleteProduct";
 import EditProduct from "../buttons/EditProduct";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from "@radix-ui/react-dialog";
-import { DialogHeader } from "../ui/dialog";
 
 interface Review {
   id: number;
@@ -46,6 +38,7 @@ function MyProducts() {
     id: number;
     name: string;
     description: string;
+    imageUrl: string;
     price: number;
     stock: number;
   }) => {
@@ -79,6 +72,7 @@ function MyProducts() {
         body: JSON.stringify({
           name: updatedData.name,
           description: updatedData.description,
+          imageUrl: updatedData.imageUrl,
           price: updatedData.price,
           stock: updatedData.stock,
         }),
@@ -86,13 +80,13 @@ function MyProducts() {
         .then((response) => response.json())
         .then((data) => {
           if (data) {
-            console.log("Product added:", data);
+            console.log("Product updated:", data);
           } else {
-            console.error("Adding product failed:", data.error);
+            console.error("updating product failed:", data.error);
           }
         })
         .catch((error) => {
-          console.error("Error while adding product:", error);
+          console.error("Error while updating product:", error);
         });
     }
   };
@@ -131,14 +125,17 @@ function MyProducts() {
   return (
     <div className="p-2">
       <div className="flex p-4 mt-4 justify-between">
-        <h1 className=" text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
+        <h1 className=" text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
           Manage your products
         </h1>
         <Link to="/addproducts">
           {" "}
           <Button>
             {" "}
-            <PlusCircle className="mr-2" /> Add Product
+            <PlusCircle className="mr-2" />
+            <h1 className="  text-xs tracking-tighter sm:text-base md:text-lg lg:text-xl/none">
+              Add Products
+            </h1>
           </Button>
         </Link>
       </div>

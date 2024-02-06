@@ -5,6 +5,11 @@ function ManageAccount() {
     console.error("JWT token not found");
     return <div>Error: JWT token not found</div>;
   }
+  return(
+    <div>
+      asdfsd
+    </div>
+  )
 }
 
 export default ManageAccount;

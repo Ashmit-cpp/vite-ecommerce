@@ -1,19 +1,27 @@
-import React, { FormEvent, useState } from "react";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@radix-ui/react-popover";
+import React, { useState } from "react";
 import { SquarePen } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogHeader,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogFooter,
+} from "../ui/alert-dialog";
+import { useToast } from "../ui/use-toast";
 
 interface EditProductProps {
   initialData: {
     id: number;
     name: string;
     description: string;
+    imageUrl: string;
     price: number;
     stock: number;
   };
@@ -21,6 +29,7 @@ interface EditProductProps {
     id: number;
     name: string;
     description: string;
+    imageUrl: string;
     price: number;
     stock: number;
   }) => void;
@@ -31,6 +40,7 @@ function EditProduct({ initialData, onUpdate }: EditProductProps) {
     id: initialData.id,
     name: initialData.name,
     description: initialData.description,
+    imageUrl: initialData.imageUrl,
     price: initialData.price,
     stock: initialData.stock,
   });
@@ -41,31 +51,38 @@ function EditProduct({ initialData, onUpdate }: EditProductProps) {
       [e.target.id]: e.target.value,
     });
   };
+  const { toast } = useToast();
 
   return (
     <div>
-      <Popover>
-        <PopoverTrigger>
+      <AlertDialog>
+        <AlertDialogTrigger>
           <Button variant={"outline"}>
             <SquarePen />
           </Button>{" "}
-        </PopoverTrigger>
-        <PopoverContent
-          align="end"
-          sideOffset={12}
-          className="w-50 p-2 rounded-xl  bg-secondary border-2 border-primary"
+        </AlertDialogTrigger>
+        <AlertDialogContent
+          // align="end"
+          // sideOffset={12}
+          className=" "
         >
-          <div className="grid gap-4">
-            <div className="space-y-2"></div>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Update your product</AlertDialogTitle>
+            <AlertDialogDescription>
+              Changes made below can not be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div>
+            <div className="space-y-1"></div>
             <form
-              className="space-y-4"
+              className="space-y-2"
               onSubmit={(e) => {
                 e.preventDefault();
                 onUpdate(formData);
               }}
             >
-              <div className="grid gap-2">
-                <div className="grid grid-cols-3 items-center gap-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-2 items-center gap-2">
                   <Label htmlFor="name">Name</Label>
                   <Input
                     id="name"
@@ -74,7 +91,7 @@ function EditProduct({ initialData, onUpdate }: EditProductProps) {
                     onChange={handleInputChange}
                   />
                 </div>
-                <div className="grid grid-cols-3 items-center gap-4">
+                <div className="grid grid-cols-2 items-center gap-2">
                   <Label htmlFor="description">Description</Label>
                   <Input
                     id="description"
@@ -83,30 +100,58 @@ function EditProduct({ initialData, onUpdate }: EditProductProps) {
                     onChange={handleInputChange}
                   />
                 </div>
-                <div className="grid grid-cols-3 items-center gap-4">
+
+                <div className="grid grid-cols-2 items-center gap-2">
                   <Label htmlFor="stock">Left Stock</Label>
                   <Input
                     id="stock"
+                    type="number"
                     value={formData.stock.toString()}
                     className="col-span-2 h-8"
                     onChange={handleInputChange}
                   />
                 </div>
-                <div className="grid grid-cols-3 items-center gap-4">
+                <div className="grid grid-cols-2 items-center gap-2">
                   <Label htmlFor="price">Price</Label>
                   <Input
                     id="price"
+                    type="number"
                     value={formData.price.toString()}
                     className="col-span-2 h-8"
                     onChange={handleInputChange}
                   />
                 </div>
               </div>
-              <Button type="submit">Update product</Button>
+              <div className="items-center py-2">
+                <Label htmlFor="imageUrl">
+                  {" "}
+                  <h1 className="pb-2">Enter Image URL</h1>
+                </Label>
+                <Input
+                  id="imageUrl"
+                  
+                  value={formData.imageUrl}
+                  className="col-span-2 h-8"
+                  onChange={handleInputChange}
+                />
+              </div>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  type="submit"
+                  onClick={() => {
+                    toast({
+                      title: "Product updated successfully.",
+                    });
+                  }}
+                >
+                  Update product
+                </AlertDialogAction>
+              </AlertDialogFooter>
             </form>
           </div>
-        </PopoverContent>
-      </Popover>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
