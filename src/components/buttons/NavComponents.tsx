@@ -1,4 +1,4 @@
-import { BookHeart, ChevronDown } from "lucide-react";
+import { BookHeart } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
@@ -59,7 +59,6 @@ function NavComponents() {
                     </NavigationMenuLink>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
-                
               </NavigationMenuList>
             </NavigationMenu>
           ) : (

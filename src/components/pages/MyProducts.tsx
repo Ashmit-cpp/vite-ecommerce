@@ -13,6 +13,7 @@ import { PlusCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import DeleteProduct from "../buttons/DeleteProduct";
 import EditProduct from "../buttons/EditProduct";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface Review {
   id: number;
@@ -145,7 +146,7 @@ function MyProducts() {
       {loading ? (
         <p>Loading...</p>
       ) : myproducts && myproducts.length > 0 ? (
-        <div className="min-h-screen m-2 max-h-[420px] flex flex-col items-center justify-center ">
+        <ScrollArea className="min-h-screen pr-4 m-2 max-h-[420px] flex flex-col items-center justify-center ">
           <Table className="rounded-3xl bg-slate-300 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">
             <TableHeader>
               <TableRow className=" text-sm  md:text-base lg:text-lg">
@@ -212,7 +213,7 @@ function MyProducts() {
               ))}
             </TableBody>
           </Table>
-        </div>
+        </ScrollArea>
       ) : (
         <p>No products found.</p>
       )}

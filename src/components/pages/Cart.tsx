@@ -170,7 +170,7 @@ const CartComponent: React.FC = () => {
   return (
     <div className="">
       {cartData && cartData.items.length > 0 ? (
-        <div className="m-2 max-h-[420px] flex flex-col items-center justify-center ">
+        <div className="m-2 max-h-[420px] flex flex-col items-center justify-center">
           <Table className="rounded-3xl bg-slate-300 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">
             <TableCaption>
               <div>

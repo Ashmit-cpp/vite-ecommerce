@@ -16,6 +16,7 @@ import DeleteProducts from "./components/pages/DeleteProducts";
 import ProductPage from "./components/pages/ProductPage";
 import Contact from "./components/pages/Contact";
 import ManageAccount from "./components/pages/ManageAccount";
+import { ScrollArea } from "./components/ui/scroll-area";
 
 function App() {
   return (

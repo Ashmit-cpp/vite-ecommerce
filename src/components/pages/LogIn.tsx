@@ -48,7 +48,7 @@ export default function Component(): JSX.Element {
       .then((response) => response.json())
       .then((data: any) => {
         if (data?.statusCode === 200) {
-          console.log("hehehe");
+          console.log("Logged in");
           localStorage.setItem("JWT", data?.accessToken);
           login(data?.accessToken);
           navigate("/");
