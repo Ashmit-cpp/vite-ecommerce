@@ -1,7 +1,16 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ProductItem from "../ProductItem";
 import CustomPagination from "../CustomPagination";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface Review {
   id: number;
@@ -27,6 +36,8 @@ function Searched() {
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortBy, setSortBy] = useState<string>(""); // State to hold sorting criteria
+  const [sortOrder, setSortOrder] = useState<string>("asc"); // State to hold sorting order
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
@@ -42,7 +53,7 @@ function Searched() {
         const response = await fetch(
           `http://localhost:3000/products/?searchTerm=${encodeURIComponent(
             params.search!
-          )}&page=${currentPage}&limit=4`
+          )}&page=${currentPage}&limit=4&sortBy=${sortBy}&sortOrder=${sortOrder}`
         );
 
         const data = await response.json();
@@ -70,16 +81,13 @@ function Searched() {
       fetchData();
       fetchTotalData();
     }
-  }, [params.search, currentPage]);
+  }, [params.search, currentPage, sortBy, sortOrder]);
 
   const itemsPerPage = 4;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
     <div className="min-h-screen flex flex-col">
-      <h2 className="p-2 ml-6 mt-4 font-bold">
-        Search Results for "{params.search}"
-      </h2>
       {searchResults.length === 0 ? (
         <div className="flex-grow flex flex-col items-center justify-center">
           <h1 className="text-foreground text-xl font-semibold tracking-tighter sm:text-2xl md:text-3xl lg:text-2xl/none">
@@ -88,7 +96,53 @@ function Searched() {
         </div>
       ) : (
         <>
-          <ul className="flex flex-wrap justify-evenly gap-4 py-4 px-4">
+          <div className="flex flex-wrap justify-between m-8">
+          <h1 className="text-foreground text-xl font-bold sm:text-2xl md:text-3xl lg:text-2xl/none">
+              Search Results for "{params.search}"</h1>
+            <div className="flex gap-2">
+              <Select
+                value={sortBy}
+                onValueChange={(
+                  value: string | ChangeEvent<HTMLSelectElement>
+                ) =>
+                  typeof value === "string"
+                    ? setSortBy(value)
+                    : setSortBy(value.target.value)
+                }
+              >
+                <SelectTrigger className="max-w-fit">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="name">Name</SelectItem>
+                    <SelectItem value="price">Price</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              <Select
+                value={sortOrder}
+                onValueChange={(
+                  value: string | ChangeEvent<HTMLSelectElement>
+                ) =>
+                  typeof value === "string"
+                    ? setSortOrder(value)
+                    : setSortOrder(value.target.value)
+                }
+              >
+                <SelectTrigger className="max-w-fit">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectItem value="asc">Ascending</SelectItem>
+                    <SelectItem value="desc">Descending</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          <ul className="flex flex-wrap justify-evenly gap-4 p-2">
             {searchResults.map((result) => (
               <ProductItem key={result.id} product={result} />
             ))}

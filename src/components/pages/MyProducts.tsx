@@ -144,9 +144,11 @@ function MyProducts() {
       <Separator />
 
       {loading ? (
-        <p>Loading...</p>
+        <h1 className="flex justify-center mt-24 min-h-screen text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
+          Loading...
+        </h1>
       ) : myproducts && myproducts.length > 0 ? (
-        <ScrollArea className="min-h-screen pr-4 m-2 max-h-[420px] flex flex-col items-center justify-center ">
+        <ScrollArea className="min-h-screen pr-4 m-2 max-h-[420px] flex flex-col items-center  ">
           <Table className="rounded-3xl bg-slate-300 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">
             <TableHeader>
               <TableRow className=" text-sm  md:text-base lg:text-lg">
@@ -215,7 +217,9 @@ function MyProducts() {
           </Table>
         </ScrollArea>
       ) : (
-        <p>No products found.</p>
+        <h1 className="flex justify-center mt-24 min-h-screen text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
+          No products Added.
+        </h1>
       )}
     </div>
   );

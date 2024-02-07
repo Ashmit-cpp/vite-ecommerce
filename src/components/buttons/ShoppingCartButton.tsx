@@ -15,7 +15,8 @@ import {
 } from "../ui/drawer";
 import CartComponent from "../pages/Cart";
 
-function ShoppingCartButton() {``
+function ShoppingCartButton() {
+  ``;
   const notificationCount = useSelector(
     (state: RootState) => state.notification.notificationCount
   );
@@ -48,9 +49,9 @@ function ShoppingCartButton() {``
         <DrawerContent className="">
           <DrawerHeader>
             <DrawerTitle>
-              <h1 className="text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
+              <div className="flex text-slate-700 dark:text-slate-200 opacity-75 text-xl font-semibold tracking-tighter sm:text-4xl md:text-3xl lg:text-4xl/none">
                 Your Cart
-              </h1>{" "}
+              </div>{" "}
             </DrawerTitle>
             <DrawerDescription>Following are the items:</DrawerDescription>
           </DrawerHeader>

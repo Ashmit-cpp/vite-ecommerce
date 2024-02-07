@@ -40,10 +40,18 @@ interface UserInfo {
 }
 
 function ManageAccount(): JSX.Element {
-  const token: string | null = localStorage.getItem("JWT");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const { login } = useAuth();
+
+  const token: string | null = localStorage.getItem("JWT");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
+  const [formData, setFormData] = useState({
+    id: 5,
+    username: "",
+    email: "",
+    password: "",
+  });
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFormData({
       ...formData,
@@ -82,14 +90,6 @@ function ManageAccount(): JSX.Element {
   useEffect(() => {
     fetchUserInfo();
   }, [token]);
-
-  const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
-  const [formData, setFormData] = useState({
-    id: 5,
-    username: "",
-    email: "",
-    password: "",
-  });
 
   const onSubmit = async (updatedData: {
     id: number;
@@ -223,7 +223,6 @@ function ManageAccount(): JSX.Element {
                     type="password"
                     onChange={handleInputChange}
                   ></Input>
-
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
                     <AlertDialogAction type="submit">Confirm</AlertDialogAction>
@@ -233,7 +232,6 @@ function ManageAccount(): JSX.Element {
             </form>
           </div>
         </CardContent>
-        <CardContent></CardContent>
       </Card>
     </div>
   );

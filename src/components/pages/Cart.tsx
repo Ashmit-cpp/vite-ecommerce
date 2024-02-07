@@ -132,7 +132,7 @@ const CartComponent: React.FC = () => {
       }
 
       const responseData = await response.json();
-      console.log("Item added to cart:", responseData);
+      // console.log("Item added to cart:", responseData);
       fetchCartData();
     } catch (error) {
       console.error("Error adding item to cart:");

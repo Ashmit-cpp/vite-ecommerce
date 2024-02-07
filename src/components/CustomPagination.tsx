@@ -81,7 +81,7 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
   };
 
   return (
-    <Pagination className="p-2 cursor-pointer">
+    <Pagination className="p-4 cursor-pointer">
       <PaginationContent>
         {currentPage !== 1 && (
           <PaginationPrevious onClick={handlePreviousPage} />

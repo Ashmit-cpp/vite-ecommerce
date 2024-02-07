@@ -26,7 +26,7 @@ interface ProductItemProps {
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
   return (
-    <ul className="flex flex-wrap justify-evenly gap-2 py-4 ">
+    <ul className="flex flex-wrap justify-evenly gap-2 ">
       <Card key={product.id} className="border mb-2 ">
         <CardContent className="flex flex-col flex-wrap ">
           <div className="p-2 mr-4  ">
@@ -41,8 +41,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
           <h3 className="text-lg font-bold">{product.name}</h3>
           <p>{product.description}</p>
           <p className="text-green-600 font-bold">${product.price}</p>
-          <p>Stock: {product.stock}</p>
-          <p>Created By: {product.createdBy}</p>
+          <p>In Stock: {product.stock} units</p>
           <div>
             <AddToWishlist
               product={{
