@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 
@@ -11,6 +12,7 @@ interface AddToWishlistProps {
 
 function AddToWishlist({ product }: AddToWishlistProps) {
   const { toast } = useToast();
+  const [added, setAdded] = useState(false);
 
   const handleAddToWishlist = () => {
     const token = localStorage.getItem("JWT");
@@ -27,6 +29,7 @@ function AddToWishlist({ product }: AddToWishlistProps) {
     })
       .then((response) => {
         console.log("Wishlist item added successfully");
+        setAdded(true);
       })
       .catch((error) => {
         console.error("Error adding item to wishlist", error);
@@ -39,14 +42,19 @@ function AddToWishlist({ product }: AddToWishlistProps) {
       className="mt-2 mr-4 p-2"
       onClick={() => {
         handleAddToWishlist();
-        toast({
-          title: "Added to Wishlist",
-          description: product.name + " Added",
-        });
+        {
+          !added
+            ? toast({
+                title: "Added to Wishlist",
+                description: product.name + " Added",
+              })
+            : toast({
+                title: product.name + " Already Added",
+              });
+        }
       }}
     >
-      {" "}
-      Add to wishlist
+      {added ? "Added to Wishlist" : "Add to Wishlist"}
     </Button>
   );
 }

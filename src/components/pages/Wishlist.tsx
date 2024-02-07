@@ -114,7 +114,7 @@ function Wishlist() {
                 </div>
                 <h3 className="text-lg font-bold">{product.name}</h3>
                 <p>{product.description}</p>
-                <p className="text-green-600 font-bold">${product.price}</p>
+                <p className="text-green-600 font-bold">₹{product.price}</p>
                 <p>Stock: {product.stock}</p>
                 <p>Created By: {product.createdBy}</p>
                 <AddToCart

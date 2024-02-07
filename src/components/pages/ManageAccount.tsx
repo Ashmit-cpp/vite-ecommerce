@@ -40,17 +40,11 @@ interface UserInfo {
 }
 
 function ManageAccount(): JSX.Element {
-  const navigate = useNavigate();
-  const { login } = useAuth();
-
   const token: string | null = localStorage.getItem("JWT");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [formData, setFormData] = useState({
     id: 5,
     username: "",
-    email: "",
-    password: "",
   });
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setFormData({
@@ -64,14 +58,11 @@ function ManageAccount(): JSX.Element {
       console.error("JWT token not found");
       return;
     }
-
-    // Decode the JWT token
     const decodedToken: DecodedToken = jwtDecode(token);
-    // Extract email from the decoded token
-    const { email } = decodedToken;
+    const { sub } = decodedToken;
     try {
       const response = await fetch(
-        `http://localhost:3000/users/email/${email}`
+        `http://localhost:3000/users/findByUserId/${sub}`
       );
       const user = await response.json();
       // console.log(user);
@@ -79,8 +70,6 @@ function ManageAccount(): JSX.Element {
       setFormData({
         id: user.id,
         username: user.username,
-        email: user.email,
-        password: "",
       });
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -91,13 +80,7 @@ function ManageAccount(): JSX.Element {
     fetchUserInfo();
   }, [token]);
 
-  const onSubmit = async (updatedData: {
-    id: number;
-    username: string;
-    email: string;
-    password: string;
-  }) => {
-    setUserInfo({ ...updatedData });
+  const onSubmit = async (updatedData: { id: number; username: string }) => {
     const token = localStorage.getItem("JWT");
     if (!token) {
       console.error("JWT token not found in localStorage");
@@ -112,7 +95,6 @@ function ManageAccount(): JSX.Element {
       },
       body: JSON.stringify({
         username: updatedData.username,
-        email: updatedData.email,
       }),
     })
       .then((response) => response.json())
@@ -126,34 +108,6 @@ function ManageAccount(): JSX.Element {
       .catch((error) => {
         console.error("Error while updating user:", error);
       });
-
-    fetch("http://localhost:3000/auth/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: formData.email,
-        password: formData.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data: any) => {
-        if (data?.statusCode === 200) {
-          localStorage.setItem("JWT", data?.accessToken);
-          login(data?.accessToken);
-          console.log("working");
-          navigate("/");
-        } else if (data?.statusCode === 404 || data?.statusCode === 401) {
-          setErrorMessage(data?.message);
-        } else {
-          setErrorMessage("Unexpected error occurred");
-        }
-      })
-      .catch((error) => {
-        console.error("Error during login:", error);
-        setErrorMessage("Unexpected error occurred");
-      });
   };
   return (
     <div className="min-h-screen m-4">
@@ -164,12 +118,18 @@ function ManageAccount(): JSX.Element {
           </CardTitle>
           <CardDescription>
             <h1 className="text-sm md:text-lg lg:text-2xl">
-              User Information:
+              Your Information:
             </h1>
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex justify-center align-middle gap-2 ">
+          <div className="flex justify-between align-middle gap-2 ">
+            <div className="p-2">
+              <h1 className="font-semibold text-sm md:text-lg lg:text-xl">
+                Your email:
+              </h1>
+              <h1>{userInfo?.email}</h1>
+            </div>
             <form
               className="space-y-2"
               onSubmit={(e) => {
@@ -183,25 +143,11 @@ function ManageAccount(): JSX.Element {
                     htmlFor="username"
                     className="text-sm md:text-lg lg:text-xl"
                   >
-                    Username
+                    Update Username:
                   </Label>
                   <Input
                     id="username"
                     value={formData.username}
-                    className="p-2 mt-2 h-8"
-                    onChange={handleInputChange}
-                  />
-                </div>
-                <div className="grip grid-cols-2">
-                  <Label
-                    htmlFor="email"
-                    className="text-sm md:text-lg lg:text-xl"
-                  >
-                    Email
-                  </Label>
-                  <Input
-                    id="email"
-                    value={formData.email}
                     className="p-2 mt-2 h-8"
                     onChange={handleInputChange}
                   />

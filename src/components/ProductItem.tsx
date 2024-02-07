@@ -40,7 +40,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
 
           <h3 className="text-lg font-bold">{product.name}</h3>
           <p>{product.description}</p>
-          <p className="text-green-600 font-bold">${product.price}</p>
+          <p className="text-green-600 font-bold"> ₹{product.price}</p>
           <p>In Stock: {product.stock} units</p>
           <div>
             <AddToWishlist

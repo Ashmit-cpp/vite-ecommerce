@@ -230,7 +230,7 @@ const CartComponent: React.FC = () => {
                   </TableCell>
 
                   <TableCell className="text-center p-2 font-semibold text-xs md:text-base lg:text-lg xl:text-lg">
-                    ${item.product.price} X {item.quantity}= ${item.totalPrice}
+                    ₹{item.product.price} X {item.quantity}= ₹{item.totalPrice}
                   </TableCell>
                   <TableCell className="text-right text-xs sm:sm md:text-md lg:text-lg xl:text-lg">
                     <Button

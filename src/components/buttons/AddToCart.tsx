@@ -2,6 +2,7 @@ import { useToast } from "../ui/use-toast";
 import { useDispatch } from "react-redux";
 import { incrementNotification } from "@/redux/slices/notificationSlice";
 import { Button } from "../ui/button";
+import { useState } from "react";
 
 interface AddToCartProps {
   product: {
@@ -14,6 +15,8 @@ interface AddToCartProps {
 function AddToCart({ product }: AddToCartProps) {
   const { toast } = useToast();
   const dispatch = useDispatch();
+  const [added, setAdded] = useState(false);
+
   const handleAddToCart = async (productId: number, productPrice: number) => {
     const token = localStorage.getItem("JWT");
 
@@ -22,7 +25,7 @@ function AddToCart({ product }: AddToCartProps) {
       return;
     }
 
-    const quantity = 1; // replace with the desired quantity
+    const quantity = 1;
 
     const apiUrl = `http://localhost:3000/cart/add/${productId}`;
     const requestBody = {
@@ -48,6 +51,7 @@ function AddToCart({ product }: AddToCartProps) {
 
       const responseData = await response.json();
       dispatch(incrementNotification());
+      setAdded(true);
 
       console.log("Item added to cart:", responseData);
     } catch (error) {
@@ -67,7 +71,7 @@ function AddToCart({ product }: AddToCartProps) {
       }}
     >
       {" "}
-      Add to Cart
+      {added ? "Added to Cart" : "Add to Cart"}
     </Button>
   );
 }

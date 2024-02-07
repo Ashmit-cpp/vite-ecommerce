@@ -134,7 +134,7 @@ function MyProducts() {
           <Button>
             {" "}
             <PlusCircle className="mr-2" />
-            <h1 className="  text-xs tracking-tighter sm:text-base md:text-lg lg:text-xl/none">
+            <h1 className=" text-xs sm:text-base md:text-lg lg:text-xl/none">
               Add Products
             </h1>
           </Button>
@@ -196,7 +196,7 @@ function MyProducts() {
                   <TableCell className="text-xl">
                     <h1 className="text-center p-1 text-base md:p-2 lg:text-lg xl:text-lg">
                       {" "}
-                      ${item.price}
+                      ₹{item.price}
                     </h1>
                   </TableCell>
 

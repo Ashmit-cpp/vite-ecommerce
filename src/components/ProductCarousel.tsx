@@ -70,7 +70,7 @@ const ProductCarousel: React.FC = () => {
                         {product.name}
                       </h2>
                       <p className="text-sm mb-2">{product.description}</p>
-                      <p className="text-lg">${product.price.toFixed(2)}</p>
+                      <p className="text-lg text-green-600"> ₹{product.price.toFixed(2)}</p>
                     </div>
                   </CardContent>
                 </Card>

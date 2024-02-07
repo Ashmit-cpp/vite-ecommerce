@@ -16,7 +16,7 @@ const Header = () => {
       className={`sticky top-0 z-50 transition-shadow  ${
         scrollPosition > 0
           ? "bg-secondary/90"
-          : "bg-secondary/30 shadow-xl shadow-primary/20"
+          : "bg-secondary/60 shadow-xl shadow-primary/20"
       }`}
     >
       <div className="px-1 py-2 border-b opacity-95 lg:px-4">
