@@ -12,7 +12,7 @@ import { Button } from "../ui/button";
 function Contact() {
   return (
     <div>
-      <Card className="p-4 my-10 mx-auto max-w-[750px] space-y-2 opacity-80">
+      <Card className="p-4 my-24 mx-auto max-w-[750px] space-y-2 opacity-80">
         <CardHeader className="space-y-2 text-center">
           <CardTitle className="text-2xl font-bold">Contact us</CardTitle>
           <CardDescription>Fill the following form</CardDescription>

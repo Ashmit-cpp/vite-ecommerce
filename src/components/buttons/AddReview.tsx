@@ -61,6 +61,10 @@ const AddReviewButton: React.FC<Props> = ({ productId, onSuccess }) => {
       setReviewText("");
       setReviewRating(0);
       onSuccess();
+      // Show toast only when the response is successful
+      toast({
+        title: "Review added",
+      });
     } catch (error) {
       console.error("Error adding review:", error);
     }
@@ -89,16 +93,7 @@ const AddReviewButton: React.FC<Props> = ({ productId, onSuccess }) => {
         }}
       />
       <PopoverClose>
-        <Button
-          onClick={() => {
-            AddReview();
-            toast({
-              title: "Review added",
-            });
-          }}
-        >
-          Submit
-        </Button>
+        <Button onClick={AddReview}>Submit</Button>
       </PopoverClose>
     </div>
   );

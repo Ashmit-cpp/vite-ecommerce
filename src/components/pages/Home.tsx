@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
 import CarouselCard from "../ProductCarousel";
+import { Separator } from "../ui/separator";
 
 export default function Component() {
   const targetContainerRef = useRef<HTMLDivElement>(null);
@@ -12,7 +13,7 @@ export default function Component() {
     <div className="mt-16 flex flex-col justify-center min-h-screen   ">
       <main className="flex-1 	 ">
         <section className="w-full py-48 md:py-52 lg:py-48">
-          <div className="container px-4 md:px-6">
+          <div className="px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-4">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
@@ -52,7 +53,7 @@ export default function Component() {
                 We provide the best mice for all your needs.
               </p>
             </div>
-            <div className="mt-2 grid gap-4 md:grid-cols-2 lg:gap-8 ">
+            <div className="mt-8 grid gap-4 md:grid-cols-2 lg:gap-8 ">
               <div className="bg-gray-200 bg-opacity-20 flex flex-col space-y-2 border-gray-300 border-solid border-spacing-1 border-2 p-2 md:p-4">
                 <h3 className="text-base md:text-lg lg:text-xl font-bold">
                   High Quality
@@ -87,9 +88,10 @@ export default function Component() {
                 </p>
               </div>
             </div>
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter mt-6 md:mt-8 p-4">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tighter mt-6 md:mt-8 ">
               Explore New Products
             </h2>
+            <Separator className="mt-2 mb-8" />
             <CarouselCard />
           </div>
         </section>

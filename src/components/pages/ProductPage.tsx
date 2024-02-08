@@ -65,8 +65,9 @@ const ProductPage: React.FC = () => {
         // Handle the error as needed (show a message, etc.)
         return;
       }
-
-      console.log("Review added successfully!");
+      toast({
+        title: "Review deleted successfully.",
+      });
       setReviewText("");
       setReviewRating(0);
       fetchData();
@@ -127,9 +128,6 @@ const ProductPage: React.FC = () => {
                               size={"icon"}
                               onClick={() => {
                                 handleDeleteReview();
-                                toast({
-                                  title: "Review deleted successfully.",
-                                });
                               }}
                             >
                               <Trash2 />

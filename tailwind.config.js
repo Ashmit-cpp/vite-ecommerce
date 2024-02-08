@@ -73,6 +73,7 @@ module.exports = {
       },
       backgroundImage: {
         "hero-pattern": "url('/public/topography.svg')",
+        "hero-patterndark": "url('/public/topographyDark.svg')",
       },
     },
   },

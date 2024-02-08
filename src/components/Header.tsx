@@ -13,10 +13,10 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-shadow  ${
+      className={`sticky top-0 z-50 border-b-2 border-primary/30 transition-shadow  ${
         scrollPosition > 0
           ? "bg-secondary/90"
-          : "bg-secondary/60 shadow-xl shadow-primary/20"
+          : "bg-secondary/50 shadow-xl shadow-primary/20"
       }`}
     >
       <div className="px-1 py-2 border-b opacity-95 lg:px-4">

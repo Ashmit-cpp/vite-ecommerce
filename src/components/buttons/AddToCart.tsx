@@ -56,6 +56,10 @@ function AddToCart({ product }: AddToCartProps) {
       }
 
       const responseData = await response.json();
+      toast({
+        title: "Added to Cart",
+        description: product.name + " Added",
+      });
       dispatch(incrementNotification());
       setAdded(true);
 
@@ -73,10 +77,6 @@ function AddToCart({ product }: AddToCartProps) {
           className="mt-2 mr-2 p-2"
           onClick={() => {
             handleAddToCart(product.id, product.price);
-            toast({
-              title: "Added to Cart",
-              description: product.name + " Added",
-            });
           }}
         >
           {" "}

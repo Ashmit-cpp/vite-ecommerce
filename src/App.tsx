@@ -12,7 +12,6 @@ import Wishlist from "./components/pages/Wishlist";
 import { Toaster } from "./components/ui/toaster";
 import AddProduct from "./components/pages/AddProduct";
 import MyProducts from "./components/pages/MyProducts";
-import DeleteProducts from "./components/pages/DeleteProducts";
 import ProductPage from "./components/pages/ProductPage";
 import Contact from "./components/pages/Contact";
 import ManageAccount from "./components/pages/ManageAccount";
@@ -22,15 +21,14 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-          <div className=" bg-hero-pattern bg-cove  ">
-            <div className="backdrop-blur-sm backdrop-brightness-80 dark:backdrop-brightness-95">
+          <div className="bg-hero-pattern dark:bg-hero-patterndark">
+            <div className="backdrop-blur-sm backdrop-brightness-80">
               <Header />
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/addproducts" element={<AddProduct />} />
                 <Route path="/myproducts" element={<MyProducts />} />
-                <Route path="/deleteproducts" element={<DeleteProducts />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/login" element={<SignIn />} />
                 <Route path="/contact" element={<Contact />} />

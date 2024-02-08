@@ -5,7 +5,14 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "./ui/button";
-import { BookHeart, LogIn, LogOut, Menu, TableProperties } from "lucide-react";
+import {
+  BookHeart,
+  LogIn,
+  LogOut,
+  Menu,
+  SquareUserRound,
+  TableProperties,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -23,19 +30,6 @@ function MobileNav() {
         <SheetContent className="flex flex-col gap-6 bg:white md:hidden">
           <ul className="flex items-center gap-5 md:flex-between m-w-[90px] md:flex-row flex-col ">
             <h1 className="font-semibold text-xl ">Navigate</h1>
-            {token ? (
-              <li>
-                <Link to="/myproducts">
-                  <SheetClose>
-                    <Button variant={"link"} className=" min-w-32">
-                      <TableProperties /> <h1 className="ml-2">My Products</h1>
-                    </Button>
-                  </SheetClose>
-                </Link>
-              </li>
-            ) : (
-              <></>
-            )}
             <li>
               {token ? (
                 <Link to="/wishlist">
@@ -51,6 +45,33 @@ function MobileNav() {
                 <></>
               )}
             </li>
+            {token ? (
+              <li>
+                <Link to="/myproducts">
+                  <SheetClose>
+                    <Button variant={"link"} className=" min-w-32">
+                      <TableProperties /> <h1 className="ml-2">My Products</h1>
+                    </Button>
+                  </SheetClose>
+                </Link>
+              </li>
+            ) : (
+              <></>
+            )}
+
+            {token ? (
+              <li>
+                <Link to="/manageaccount">
+                  <SheetClose>
+                    <Button variant={"link"} className=" min-w-32">
+                      <SquareUserRound /> <h1 className="ml-2">My Account</h1>
+                    </Button>
+                  </SheetClose>
+                </Link>
+              </li>
+            ) : (
+              <></>
+            )}
             <li className="">
               {" "}
               {token ? (

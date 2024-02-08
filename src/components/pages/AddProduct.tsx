@@ -65,6 +65,9 @@ export default function Component(): JSX.Element {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
+          toast({
+            title: "Product created",
+          });
           console.log("Product added:", data);
         } else {
           console.error("Adding product failed:", data.error);
@@ -76,7 +79,7 @@ export default function Component(): JSX.Element {
   };
 
   return (
-    <Card className="p-4 my-10 mx-auto max-w-[750px] space-y-2 opacity-80">
+    <Card className="p-4 my-16 mx-auto max-w-[750px] space-y-2 opacity-80">
       <CardHeader className="space-y-2 text-center">
         <CardTitle className="text-2xl font-bold">Add Product</CardTitle>
         <CardDescription>Enter details about your product</CardDescription>
@@ -157,15 +160,7 @@ export default function Component(): JSX.Element {
             />
           </div> */}
 
-          <Button
-            className="w-full"
-            type="submit"
-            onClick={() => {
-              toast({
-                title: "Product created",
-              });
-            }}
-          >
+          <Button className="w-full" type="submit">
             Add product
           </Button>
         </form>

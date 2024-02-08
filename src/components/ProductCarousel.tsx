@@ -10,7 +10,6 @@ import {
 } from "./ui/CarouselCard";
 import { getURL } from "@/lib/helper";
 
-
 interface Product {
   id: number;
   name: string;
@@ -42,27 +41,22 @@ const ProductCarousel: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="mx-8">
       <Carousel
         opts={{
-          align: "center",
           loop: true,
         }}
-        className="w-full max-w"
       >
-        <CarouselContent className="-ml-1">
+        <CarouselContent>
           {products.map((product) => (
-            <CarouselItem
-              key={product.id}
-              className="pl-1 md:basis-1/2 lg:basis-1/3"
-            >
+            <CarouselItem key={product.id} className=" lg:basis-1/3">
               <div className="p-1">
                 <Card>
                   <CardContent className="flex flex-col items-center justify-center p-6">
                     <img
                       src={product.imageUrl}
                       alt={product.name}
-                      className="mb-4 object-cover max-w-full cursor-pointer"
+                      className="mb-4 max-w-full cursor-pointer"
                       onClick={() =>
                         window.open(`/product/${product.id}`, "_blank")
                       }

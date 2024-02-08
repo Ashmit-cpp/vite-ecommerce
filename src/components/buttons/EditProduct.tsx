@@ -15,7 +15,6 @@ import {
   AlertDialogTitle,
   AlertDialogFooter,
 } from "../ui/alert-dialog";
-import { useToast } from "../ui/use-toast";
 
 interface EditProductProps {
   initialData: {
@@ -52,7 +51,6 @@ function EditProduct({ initialData, onUpdate }: EditProductProps) {
       [e.target.id]: e.target.value,
     });
   };
-  const { toast } = useToast();
 
   return (
     <div>
@@ -62,11 +60,7 @@ function EditProduct({ initialData, onUpdate }: EditProductProps) {
             <SquarePen />
           </Button>{" "}
         </AlertDialogTrigger>
-        <AlertDialogContent
-          // align="end"
-          // sideOffset={12}
-          className=" "
-        >
+        <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Update your product</AlertDialogTitle>
             <AlertDialogDescription>
@@ -137,14 +131,7 @@ function EditProduct({ initialData, onUpdate }: EditProductProps) {
               </div>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction
-                  type="submit"
-                  onClick={() => {
-                    toast({
-                      title: "Product updated successfully.",
-                    });
-                  }}
-                >
+                <AlertDialogAction type="submit">
                   Update product
                 </AlertDialogAction>
               </AlertDialogFooter>

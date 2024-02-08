@@ -10,18 +10,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
-} from "../ui/alert-dialog";
+
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
 
 interface DecodedToken {
   sub: number;
@@ -38,6 +29,7 @@ interface UserInfo {
 }
 
 function ManageAccount(): JSX.Element {
+  const { toast } = useToast();
   const token: string | null = localStorage.getItem("JWT");
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null);
   const [formData, setFormData] = useState({
@@ -96,6 +88,9 @@ function ManageAccount(): JSX.Element {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
+          toast({
+            title: "Username updated successfully.",
+          });
           console.log("user updated:", data);
         } else {
           console.error("updating user failed:", data.error);
@@ -106,9 +101,9 @@ function ManageAccount(): JSX.Element {
       });
   };
   return (
-    <div className="min-h-screen m-4">
-      <Card className="p-2 my-20 mx-auto max-w-[600px] opacity-80 ">
-        <CardHeader className="text-center">
+    <div className="flex justify-center align-middle min-h-screen m-4">
+      <Card className="p-2 my-20 mx-auto opacity-90 max-h-[280px] ">
+        <CardHeader>
           <CardTitle className="text-2xl font-bold">
             Manage your Profile
           </CardTitle>
@@ -119,12 +114,14 @@ function ManageAccount(): JSX.Element {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex justify-between align-middle gap-2 ">
-            <div className="p-2">
-              <h1 className="font-semibold text-sm md:text-lg lg:text-xl">
+          <div className="flex-col justify-between align-middle gap-2 ">
+            <div className="flex p-2">
+              <h1 className="font-semibold text-sm md:text-lg lg:text-xl mr-4">
                 Your email:
               </h1>
-              <h1>{userInfo?.email}</h1>
+              <h1 className=" text-sm md:text-lg lg:text-xl">
+                {userInfo?.email}
+              </h1>
             </div>
             <form
               className="space-y-2"
@@ -133,44 +130,23 @@ function ManageAccount(): JSX.Element {
                 onSubmit(formData);
               }}
             >
-              <div className="flex items-center gap-8">
-                <div className="grip grid-cols-2 my-2">
+              <div className="flex items-center gap-2">
+                <div className="flex my-2">
                   <Label
                     htmlFor="username"
-                    className="text-sm md:text-lg lg:text-xl"
+                    className="mr-4 m-2 mt-3 text-sm md:text-lg lg:text-xl "
                   >
-                    Update Username:
+                    Username:
                   </Label>
                   <Input
                     id="username"
                     value={formData.username}
-                    className="p-2 mt-2 h-8"
+                    className="m-2    text-sm md:text-lg lg:text-lg"
                     onChange={handleInputChange}
                   />
                 </div>
+                <Button type="submit">Update</Button>
               </div>
-              <AlertDialog>
-                <AlertDialogTrigger>
-                  <Button className="h-8">Update</Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Confirmation</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      Enter your password to perform this action
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <Input
-                    id="password"
-                    type="password"
-                    onChange={handleInputChange}
-                  ></Input>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction type="submit">Confirm</AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
             </form>
           </div>
         </CardContent>

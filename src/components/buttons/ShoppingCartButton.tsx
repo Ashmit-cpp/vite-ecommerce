@@ -16,7 +16,6 @@ import {
 import CartComponent from "../pages/Cart";
 
 function ShoppingCartButton() {
-  ``;
   const notificationCount = useSelector(
     (state: RootState) => state.notification.notificationCount
   );
@@ -39,7 +38,7 @@ function ShoppingCartButton() {
             >
               <ShoppingCart />
               {notificationCount > 0 && (
-                <span className="absolute top-0 right-0 bg-primary text-white rounded-full px-2 py-1 text-xs -mt-2 -mr-2">
+                <span className="absolute top-0 right-0 bg-primary text-white rounded-full px-2 py-1 text-xs -mt-2 -mr-2 ">
                   {notificationCount}
                 </span>
               )}

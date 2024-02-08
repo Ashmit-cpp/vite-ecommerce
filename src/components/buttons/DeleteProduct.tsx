@@ -40,6 +40,10 @@ function DeleteProduct({ id, name, onDelete }: DeleteProductProps) {
 
       if (response.ok) {
         onDelete();
+        toast({
+          title: "Item permanently deleted",
+          description: `${name} deleted`,
+        });
 
         console.log("Product deleted successfully");
       } else {
@@ -71,10 +75,6 @@ function DeleteProduct({ id, name, onDelete }: DeleteProductProps) {
             <AlertDialogAction
               onClick={() => {
                 handleDeleteProduct();
-                toast({
-                  title: "Item permanently deleted",
-                  description: `${name} deleted`,
-                });
               }}
             >
               Continue <Trash2 className="ml-1" />

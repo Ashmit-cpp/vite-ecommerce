@@ -15,6 +15,7 @@ import DeleteProduct from "../buttons/DeleteProduct";
 import EditProduct from "../buttons/EditProduct";
 import { ScrollArea } from "../ui/scroll-area";
 import { getURL } from "@/lib/helper";
+import { useToast } from "../ui/use-toast";
 
 interface Review {
   id: number;
@@ -34,6 +35,8 @@ interface Product {
 }
 
 function MyProducts() {
+  const { toast } = useToast();
+
   const [myproducts, setmyProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const updateProduct = (updatedData: {
@@ -82,6 +85,9 @@ function MyProducts() {
         .then((response) => response.json())
         .then((data) => {
           if (data) {
+            toast({
+              title: "Product updated successfully.",
+            });
             console.log("Product updated:", data);
           } else {
             console.error("updating product failed:", data.error);
