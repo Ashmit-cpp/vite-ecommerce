@@ -46,42 +46,6 @@ const ProductPage: React.FC = () => {
     const decodedToken: DecodedToken = jwtDecode(token);
     sub = decodedToken;
   }
-  const AddReview = async () => {
-    try {
-      if (!reviewText || !reviewRating) {
-        console.error("Please provide both review text and rating.");
-        return;
-      }
-
-      const response = await fetch(
-        `${getURL()}/products/addreview/${params.id}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            text: reviewText,
-            rating: reviewRating,
-          }),
-        }
-      );
-
-      if (!response.ok) {
-        console.error("Error adding review:", response.statusText);
-        // Handle the error as needed (show a message, etc.)
-        return;
-      }
-
-      console.log("Review added successfully!");
-      setReviewText("");
-      setReviewRating(0);
-      fetchData();
-    } catch (error) {
-      console.error("Error adding review:", error);
-    }
-  };
 
   const handleDeleteReview = async () => {
     try {
@@ -129,9 +93,11 @@ const ProductPage: React.FC = () => {
     <div className="min-h-screen flex justify-center align-middle">
       <div className="my-20">
         {loading ? (
-          <p>Loading...</p>
+          <h1 className="flex justify-center mt-24 min-h-screen text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
+            Loading...
+          </h1>
         ) : product ? (
-          <div className="m-4 bg-white dark:bg-slate-800 border-2 border-primary p-8 md:flex">
+          <div className="m-8 bg-white dark:bg-slate-800 border-2 border-primary p-8 md:flex">
             <div className="p-8 mr-4 border-4 border-solid bg-white ">
               <img src={product.imageUrl} alt={product.name} width={200} />
             </div>
@@ -198,13 +164,14 @@ const ProductPage: React.FC = () => {
                     <PopoverTrigger asChild>
                       <Button className="my-2">Add Review</Button>
                     </PopoverTrigger>
-                    <PopoverContent sideOffset={4}>
-                      <div className="p-2 rounded-xl">
-                        <AddReviewButton
-                          productId={product.id}
-                          onSuccess={fetchData}
-                        />
-                      </div>
+                    <PopoverContent
+                      sideOffset={4}
+                      className="p-4 rounded-xl border-2 border-primary "
+                    >
+                      <AddReviewButton
+                        productId={product.id}
+                        onSuccess={fetchData}
+                      />
                     </PopoverContent>
                   </Popover>
                 )}

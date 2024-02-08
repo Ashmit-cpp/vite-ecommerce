@@ -4,6 +4,7 @@ import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
 import { jwtDecode } from "jwt-decode";
 import { getURL } from "@/lib/helper";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 interface DecodedToken {
   sub: number;
@@ -53,7 +54,6 @@ const AddReviewButton: React.FC<Props> = ({ productId, onSuccess }) => {
 
       if (!response.ok) {
         console.error("Error adding review:", response.statusText);
-        // Handle the error as needed (show a message, etc.)
         return;
       }
 
@@ -67,7 +67,7 @@ const AddReviewButton: React.FC<Props> = ({ productId, onSuccess }) => {
   };
 
   return (
-    <div className="flex flex-col w-full gap-3">
+    <div className="flex flex-col w-full gap-3 ">
       <h1>Write your review below:</h1>
       <Input
         type="text"
@@ -88,16 +88,18 @@ const AddReviewButton: React.FC<Props> = ({ productId, onSuccess }) => {
           }
         }}
       />
-      <Button
-        onClick={() => {
-          AddReview();
-          toast({
-            title: "Review added",
-          });
-        }}
-      >
-        Submit
-      </Button>
+      <PopoverClose>
+        <Button
+          onClick={() => {
+            AddReview();
+            toast({
+              title: "Review added",
+            });
+          }}
+        >
+          Submit
+        </Button>
+      </PopoverClose>
     </div>
   );
 };
