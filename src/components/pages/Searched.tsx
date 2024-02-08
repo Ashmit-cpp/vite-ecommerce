@@ -86,9 +86,9 @@ function Searched() {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex flex-col">
       {searchResults.length === 0 ? (
-        <div className="flex-grow flex flex-col items-center justify-center">
+        <div className="min-h-screen flex-grow flex flex-col items-center justify-center">
           <h1 className="text-foreground text-xl font-semibold tracking-tighter sm:text-2xl md:text-3xl lg:text-2xl/none">
             No results found for "{params.search}"
           </h1>
@@ -142,7 +142,7 @@ function Searched() {
               </Select>
             </div>
           </div>
-          <ul className="flex flex-wrap justify-evenly gap-4 p-2">
+          <ul className="flex flex-wrap justify-evenly gap-4 py-8">
             {searchResults.map((result) => (
               <ProductItem key={result.id} product={result} />
             ))}

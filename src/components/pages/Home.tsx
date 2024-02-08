@@ -11,7 +11,7 @@ export default function Component() {
   return (
     <div className="mt-16 flex flex-col justify-center min-h-screen   ">
       <main className="flex-1 	 ">
-        <section className="w-full py-24 md:py-24 lg:py-40">
+        <section className="w-full py-48 md:py-52 lg:py-48">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-4">
@@ -40,7 +40,7 @@ export default function Component() {
           </div>
         </section>
         <section
-          className=" flex w-full py-8 md:py-16 lg:py-32"
+          className=" flex w-full py-4 md:py-8 lg:py-16"
           ref={targetContainerRef}
         >
           <div className="container flex-grid items-center justify-center gap-4 px-4 md:px-6 ">

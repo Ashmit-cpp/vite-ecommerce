@@ -3,13 +3,12 @@ import { useParams } from "react-router-dom";
 import AddToCart from "../buttons/AddToCart";
 import AddToWishlist from "../buttons/AddToWishlist";
 import { Button } from "../ui/button";
-
-import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
 import { Trash2 } from "lucide-react";
 import { jwtDecode } from "jwt-decode";
 import { getURL } from "@/lib/helper";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import AddReviewButton from "../buttons/AddReview";
 
 interface Review {
   id: number;
@@ -42,13 +41,11 @@ const ProductPage: React.FC = () => {
   let params = useParams();
   const { toast } = useToast();
   const token: string | null = localStorage.getItem("JWT");
-  if (!token) {
-    console.error("JWT token not found");
-    return;
+  let sub: DecodedToken | null = null; // Initialize sub with null
+  if (token) {
+    const decodedToken: DecodedToken = jwtDecode(token);
+    sub = decodedToken;
   }
-  const decodedToken: DecodedToken = jwtDecode(token);
-  const { sub } = decodedToken;
-  console.log(sub);
   const AddReview = async () => {
     try {
       if (!reviewText || !reviewRating) {
@@ -85,6 +82,7 @@ const ProductPage: React.FC = () => {
       console.error("Error adding review:", error);
     }
   };
+
   const handleDeleteReview = async () => {
     try {
       const response = await fetch(
@@ -158,7 +156,7 @@ const ProductPage: React.FC = () => {
                           <h1>{review.text}</h1>
                         </div>
                         <div className="p-2">
-                          {review.createdbyUserId === sub && (
+                          {sub && review.createdbyUserId === sub.sub && (
                             <Button
                               size={"icon"}
                               onClick={() => {
@@ -195,51 +193,21 @@ const ProductPage: React.FC = () => {
                     name: product.name,
                   }}
                 />
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button className="my-2">Add Review</Button>
-                  </PopoverTrigger>
-                  <PopoverContent sideOffset={4}>
-                    <div className="p-2rounded-xl">
-                      <div className="flex  flex-col w-full gap-3">
-                        <h1>Write your review below:</h1>
-                        <Input
-                          type="text"
-                          placeholder="Write your review here"
-                          value={reviewText}
-                          onChange={(e) => setReviewText(e.target.value)}
+                {token && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button className="my-2">Add Review</Button>
+                    </PopoverTrigger>
+                    <PopoverContent sideOffset={4}>
+                      <div className="p-2 rounded-xl">
+                        <AddReviewButton
+                          productId={product.id}
+                          onSuccess={fetchData}
                         />
-                        <h1>Add rating below:</h1>
-                        <Input
-                          type="number"
-                          placeholder="Rating (1-5)"
-                          value={reviewRating}
-                          onChange={(e) => {
-                            const ratingValue = parseInt(e.target.value, 10);
-                            // Check if the rating is within the valid range (1-5)
-                            if (
-                              !isNaN(ratingValue) &&
-                              ratingValue >= 1 &&
-                              ratingValue <= 5
-                            ) {
-                              setReviewRating(ratingValue);
-                            }
-                          }}
-                        />
-                        <Button
-                          onClick={() => {
-                            AddReview();
-                            toast({
-                              title: "Review added",
-                            });
-                          }}
-                        >
-                          Submit
-                        </Button>
                       </div>
-                    </div>
-                  </PopoverContent>
-                </Popover>
+                    </PopoverContent>
+                  </Popover>
+                )}
               </div>
             </div>
           </div>
