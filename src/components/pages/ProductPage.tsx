@@ -3,15 +3,13 @@ import { useParams } from "react-router-dom";
 import AddToCart from "../buttons/AddToCart";
 import AddToWishlist from "../buttons/AddToWishlist";
 import { Button } from "../ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@radix-ui/react-popover";
+
 import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { jwtDecode } from "jwt-decode";
+import { getURL } from "@/lib/helper";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 interface Review {
   id: number;
@@ -59,7 +57,7 @@ const ProductPage: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:3000/products/addreview/${params.id}`,
+        `${getURL()}/products/addreview/${params.id}`,
         {
           method: "PUT",
           headers: {
@@ -90,7 +88,7 @@ const ProductPage: React.FC = () => {
   const handleDeleteReview = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/products/deletereview/${params.id}`,
+        `${getURL()}/products/deletereview/${params.id}`,
         {
           method: "DELETE",
           headers: {
@@ -116,9 +114,7 @@ const ProductPage: React.FC = () => {
   };
   const fetchData = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/products/${params.id!}`
-      );
+      const response = await fetch(`${getURL()}/products/${params.id!}`);
       const data = await response.json();
       setProduct(data);
     } catch (error) {
@@ -204,8 +200,8 @@ const ProductPage: React.FC = () => {
                     <Button className="my-2">Add Review</Button>
                   </PopoverTrigger>
                   <PopoverContent sideOffset={4}>
-                    <div className="p-4 border-2 border-primary border-double rounded-xl bg-gray-200 dark:bg-gray-900">
-                      <div className="flex  flex-col w-full gap-2">
+                    <div className="p-2rounded-xl">
+                      <div className="flex  flex-col w-full gap-3">
                         <h1>Write your review below:</h1>
                         <Input
                           type="text"

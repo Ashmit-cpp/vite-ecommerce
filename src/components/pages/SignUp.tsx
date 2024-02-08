@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { getURL } from "@/lib/helper";
 import { Link } from "react-router-dom";
 import {
   Card,
@@ -39,7 +40,7 @@ export default function Component(): JSX.Element {
     e.preventDefault();
     console.log(formData);
 
-    fetch("http://localhost:3000/users/register", {
+    fetch(`${getURL()}/users/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

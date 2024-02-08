@@ -1,7 +1,7 @@
-import React, { FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-
+import { getURL } from "@/lib/helper";
 import { jwtDecode } from "jwt-decode";
 import {
   Card,
@@ -22,8 +22,6 @@ import {
   AlertDialogAction,
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
 
 interface DecodedToken {
   sub: number;
@@ -61,9 +59,7 @@ function ManageAccount(): JSX.Element {
     const decodedToken: DecodedToken = jwtDecode(token);
     const { sub } = decodedToken;
     try {
-      const response = await fetch(
-        `http://localhost:3000/users/findByUserId/${sub}`
-      );
+      const response = await fetch(`${getURL()}/users/findByUserId/${sub}`);
       const user = await response.json();
       // console.log(user);
       setUserInfo(user);
@@ -87,7 +83,7 @@ function ManageAccount(): JSX.Element {
       return;
     }
     // console.log(updatedData);
-    fetch(`http://localhost:3000/users/${updatedData.id}`, {
+    fetch(`${getURL()}/users/${updatedData.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

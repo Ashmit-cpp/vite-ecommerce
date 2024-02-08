@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import { MinusCircle, PlusCircle, Trash2 } from "lucide-react";
+import { getURL } from "@/lib/helper";
+
 import {
   Table,
   TableBody,
@@ -52,7 +54,7 @@ const CartComponent: React.FC = () => {
       return;
     }
 
-    const apiUrl = "http://localhost:3000/cart";
+    const apiUrl = `${getURL()}/cart`;
 
     try {
       const response = await fetch(apiUrl, {
@@ -82,7 +84,7 @@ const CartComponent: React.FC = () => {
       console.error("JWT token not found in localStorage");
       return;
     }
-    fetch(`http://localhost:3000/cart/delete/${productId}`, {
+    fetch(`${getURL()}/cart/delete/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -110,7 +112,7 @@ const CartComponent: React.FC = () => {
 
     const quantity = 1; // replace with the desired quantity
 
-    const apiUrl = `http://localhost:3000/cart/increase/${productId}`;
+    const apiUrl = `${getURL()}/cart/increase/${productId}`;
     const requestBody = {
       quantity: quantity.toString(),
     };
@@ -145,7 +147,7 @@ const CartComponent: React.FC = () => {
       console.error("JWT token not found in localStorage");
       return;
     }
-    fetch(`http://localhost:3000/cart/reduce/${productId}`, {
+    fetch(`${getURL()}/cart/reduce/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,

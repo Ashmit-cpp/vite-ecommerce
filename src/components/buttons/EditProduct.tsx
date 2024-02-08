@@ -3,6 +3,7 @@ import { SquarePen } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -129,7 +130,6 @@ function EditProduct({ initialData, onUpdate }: EditProductProps) {
                 </Label>
                 <Input
                   id="imageUrl"
-                  
                   value={formData.imageUrl}
                   className="col-span-2 h-8"
                   onChange={handleInputChange}

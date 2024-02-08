@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "../ui/card";
 import { toast } from "../ui/use-toast";
+import { getURL } from "@/lib/helper";
 
 interface FormData {
   name: string;
@@ -47,7 +48,7 @@ export default function Component(): JSX.Element {
     }
     console.log(formData);
 
-    fetch("http://localhost:3000/products/create", {
+    fetch(`${getURL()}/products/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

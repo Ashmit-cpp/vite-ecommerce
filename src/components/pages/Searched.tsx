@@ -11,6 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { getURL } from "@/lib/helper";
 
 interface Review {
   id: number;
@@ -31,8 +32,6 @@ interface Product {
 
 function Searched() {
   let params = useParams();
-
-  console.log(params);
   const [searchResults, setSearchResults] = useState<Product[]>([]);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,7 +50,7 @@ function Searched() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/products/?searchTerm=${encodeURIComponent(
+          `${getURL()}/products/?searchTerm=${encodeURIComponent(
             params.search!
           )}&page=${currentPage}&limit=4&sortBy=${sortBy}&sortOrder=${sortOrder}`
         );
@@ -66,7 +65,7 @@ function Searched() {
     const fetchTotalData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/products/?searchTerm=${encodeURIComponent(
+          `${getURL()}/products/?searchTerm=${encodeURIComponent(
             params.search!
           )}`
         );
@@ -96,10 +95,11 @@ function Searched() {
         </div>
       ) : (
         <>
-          <div className="flex flex-wrap justify-between m-8">
-          <h1 className="text-foreground text-xl font-bold sm:text-2xl md:text-3xl lg:text-2xl/none">
-              Search Results for "{params.search}"</h1>
-            <div className="flex gap-2">
+          <div className="flex flex-wrap justify-between align-middle mx-14 mt-8">
+            <h1 className="text-foreground text-xl font-bold sm:text-2xl md:text-3xl lg:text-2xl/none">
+              Search Results for "{params.search}"
+            </h1>
+            <div className="flex gap-2 my-2">
               <Select
                 value={sortBy}
                 onValueChange={(

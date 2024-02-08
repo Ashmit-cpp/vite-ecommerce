@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
+import { getURL } from "@/lib/helper";
 
 interface FormData {
   email: string;
@@ -35,7 +36,7 @@ export default function Component(): JSX.Element {
   const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
-    fetch("http://localhost:3000/auth/users/login", {
+    fetch(`${getURL()}/auth/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

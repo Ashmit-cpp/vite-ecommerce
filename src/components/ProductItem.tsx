@@ -29,11 +29,11 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
     <ul className="flex flex-wrap justify-evenly gap-2 ">
       <Card key={product.id} className="border mb-2 ">
         <CardContent className="flex flex-col flex-wrap ">
-          <div className="p-2 mr-4  ">
+          <div className="flex justify-center p-4 md:flex">
             <img
               src={product.imageUrl}
               alt={product.name}
-              className="my-4 px-8 min-h-32 cursor-pointer"
+              className="my-4 px-2 h-44  cursor-pointer"
               onClick={() => window.open(`/product/${product.id}`, "_blank")}
             />
           </div>

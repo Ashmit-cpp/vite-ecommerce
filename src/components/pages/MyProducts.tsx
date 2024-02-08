@@ -14,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import DeleteProduct from "../buttons/DeleteProduct";
 import EditProduct from "../buttons/EditProduct";
 import { ScrollArea } from "../ui/scroll-area";
+import { getURL } from "@/lib/helper";
 
 interface Review {
   id: number;
@@ -64,7 +65,7 @@ function MyProducts() {
         return;
       }
 
-      fetch(`http://localhost:3000/products/${updatedData.id}`, {
+      fetch(`${getURL()}/products/${updatedData.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -98,7 +99,7 @@ function MyProducts() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3000/products/productby", {
+      const response = await fetch(`${getURL()}/products/productby`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

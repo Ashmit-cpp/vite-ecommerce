@@ -12,6 +12,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "../ui/alert-dialog";
+import { getURL } from "@/lib/helper";
 
 interface DeleteProductProps {
   id: number;
@@ -30,7 +31,7 @@ function DeleteProduct({ id, name, onDelete }: DeleteProductProps) {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/products/${id}`, {
+      const response = await fetch(`${getURL()}/products/${id}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

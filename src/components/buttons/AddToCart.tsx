@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { incrementNotification } from "@/redux/slices/notificationSlice";
 import { Button } from "../ui/button";
 import { useState } from "react";
+import { getURL } from "@/lib/helper";
 
 interface AddToCartProps {
   product: {
@@ -27,7 +28,7 @@ function AddToCart({ product }: AddToCartProps) {
 
     const quantity = 1;
 
-    const apiUrl = `http://localhost:3000/cart/add/${productId}`;
+    const apiUrl = `${getURL()}/cart/add/${productId}`;
     const requestBody = {
       totalPrice: productPrice,
       quantity: quantity.toString(),

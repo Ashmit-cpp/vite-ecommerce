@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
+import { getURL } from "@/lib/helper";
 
 interface AddToWishlistProps {
   product: {
@@ -21,7 +22,7 @@ function AddToWishlist({ product }: AddToWishlistProps) {
       return;
     }
 
-    fetch(`http://localhost:3000/wishlist/add/${product.id}`, {
+    fetch(`${getURL()}/wishlist/add/${product.id}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

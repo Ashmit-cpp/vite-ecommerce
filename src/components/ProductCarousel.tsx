@@ -8,6 +8,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/CarouselCard";
+import { getURL } from "@/lib/helper";
+
 
 interface Product {
   id: number;
@@ -27,7 +29,7 @@ const ProductCarousel: React.FC = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/products?searchTerm=mouse&page=1&limit=6"
+          `${getURL()}/products?searchTerm=mouse&page=1&limit=6&sortBy=price&sortOrder=desc`
         );
         const data = await response.json();
         setProducts(data);
@@ -37,7 +39,7 @@ const ProductCarousel: React.FC = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array means this effect runs once after the initial render
+  }, []);
 
   return (
     <div className="flex justify-center items-center">
@@ -70,7 +72,10 @@ const ProductCarousel: React.FC = () => {
                         {product.name}
                       </h2>
                       <p className="text-sm mb-2">{product.description}</p>
-                      <p className="text-lg text-green-600"> ₹{product.price.toFixed(2)}</p>
+                      <p className="text-lg text-green-600">
+                        {" "}
+                        ₹{product.price.toFixed(2)}
+                      </p>
                     </div>
                   </CardContent>
                 </Card>

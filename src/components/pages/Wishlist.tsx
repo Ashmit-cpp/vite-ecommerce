@@ -3,6 +3,7 @@ import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import AddToCart from "../buttons/AddToCart";
 import { useToast } from "../ui/use-toast";
+import { getURL } from "@/lib/helper";
 
 interface WishlistItem {
   id: number;
@@ -26,7 +27,7 @@ function Wishlist() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:3000/wishlist/", {
+      const response = await fetch(`${getURL()}/wishlist/`, {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -53,7 +54,7 @@ function Wishlist() {
       console.error("JWT token not found in localStorage");
       return;
     }
-    fetch(`http://localhost:3000/wishlist/remove/${productId}`, {
+    fetch(`${getURL()}/wishlist/remove/${productId}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -100,13 +101,13 @@ function Wishlist() {
       ) : (
         <ul className="flex flex-wrap justify-evenly gap-2 py-4 px-4">
           {wishlistItems.reverse().map((product: WishlistItem) => (
-            <Card key={product.id} className="border p-1 mb-4 ">
+            <Card key={product.id} className="border p-1 mb-4 w-80">
               <CardContent className="flex flex-col flex-wrap ">
-                <div className="p-2 mr-4  ">
+                <div className="p-8 md:flex">
                   <img
                     src={product.imageUrl}
                     alt={product.name}
-                    className="my-4 px-8 min-h-32 cursor-pointer"
+                    className="my-4 px-8 h-44  cursor-pointer"
                     onClick={() =>
                       window.open(`/product/${product.id}`, "_blank")
                     }
@@ -116,7 +117,6 @@ function Wishlist() {
                 <p>{product.description}</p>
                 <p className="text-green-600 font-bold">₹{product.price}</p>
                 <p>Stock: {product.stock}</p>
-                <p>Created By: {product.createdBy}</p>
                 <AddToCart
                   product={{
                     id: product.id,
