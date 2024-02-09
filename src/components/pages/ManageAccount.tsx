@@ -10,9 +10,11 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
+import ChangePasswordForm from "../ChangePassword";
 
 interface DecodedToken {
   sub: number;
@@ -101,56 +103,66 @@ function ManageAccount(): JSX.Element {
       });
   };
   return (
-    <div className="flex justify-center align-middle min-h-screen m-4">
-      <Card className="p-2 my-20 mx-auto opacity-90 max-h-[280px] ">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">
-            Manage your Profile
-          </CardTitle>
-          <CardDescription>
-            <h1 className="text-sm md:text-lg lg:text-2xl">
-              Your Information:
-            </h1>
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex-col justify-between align-middle gap-2 ">
-            <div className="flex p-2">
-              <h1 className="font-semibold text-sm md:text-lg lg:text-xl mr-4">
-                Your email:
-              </h1>
-              <h1 className=" text-sm md:text-lg lg:text-xl">
-                {userInfo?.email}
-              </h1>
-            </div>
-            <form
-              className="space-y-2"
-              onSubmit={(e) => {
-                e.preventDefault();
-                onSubmit(formData);
-              }}
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex my-2">
-                  <Label
-                    htmlFor="username"
-                    className="mr-4 m-2 mt-3 text-sm md:text-lg lg:text-xl "
-                  >
-                    Username:
-                  </Label>
-                  <Input
-                    id="username"
-                    value={formData.username}
-                    className="m-2    text-sm md:text-lg lg:text-lg"
-                    onChange={handleInputChange}
-                  />
+    <div className="flex justify-center align-middle mb-44">
+      <Tabs defaultValue="account" className="p-2 my-20 mx-auto max-h-[280px]">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="account">Account</TabsTrigger>
+          <TabsTrigger value="password">Password</TabsTrigger>
+        </TabsList>
+        <TabsContent value="account">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold">Account</CardTitle>
+              <CardDescription>
+                <h1 className="lg:text-lg">
+                  Make changes to your account here. Click save when you're
+                  done.{" "}
+                </h1>
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="flex-col justify-between align-middle gap-2 ">
+                <div className="flex p-2">
+                  <h1 className="font-semibold text-sm md:text-lg lg:text-xl mr-4">
+                    Your email:
+                  </h1>
+                  <h1 className=" text-sm md:text-lg lg:text-xl">
+                    {userInfo?.email}
+                  </h1>
                 </div>
-                <Button type="submit">Update</Button>
+                <form
+                  className="space-y-2"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    onSubmit(formData);
+                  }}
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="flex my-2">
+                      <Label
+                        htmlFor="username"
+                        className="mr-4 m-2 mt-3 text-sm md:text-lg lg:text-xl "
+                      >
+                        Username:
+                      </Label>
+                      <Input
+                        id="username"
+                        value={formData.username}
+                        className="m-2    text-sm md:text-lg lg:text-lg"
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                    <Button type="submit">Save changes</Button>
+                  </div>
+                </form>
               </div>
-            </form>
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="password">
+          <ChangePasswordForm />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

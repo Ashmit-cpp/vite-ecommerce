@@ -13,7 +13,6 @@ import { PlusCircle } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import DeleteProduct from "../buttons/DeleteProduct";
 import EditProduct from "../buttons/EditProduct";
-import { ScrollArea } from "../ui/scroll-area";
 import { getURL } from "@/lib/helper";
 import { useToast } from "../ui/use-toast";
 
@@ -155,7 +154,7 @@ function MyProducts() {
           Loading...
         </h1>
       ) : myproducts && myproducts.length > 0 ? (
-        <ScrollArea className="min-h-screen pr-4 m-2 max-h-[420px] flex flex-col items-center  ">
+        <div className="min-h-screen m-2 max-h-[420px] flex flex-col items-center">
           <Table className="rounded-3xl bg-slate-300 dark:bg-slate-700 bg-opacity-30 dark:bg-opacity-30 backdrop-blur-lg backdrop-filter">
             <TableHeader>
               <TableRow className=" text-sm  md:text-base lg:text-lg">
@@ -222,7 +221,7 @@ function MyProducts() {
               ))}
             </TableBody>
           </Table>
-        </ScrollArea>
+        </div>
       ) : (
         <h1 className="flex justify-center mt-24 min-h-screen text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
           No products Added.

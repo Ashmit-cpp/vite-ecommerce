@@ -22,7 +22,7 @@ function App() {
       <BrowserRouter>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <div className="bg-hero-pattern dark:bg-hero-patterndark">
-            <div className="backdrop-blur-sm backdrop-brightness-80">
+            <div className="backdrop-blur-sm backdrop-brightness-110">
               <Header />
               <Routes>
                 <Route path="/" element={<Home />} />
