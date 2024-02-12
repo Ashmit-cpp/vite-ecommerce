@@ -6,17 +6,17 @@ import { jwtDecode } from "jwt-decode";
 import { getURL } from "@/lib/helper";
 import { PopoverClose } from "@radix-ui/react-popover";
 
-interface DecodedToken {
+type DecodedToken = {
   sub: number;
   email: string;
   iat: number;
   exp: number;
-}
+};
 
-interface Props {
+type Props = {
   productId: number;
   onSuccess: () => void;
-}
+};
 
 const AddReviewButton: React.FC<Props> = ({ productId, onSuccess }) => {
   const [reviewText, setReviewText] = useState<string>("");
@@ -28,7 +28,6 @@ const AddReviewButton: React.FC<Props> = ({ productId, onSuccess }) => {
     return null;
   }
   const decodedToken: DecodedToken = jwtDecode(token);
-  const { sub } = decodedToken;
 
   const AddReview = async () => {
     try {

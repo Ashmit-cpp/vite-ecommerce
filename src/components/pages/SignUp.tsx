@@ -14,55 +14,58 @@ import {
   CardTitle,
 } from "../ui/card";
 
-interface FormData {
+type FormData = {
   name: string;
   email: string;
   password: string;
-}
+};
 
-export default function Component(): JSX.Element {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    email: "",
-    password: "",
-  });
+const initialFormData: FormData = {
+  name: "",
+  email: "",
+  password: "",
+};
 
+export default function Signup() {
   const navigate = useNavigate();
 
+  const [formData, setFormData] = useState<FormData>(initialFormData);
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
   };
 
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleFormSubmit = async (
+    e: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
-    console.log(formData);
-
-    fetch(`${getURL()}/users/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username: formData.name,
-        email: formData.email,
-        password: formData.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          console.log("Signup response:", data);
-          navigate("/login  ");
-        } else {
-          console.error("Signup failed:", data.error);
-        }
-      })
-      .catch((error) => {
-        console.error("Error during signup:", error);
+    try {
+      const response = await fetch(`${getURL()}/users/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
       });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Signup response:", data);
+        navigate("/login");
+      } else {
+        console.error("Signup failed:", data.error);
+      }
+    } catch (error) {
+      console.error("Error during signup:", error);
+    }
   };
 
   return (

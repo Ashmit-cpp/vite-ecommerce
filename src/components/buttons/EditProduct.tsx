@@ -3,6 +3,7 @@ import { SquarePen } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
+import { Product } from "@/lib/types"; // Make sure you import Admin and Seller types
 
 import {
   AlertDialog,
@@ -17,23 +18,10 @@ import {
 } from "../ui/alert-dialog";
 
 interface EditProductProps {
-  initialData: {
-    id: number;
-    name: string;
-    description: string;
-    imageUrl: string;
-    price: number;
-    stock: number;
-  };
-  onUpdate: (data: {
-    id: number;
-    name: string;
-    description: string;
-    imageUrl: string;
-    price: number;
-    stock: number;
-  }) => void;
+  initialData: Product;
+  onUpdate: (data: Product) => void;
 }
+
 
 function EditProduct({ initialData, onUpdate }: EditProductProps) {
   const [formData, setFormData] = useState({

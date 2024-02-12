@@ -7,6 +7,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  Row,
+  useReactTable,
+} from "@tanstack/react-table";
+import { useVirtualizer } from "@tanstack/react-virtual";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import { PlusCircle } from "lucide-react";
@@ -15,37 +24,13 @@ import DeleteProduct from "../buttons/DeleteProduct";
 import EditProduct from "../buttons/EditProduct";
 import { getURL } from "@/lib/helper";
 import { useToast } from "../ui/use-toast";
-
-interface Review {
-  id: number;
-  text: string;
-  rating: number;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-  stock: number;
-  createdBy: string;
-  reviews: Review[];
-}
+import { Product } from "@/lib/types";
 
 function MyProducts() {
   const { toast } = useToast();
-
   const [myproducts, setmyProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const updateProduct = (updatedData: {
-    id: number;
-    name: string;
-    description: string;
-    imageUrl: string;
-    price: number;
-    stock: number;
-  }) => {
+  const updateProduct = (updatedData: Product) => {
     // Find the index of the updated product in the state
     const updatedIndex = myproducts.findIndex(
       (product) => product.id == updatedData.id
@@ -148,7 +133,6 @@ function MyProducts() {
       </div>
       <Separator />
       <Separator />
-
       {loading ? (
         <h1 className="flex justify-center mt-24 min-h-screen text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
           Loading...

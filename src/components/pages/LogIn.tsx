@@ -1,24 +1,24 @@
-import {
-  CardTitle,
-  CardDescription,
-  CardHeader,
-  CardContent,
-  Card,
-} from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { ChangeEvent, FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { getURL } from "@/lib/helper";
+import {
+  Card,
+  CardTitle,
+  CardDescription,
+  CardHeader,
+  CardContent,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-interface FormData {
+type FormData =  {
   email: string;
   password: string;
 }
 
-export default function Component(): JSX.Element {
+export default function Login(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
@@ -26,48 +26,51 @@ export default function Component(): JSX.Element {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const navigate = useNavigate();
   const { login } = useAuth();
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
   };
 
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleFormSubmit = async (
+    e: FormEvent<HTMLFormElement>
+  ): Promise<void> => {
     e.preventDefault();
 
-    fetch(`${getURL()}/auth/users/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: formData.email,
-        password: formData.password,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data: any) => {
-        if (data?.statusCode === 200) {
-          console.log("Logged in");
-          localStorage.setItem("JWT", data?.accessToken);
-          login(data?.accessToken);
-          navigate("/");
-        } else if (data?.statusCode === 404 || data?.statusCode === 401) {
-          setErrorMessage(data?.message);
-        } else {
-          setErrorMessage("Unexpected error occurred");
-        }
-      })
-      .catch((error) => {
-        console.error("Error during login:", error);
-        setErrorMessage("Unexpected error occurred");
+    try {
+      const response = await fetch(`${getURL()}/auth/users/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+        }),
       });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Logged in");
+        localStorage.setItem("JWT", data.accessToken);
+        login(data.accessToken);
+        navigate("/");
+      } else if (response.status === 404 || response.status === 401) {
+        setErrorMessage(data.message);
+      } else {
+        setErrorMessage("Unexpected error occurred");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setErrorMessage("Unexpected error occurred");
+    }
   };
 
   return (
     <div className="flex flex-col justify-center min-h-screen">
-      {" "}
       <Card className="mx-auto max-w-[450px] space-y-6 opacity-80">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Login</CardTitle>
