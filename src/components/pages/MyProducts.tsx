@@ -13,7 +13,6 @@ import { useToast } from "../ui/use-toast";
 
 function MyProducts() {
   const { toast } = useToast();
-
   const [myproducts, setmyProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -107,12 +106,10 @@ function MyProducts() {
       id: "name",
       header: "Name",
       accessorKey: "name",
-      size: 60,
     },
     {
       accessorKey: "description",
       header: "Description",
-      size: 60,
     },
     {
       accessorKey: "stock",
@@ -170,7 +167,7 @@ function MyProducts() {
       <Separator />
       <Separator />
       {loading ? (
-        <h1 className="mt-24 min-h-screen text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
+        <h1 className="flex justify-center align-middle min-h-screen mt-24 text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
           Loading...
         </h1>
       ) : myproducts && myproducts.length > 0 ? (

@@ -40,27 +40,21 @@ export function DataTable<TData, TValue>({
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const rowVirtualizer = useVirtualizer({
     count: rows.length,
-    estimateSize: () => 30,
+    estimateSize: () => 5,
     getScrollElement: () => tableContainerRef.current,
-    overscan: 3,
+    overscan: 2,
   });
   const check = rowVirtualizer.getVirtualItems();
-  console.log("asdfasdf", check);
+  console.log("Row Change", check);
 
   return (
-    <div
-      className="rounded-md border h-screen"
-      ref={tableContainerRef}
-      style={{
-        overflow: "auto",
-      }}
-    >
-      <Table>
-        <TableHeader className="">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                return (
+    <div className="relative">
+      <div className="sticky top-0 z-10">
+        <Table>
+          <TableHeader>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
                   <TableHead key={header.id} className="w-48">
                     {header.isPlaceholder
                       ? null
@@ -69,60 +63,60 @@ export function DataTable<TData, TValue>({
                           header.getContext()
                         )}
                   </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-
-        <TableBody
-          style={{
-            height: `${rowVirtualizer.getTotalSize()}px`,
-          }}
-        >
-          {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-            const row = rows[virtualRow.index] as Row<Product>;
-            return (
-              <TableRow
-                data-index={virtualRow.index}
-                ref={(node) => rowVirtualizer.measureElement(node)}
-                key={row.id}
-                className="w-"
-                style={{
-                  position: "absolute",
-                  transform: `translateY(${virtualRow.start}px)`,
-                }}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="w-64">
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
                 ))}
-                {/* <TableCell>
-                  <EditProduct
-                    initialData={row.original}
-                    onUpdate={updateProduct}
-                  />
-                </TableCell>
-                <TableCell>
-                    <DeleteProduct
-                        id={row.original.id}
-                        name={row.original.name}
-                        onDelete={fetchMyProducts}
-                    />
-                </TableCell> */}
               </TableRow>
-            );
-          })}
-          {rows.length === 0 && (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            ))}
+          </TableHeader>
+        </Table>
+      </div>
+      <div
+        className="rounded-md border-2 overflow-auto"
+        ref={tableContainerRef}
+        style={{ maxHeight: "calc(100vh - 40px)" }} // Adjust height accordingly
+      >
+        <Table className="mt ">
+          <TableBody
+            style={{
+              height: `${rowVirtualizer.getTotalSize()}px`,
+            }}
+          >
+            {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+              const row = rows[virtualRow.index] as Row<Product>;
+              return (
+                <TableRow
+                  data-index={virtualRow.index}
+                  ref={(node) => rowVirtualizer.measureElement(node)}
+                  key={row.id}
+                  className="w-"
+                  style={{
+                    position: "absolute",
+                    transform: `translateY(${virtualRow.start}px)`,
+                  }}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id} className="w-64">
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              );
+            })}
+            {rows.length === 0 && (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
