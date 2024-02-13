@@ -136,7 +136,7 @@ function MyProducts() {
       header: "Remove",
       cell: ({ row }) => {
         return (
-          <div>
+          <div className="ml-4">
             <DeleteProduct
               id={row.original.id}
               name={row.original.name}
@@ -148,7 +148,7 @@ function MyProducts() {
     },
   ];
   return (
-    <div className="p-2">
+    <div className="p-2 min-h-screen">
       <div className="flex p-4 mt-4 justify-between">
         <h1 className=" text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
           Manage your products

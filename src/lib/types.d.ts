@@ -1,9 +1,3 @@
-export type Review = {
-  id: number;
-  text: string;
-  rating: number;
-};
-
 // type CommonFields = {
 //   id: number;
 //   name: string;
@@ -34,4 +28,10 @@ export type Product = {
   stock: number;
   createdBy?: string;
   reviews?: Review[];
+};
+export type Review = {
+  id: number;
+  text: string;
+  rating: number;
+  createdbyUserId: number;
 };

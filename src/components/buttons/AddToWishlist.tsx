@@ -38,6 +38,7 @@ function AddToWishlist({ product }: AddToWishlistProps) {
       })
         .then((response) => {
           // console.log("Wishlist item added successfully");
+          console.log(response);
           setAdded(true);
         })
         .catch((error) => {

@@ -3,7 +3,7 @@ import { SquarePen } from "lucide-react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { Product } from "@/lib/types"; // Make sure you import Admin and Seller types
+import { Product } from "@/lib/types";
 
 import {
   AlertDialog,
@@ -21,7 +21,6 @@ interface EditProductProps {
   initialData: Product;
   onUpdate: (data: Product) => void;
 }
-
 
 function EditProduct({ initialData, onUpdate }: EditProductProps) {
   const [formData, setFormData] = useState({

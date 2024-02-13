@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import { Link } from "react-router-dom";
 
 interface AuthContextType {
   token: string | null;

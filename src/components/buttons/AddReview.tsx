@@ -2,16 +2,8 @@ import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { useToast } from "../ui/use-toast";
-import { jwtDecode } from "jwt-decode";
 import { getURL } from "@/lib/helper";
 import { PopoverClose } from "@radix-ui/react-popover";
-
-type DecodedToken = {
-  sub: number;
-  email: string;
-  iat: number;
-  exp: number;
-};
 
 type Props = {
   productId: number;
@@ -27,7 +19,6 @@ const AddReviewButton: React.FC<Props> = ({ productId, onSuccess }) => {
     console.error("JWT token not found");
     return null;
   }
-  const decodedToken: DecodedToken = jwtDecode(token);
 
   const AddReview = async () => {
     try {

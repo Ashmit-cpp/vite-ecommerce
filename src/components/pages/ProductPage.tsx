@@ -9,23 +9,8 @@ import { jwtDecode } from "jwt-decode";
 import { getURL } from "@/lib/helper";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import AddReviewButton from "../buttons/AddReview";
+import { Product, Review } from "@/lib/types";
 
-interface Review {
-  id: number;
-  text: string;
-  rating: number;
-  createdbyUserId: number;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-  stock: number;
-  reviews: Review[];
-}
 interface DecodedToken {
   sub: number;
   email: string;
@@ -36,8 +21,8 @@ interface DecodedToken {
 const ProductPage: React.FC = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-  const [reviewText, setReviewText] = useState<string>("");
-  const [reviewRating, setReviewRating] = useState<number>(0);
+  const [, setReviewText] = useState<string>("");
+  const [, setReviewRating] = useState<number>(0);
   let params = useParams();
   const { toast } = useToast();
   const token: string | null = localStorage.getItem("JWT");
@@ -108,9 +93,9 @@ const ProductPage: React.FC = () => {
               <p className="text-lg  mb-2">Price: ₹{product.price}</p>
               <p className="text-lg mb-2">In Stock: {product.stock}</p>
               <h3 className="text-lg font-bold">Reviews</h3>
-              {product.reviews.length > 0 ? (
+              {(product.reviews as Review[]).length > 0 ? (
                 <ul className="flex-row">
-                  {product.reviews.map((review) => (
+                  {(product.reviews as Review[]).map((review) => (
                     <li
                       key={review.id}
                       className="gap-4 p-2 rounded-lg border-4 border-primary/40 mb-4"

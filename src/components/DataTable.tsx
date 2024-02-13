@@ -94,7 +94,10 @@ export function DataTable<TData, TValue>({
                   }}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="w-64">
+                    <TableCell
+                      key={cell.id}
+                      className="w-64 text-xs sm:sm md:text-base lg:text-lg xl:text-lg"
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
