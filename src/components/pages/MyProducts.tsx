@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
@@ -101,52 +101,59 @@ function MyProducts() {
     fetchMyProducts();
   }, []);
 
-  const columns: ColumnDef<Product>[] = [
-    {
-      id: "name",
-      header: "Name",
-      accessorKey: "name",
-    },
-    {
-      accessorKey: "description",
-      header: "Description",
-    },
-    {
-      accessorKey: "stock",
-      header: () => "Left Stock",
-    },
-    {
-      accessorKey: "price",
-      header: "Price",
-    },
+  const columns = React.useMemo<ColumnDef<Product>[]>(
+    () => [
+      {
+        id: "name",
+        header: "Name",
+        accessorKey: "name",
+      },
+      {
+        accessorKey: "description",
+        header: "Description",
+      },
+      {
+        accessorKey: "stock",
+        header: () => "Left Stock",
+        size: 50,
+      },
+      {
+        accessorKey: "price",
+        header: "Price",
+      },
 
-    {
-      accessorKey: "edit",
-      header: "Edit",
-      cell: ({ row }) => {
-        return (
-          <div>
-            <EditProduct initialData={row.original} onUpdate={updateProduct} />
-          </div>
-        );
+      {
+        accessorKey: "edit",
+        header: "Edit",
+        cell: ({ row }) => {
+          return (
+            <div>
+              <EditProduct
+                initialData={row.original}
+                onUpdate={updateProduct}
+              />
+            </div>
+          );
+        },
       },
-    },
-    {
-      accessorKey: "remove",
-      header: "Remove",
-      cell: ({ row }) => {
-        return (
-          <div>
-            <DeleteProduct
-              id={row.original.id}
-              name={row.original.name}
-              onDelete={fetchMyProducts}
-            />
-          </div>
-        );
+      {
+        accessorKey: "remove",
+        header: "Remove",
+        cell: ({ row }) => {
+          return (
+            <div>
+              <DeleteProduct
+                id={row.original.id}
+                name={row.original.name}
+                onDelete={fetchMyProducts}
+              />
+            </div>
+          );
+        },
       },
-    },
-  ];
+    ],
+    []
+  );
   return (
     <div className="p-2 min-h-screen">
       <div className="flex p-4 mt-4 justify-between">

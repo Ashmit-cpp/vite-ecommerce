@@ -11,6 +11,7 @@ import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  getSortedRowModel,
   Row,
   useReactTable,
 } from "@tanstack/react-table";
@@ -33,6 +34,8 @@ export function DataTable<TData, TValue>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+
     debugTable: true,
   });
 
@@ -53,59 +56,57 @@ export function DataTable<TData, TValue>({
         overflow: "auto",
         position: "relative",
         height: "800px",
-        maxHeight: "calc(100vh - 90px)",
       }}
     >
-      <Table style={{ display: "grid" }}>
-        <div>
-          <TableHeader
-            style={{
-              display: "grid",
-              position: "sticky",
-              top: 0,
-              zIndex: 10,
-            }}
-          >
-            {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow
-                key={headerGroup.id}
-                style={{
-                  width: "100vw",
-                  display: "table",
-                }}
-              >
-                {headerGroup.headers.map((header) => {
-                  return (
-                    <TableHead
-                      key={header.id}
-                      style={{
-                        width: header.getSize(),
+      <table>
+        <TableHeader
+          className="bg-secondary/95"
+          style={{
+            display: "table", // Keep this if you want table layout
+            position: "sticky",
+            top: 0,
+            zIndex: 10,
+          }}
+        >
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow
+              key={headerGroup.id}
+              style={{
+                width: "100vw",
+                display: "table",
+              }}
+            >
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead
+                    key={header.id}
+                    style={{
+                      width: header.getSize(),
+                    }}
+                  >
+                    <div
+                      {...{
+                        className: header.column.getCanSort()
+                          ? "cursor-pointer select-none"
+                          : "",
+                        onClick: header.column.getToggleSortingHandler(),
                       }}
                     >
-                      <div
-                        {...{
-                          className: header.column.getCanSort()
-                            ? "cursor-pointer select-none"
-                            : "",
-                          onClick: header.column.getToggleSortingHandler(),
-                        }}
-                      >
-                        {flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                        {{
-                          asc: " 🔼",
-                          desc: " 🔽",
-                        }[header.column.getIsSorted() as string] ?? null}
-                      </div>
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            ))}
-          </TableHeader>
-        </div>
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                      {{
+                        asc: " 🔼",
+                        desc: " 🔽",
+                      }[header.column.getIsSorted() as string] ?? null}
+                    </div>
+                  </TableHead>
+                );
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
 
         <TableBody
           style={{
@@ -117,7 +118,7 @@ export function DataTable<TData, TValue>({
           {rowVirtualizer.getVirtualItems().map((virtualRow) => {
             const row = rows[virtualRow.index] as Row<Product>;
             return (
-              <TableRow
+              <tr
                 data-index={virtualRow.index}
                 ref={(node) => rowVirtualizer.measureElement(node)}
                 key={row.id}
@@ -139,18 +140,18 @@ export function DataTable<TData, TValue>({
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
-              </TableRow>
+              </tr>
             );
           })}
           {rows.length === 0 && (
-            <TableRow>
+            <tr>
               <TableCell colSpan={columns.length} className="h-24 text-center">
                 No results.
               </TableCell>
-            </TableRow>
+            </tr>
           )}
         </TableBody>
-      </Table>
+      </table>
     </div>
   );
 }
