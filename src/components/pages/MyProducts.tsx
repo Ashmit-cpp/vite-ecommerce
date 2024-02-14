@@ -113,7 +113,7 @@ function MyProducts() {
     },
     {
       accessorKey: "stock",
-      header: "Left Stock",
+      header: () => "Left Stock",
     },
     {
       accessorKey: "price",
@@ -136,7 +136,7 @@ function MyProducts() {
       header: "Remove",
       cell: ({ row }) => {
         return (
-          <div className="ml-4">
+          <div>
             <DeleteProduct
               id={row.original.id}
               name={row.original.name}
