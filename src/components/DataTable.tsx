@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Table,
   TableBody,
   TableCell,
   TableHead,
@@ -27,18 +26,16 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
-  // console.log(data);
-  // console.log(columns);
+  console.log(data);
+  console.log(columns);
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-
     debugTable: true,
   });
-
   const { rows } = table.getRowModel();
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const rowVirtualizer = useVirtualizer({
@@ -47,8 +44,8 @@ export function DataTable<TData, TValue>({
     getScrollElement: () => tableContainerRef.current,
     overscan: 2,
   });
-  const check = rowVirtualizer.getVirtualItems();
-  console.log("Row Change", check);
+  // const check = rowVirtualizer.getVirtualItems();
+  // console.log("Row Change", check);
   return (
     <div
       ref={tableContainerRef}
@@ -62,7 +59,7 @@ export function DataTable<TData, TValue>({
         <TableHeader
           className="bg-secondary/95"
           style={{
-            display: "table", // Keep this if you want table layout
+            display: "table",
             position: "sticky",
             top: 0,
             zIndex: 10,

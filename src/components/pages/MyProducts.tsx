@@ -104,7 +104,6 @@ function MyProducts() {
   const columns = React.useMemo<ColumnDef<Product>[]>(
     () => [
       {
-        id: "name",
         header: "Name",
         accessorKey: "name",
       },
@@ -114,8 +113,7 @@ function MyProducts() {
       },
       {
         accessorKey: "stock",
-        header: () => "Left Stock",
-        size: 50,
+        header: "Left Stock",
       },
       {
         accessorKey: "price",
