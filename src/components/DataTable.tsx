@@ -17,17 +17,14 @@ import {
 import { useVirtualizer } from "@tanstack/react-virtual";
 import { Product } from "@/lib/types";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
+interface DataTableProps<TData> {
+  columns: ColumnDef<TData>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
-  console.log(data);
-  console.log(columns);
+export function DataTable<TData>({ columns, data }: DataTableProps<TData>) {
+  // console.log(data);
+  // console.log(columns);
 
   const table = useReactTable({
     data,
@@ -36,6 +33,7 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     debugTable: true,
   });
+
   const { rows } = table.getRowModel();
   const tableContainerRef = React.useRef<HTMLDivElement>(null);
   const rowVirtualizer = useVirtualizer({
@@ -44,8 +42,10 @@ export function DataTable<TData, TValue>({
     getScrollElement: () => tableContainerRef.current,
     overscan: 2,
   });
-  // const check = rowVirtualizer.getVirtualItems();
-  // console.log("Row Change", check);
+
+  const check = rowVirtualizer.getVirtualItems();
+  console.log("Row Change", check);
+
   return (
     <div
       ref={tableContainerRef}

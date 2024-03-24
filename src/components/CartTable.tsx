@@ -10,20 +10,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Product } from "@/lib/types";
+import { CartData, Product } from "@/lib/types";
 import { getURL } from "@/lib/helper";
 
-interface CartItem {
+type Item = {
   id: number;
-  totalPrice: number;
   quantity: number;
+  totalPrice: number;
   product: Product;
-}
+};
 
-interface CartData {
+type ResponseBody = {
   id: number;
-  items: CartItem[];
-}
+  items: Item[];
+};
 
 type CartTableProps = {
   cartData: CartData;
@@ -66,7 +66,7 @@ function CartTable({
         );
       }
 
-      const responseData = await response.json();
+      const responseData: ResponseBody = await response.json();
       console.log("Item added to cart:", responseData);
       fetchCartData();
     } catch (error) {

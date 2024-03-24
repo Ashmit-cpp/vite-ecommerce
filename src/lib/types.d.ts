@@ -35,3 +35,15 @@ export type Review = {
   rating: number;
   createdbyUserId: number;
 };
+
+export type CartItem = {
+  id: number;
+  totalPrice: number;
+  quantity: number;
+  product: Product;
+};
+
+export type CartData = {
+  id: number;
+  items: CartItem[];
+};

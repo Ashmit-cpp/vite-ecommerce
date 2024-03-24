@@ -1,19 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getURL } from "@/lib/helper";
-import { Product } from "@/lib/types";
 import CartTable from "../CartTable";
-
-interface CartItem {
-  id: number;
-  totalPrice: number;
-  quantity: number;
-  product: Product;
-}
-
-interface CartData {
-  id: number;
-  items: CartItem[];
-}
+import { CartData } from "@/lib/types";
 
 const CartComponent: React.FC = () => {
   const [cartData, setCartData] = useState<CartData | null>(null);
@@ -48,7 +36,7 @@ const CartComponent: React.FC = () => {
       console.error("Error fetching cart data:");
     }
   };
-  
+
   const handleRemoveFromCart = (productId: number) => {
     const token = localStorage.getItem("JWT");
     if (!token) {
