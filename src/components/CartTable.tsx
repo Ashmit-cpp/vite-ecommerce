@@ -37,6 +37,7 @@ function CartTable({
   handleRemoveFromCart,
 }: CartTableProps) {
   const { toast } = useToast();
+  
   const handleIncreaseQuantity = async (productId: number) => {
     const token = localStorage.getItem("JWT");
     if (!token) {
@@ -98,6 +99,7 @@ function CartTable({
         console.error("Error removing item from Cart", error);
       });
   };
+
   const getTotalSum = (): number => {
     if (!cartData) {
       return 0;

@@ -5,10 +5,8 @@ import { Button } from "../ui/button";
 import { ShoppingCart } from "lucide-react";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
-  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -55,11 +53,6 @@ function ShoppingCartButton() {
             <DrawerDescription>Following are the items:</DrawerDescription>
           </DrawerHeader>
           <CartComponent />
-          <DrawerFooter className="p-2">
-            <DrawerClose>
-              <Button>Checkout</Button>
-            </DrawerClose>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </div>

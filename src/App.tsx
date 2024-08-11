@@ -15,6 +15,7 @@ import MyProducts from "./components/pages/MyProducts";
 import ProductPage from "./components/pages/ProductPage";
 import Contact from "./components/pages/Contact";
 import ManageAccount from "./components/pages/ManageAccount";
+import PaymentSuccess from "./components/pages/PaymentSuccess";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                 <Route path="/wishlist" element={<Wishlist />} />
                 <Route path="/product/:id" element={<ProductPage />} />
                 <Route path="/searched/:search" element={<Searched />} />
+                <Route path="/success" element={<PaymentSuccess />} />
               </Routes>
               <Footer />
             </div>
