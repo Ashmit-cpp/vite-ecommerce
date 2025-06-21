@@ -1,7 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
-import { getURL } from "@/lib/helper";
 import {
   Card,
   CardTitle,
@@ -12,20 +11,21 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Loader2 } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
-type FormData =  {
+type FormData = {
   email: string;
   password: string;
-}
+};
 
 export default function Login(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const navigate = useNavigate();
-  const { login } = useAuth();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login, error, clearError, isLoading } = useAuth();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = e.target;
@@ -33,41 +33,31 @@ export default function Login(): JSX.Element {
       ...prevData,
       [id]: value,
     }));
-  };
-
-  const handleFormSubmit = async (
-    e: FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch(`${getURL()}/auth-integration/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Logged in");
-        localStorage.setItem("JWT", data.accessToken);
-        login(data.accessToken);
-        navigate("/");
-      } else if (response.status === 404 || response.status === 401) {
-        setErrorMessage(data.message);
-      } else {
-        setErrorMessage("Unexpected error occurred");
-      }
-    } catch (error) {
-      console.error("Error during login:", error);
-      setErrorMessage("Unexpected error occurred");
+    
+    // Clear error when user starts typing
+    if (error) {
+      clearError();
     }
   };
+
+  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    
+    if (isSubmitting || isLoading) return;
+
+    try {
+      setIsSubmitting(true);
+      await login(formData.email, formData.password);
+      // Navigation will be handled by the AuthContext
+    } catch (error) {
+      // Error is handled by the AuthContext
+      console.error("Login failed:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const isFormDisabled = isSubmitting || isLoading;
 
   return (
     <div className="flex flex-col justify-center min-h-screen">
@@ -80,7 +70,12 @@ export default function Login(): JSX.Element {
         </CardHeader>
         <CardContent>
           <form className="space-y-4" onSubmit={handleFormSubmit}>
-            {errorMessage && <div className="text-red-500">{errorMessage}</div>}
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -90,8 +85,10 @@ export default function Login(): JSX.Element {
                 type="email"
                 value={formData.email}
                 onChange={handleInputChange}
+                disabled={isFormDisabled}
               />
             </div>
+            
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
@@ -100,11 +97,31 @@ export default function Login(): JSX.Element {
                 type="password"
                 value={formData.password}
                 onChange={handleInputChange}
+                disabled={isFormDisabled}
               />
             </div>
-            <Button className="w-full" type="submit">
-              Login
+            
+            <Button 
+              className="w-full" 
+              type="submit"
+              disabled={isFormDisabled}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Logging in...
+                </>
+              ) : (
+                "Login"
+              )}
             </Button>
+            
+            <div className="text-center text-sm">
+              Don't have an account?{" "}
+              <Link to="/signup" className="underline">
+                Sign up
+              </Link>
+            </div>
           </form>
         </CardContent>
       </Card>

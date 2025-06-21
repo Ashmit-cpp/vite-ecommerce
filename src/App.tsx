@@ -16,29 +16,91 @@ import ProductPage from "./components/pages/ProductPage";
 import Contact from "./components/pages/Contact";
 import ManageAccount from "./components/pages/ManageAccount";
 import PaymentSuccess from "./components/pages/PaymentSuccess";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <div className="bg-hero-pattern dark:bg-hero-patterndark">
             <div className="flex flex-col min-h-screen backdrop-blur-sm backdrop-brightness-110">
               <Header />
               <main className="flex-grow">
                 <Routes>
+                  {/* Public routes */}
                   <Route path="/" element={<Home />} />
-                  <Route path="/cart" element={<Cart />} />
-                  <Route path="/addproducts" element={<AddProduct />} />
-                  <Route path="/myproducts" element={<MyProducts />} />
-                  <Route path="/signup" element={<SignUp />} />
-                  <Route path="/login" element={<SignIn />} />
                   <Route path="/contact" element={<Contact />} />
-                  <Route path="/manageaccount" element={<ManageAccount />} />
-                  <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/product/:id" element={<ProductPage />} />
                   <Route path="/searched/:search" element={<Searched />} />
-                  <Route path="/success" element={<PaymentSuccess />} />
+                  
+                  {/* Auth routes (redirect to home if already authenticated) */}
+                  <Route 
+                    path="/signup" 
+                    element={
+                      <ProtectedRoute requireAuth={false}>
+                        <SignUp />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/login" 
+                    element={
+                      <ProtectedRoute requireAuth={false}>
+                        <SignIn />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  
+                  {/* Protected routes (authentication required) */}
+                  <Route 
+                    path="/cart" 
+                    element={
+                      <ProtectedRoute>
+                        <Cart />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/addproducts" 
+                    element={
+                      <ProtectedRoute>
+                        <AddProduct />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/myproducts" 
+                    element={
+                      <ProtectedRoute>
+                        <MyProducts />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/manageaccount" 
+                    element={
+                      <ProtectedRoute>
+                        <ManageAccount />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/wishlist" 
+                    element={
+                      <ProtectedRoute>
+                        <Wishlist />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route 
+                    path="/success" 
+                    element={
+                      <ProtectedRoute>
+                        <PaymentSuccess />
+                      </ProtectedRoute>
+                    } 
+                  />
                 </Routes>
               </main>
 
@@ -48,8 +110,8 @@ function App() {
             <Toaster />
           </div>
         </ThemeProvider>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
