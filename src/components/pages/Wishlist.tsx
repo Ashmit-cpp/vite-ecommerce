@@ -93,7 +93,7 @@ function Wishlist() {
         Your Wishlist
       </h1>
       {wishlistItems.length === 0 ? (
-        <div className="min-h-screen flex-grow flex flex-col items-center justify-center">
+        <div className="mt-32 flex-grow flex flex-col items-center justify-center">
           <h1 className="mb-32 text-foreground text-xl font-semibold tracking-tighter sm:text-2xl md:text-3xl lg:text-2xl/none">
             Your wishlist is empty.
           </h1>

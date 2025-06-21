@@ -23,24 +23,28 @@ function App() {
       <BrowserRouter>
         <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
           <div className="bg-hero-pattern dark:bg-hero-patterndark">
-            <div className="backdrop-blur-sm backdrop-brightness-110">
+            <div className="flex flex-col min-h-screen backdrop-blur-sm backdrop-brightness-110">
               <Header />
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/cart" element={<Cart />} />
-                <Route path="/addproducts" element={<AddProduct />} />
-                <Route path="/myproducts" element={<MyProducts />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/login" element={<SignIn />} />
-                <Route path="/contact" element={<Contact />} />
-                <Route path="/manageaccount" element={<ManageAccount />} />
-                <Route path="/wishlist" element={<Wishlist />} />
-                <Route path="/product/:id" element={<ProductPage />} />
-                <Route path="/searched/:search" element={<Searched />} />
-                <Route path="/success" element={<PaymentSuccess />} />
-              </Routes>
+              <main className="flex-grow">
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/addproducts" element={<AddProduct />} />
+                  <Route path="/myproducts" element={<MyProducts />} />
+                  <Route path="/signup" element={<SignUp />} />
+                  <Route path="/login" element={<SignIn />} />
+                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/manageaccount" element={<ManageAccount />} />
+                  <Route path="/wishlist" element={<Wishlist />} />
+                  <Route path="/product/:id" element={<ProductPage />} />
+                  <Route path="/searched/:search" element={<Searched />} />
+                  <Route path="/success" element={<PaymentSuccess />} />
+                </Routes>
+              </main>
+
               <Footer />
             </div>
+
             <Toaster />
           </div>
         </ThemeProvider>

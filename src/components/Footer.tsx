@@ -7,7 +7,7 @@ function Footer() {
       style={{ zIndex: 9999 }}
     >
       <p className="text-xs text-gray-500 dark:text-gray-400">
-        © 2024 Acme Mice. All rights reserved.
+        © 2025 Acme Mice. All rights reserved.
       </p>
       <nav className="sm:ml-auto flex gap-4 sm:gap-6">
         <Link

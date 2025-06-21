@@ -41,7 +41,7 @@ export default function Login(): JSX.Element {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${getURL()}/auth/users/login`, {
+      const response = await fetch(`${getURL()}/auth-integration/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

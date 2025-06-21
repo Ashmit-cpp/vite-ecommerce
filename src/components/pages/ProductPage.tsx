@@ -1,15 +1,23 @@
-import React, { useState, useEffect } from "react";
+"use client";
+
+import type React from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import AddToCart from "../buttons/AddToCart";
-import AddToWishlist from "../buttons/AddToWishlist";
-import { Button } from "../ui/button";
-import { useToast } from "../ui/use-toast";
-import { Trash2 } from "lucide-react";
 import { jwtDecode } from "jwt-decode";
+import { Trash2, Star } from "lucide-react";
 import { getURL } from "@/lib/helper";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import AddReviewButton from "../buttons/AddReview";
-import { Product, Review } from "@/lib/types";
+import type { Product, Review } from "@/lib/types";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/use-toast";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import AddToCart from "@/components/buttons/AddToCart";
+import AddToWishlist from "@/components/buttons/AddToWishlist";
+import AddReviewButton from "@/components/buttons/AddReview";
 
 interface DecodedToken {
   sub: number;
@@ -23,10 +31,10 @@ const ProductPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [, setReviewText] = useState<string>("");
   const [, setReviewRating] = useState<number>(0);
-  let params = useParams();
+  const params = useParams();
   const { toast } = useToast();
   const token: string | null = localStorage.getItem("JWT");
-  let sub: DecodedToken | null = null; // Initialize sub with null
+  let sub: DecodedToken | null = null;
   if (token) {
     const decodedToken: DecodedToken = jwtDecode(token);
     sub = decodedToken;
@@ -46,8 +54,7 @@ const ProductPage: React.FC = () => {
       );
 
       if (!response.ok) {
-        console.error("Error adding review:", response.statusText);
-        // Handle the error as needed (show a message, etc.)
+        console.error("Error deleting review:", response.statusText);
         return;
       }
       toast({
@@ -57,9 +64,10 @@ const ProductPage: React.FC = () => {
       setReviewRating(0);
       fetchData();
     } catch (error) {
-      console.error("Error adding review:", error);
+      console.error("Error deleting review:", error);
     }
   };
+
   const fetchData = async () => {
     try {
       const response = await fetch(`${getURL()}/products/${params.id!}`);
@@ -71,70 +79,53 @@ const ProductPage: React.FC = () => {
       setLoading(false);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, [params.id]);
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <h1 className="text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
+          Loading...
+        </h1>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-red-500 text-lg">Product not found.</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen flex justify-center align-middle">
-      <div className="my-20">
-        {loading ? (
-          <h1 className="flex justify-center mt-24 min-h-screen text-slate-700 dark:text-slate-200 opacity-75 text-lg font-semibold tracking-tighter sm:text-3xl md:text-3xl lg:text-4xl/none">
-            Loading...
-          </h1>
-        ) : product ? (
-          <div className="m-8 bg-white dark:bg-slate-800 border-2 border-primary p-8 md:flex">
-            <div className="p-8 mr-4 border-4 border-solid bg-white ">
-              <img src={product.imageUrl} alt={product.name} width={200} />
-            </div>
-            <div className="flex-col justify-between p-8 pb-2">
-              <h2 className="text-3xl font-bold mb-2 ">{product.name}</h2>
-              <h2 className="mb-4">{product.description}</h2>
-              <p className="text-lg  mb-2">Price: ₹{product.price}</p>
-              <p className="text-lg mb-2">In Stock: {product.stock}</p>
-              <h3 className="text-lg font-bold">Reviews</h3>
-              {(product.reviews as Review[]).length > 0 ? (
-                <ul className="flex-row">
-                  {(product.reviews as Review[]).map((review) => (
-                    <li
-                      key={review.id}
-                      className="gap-4 p-2 rounded-lg border-4 border-primary/40 mb-4"
-                    >
-                      <div className="flex justify-between">
-                        <div className="">
-                          <h1 className="font-semibold">
-                            Rating: {review.rating}
-                          </h1>
-                          <h1>{review.text}</h1>
-                        </div>
-                        <div className="p-2">
-                          {sub && review.createdbyUserId === sub.sub && (
-                            <Button
-                              size={"icon"}
-                              onClick={() => {
-                                handleDeleteReview();
-                              }}
-                            >
-                              <Trash2 />
-                            </Button>
-                          )}
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No reviews yet.</p>
-              )}
-
-              <div className="flex-col">
+      <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden p-5 md:flex " >
+          <div className="md:w-1/2">
+            <img
+              src={product.imageUrl || "/placeholder.svg"}
+              alt={product.name}
+              className="w-full h-[500px] object-contain"
+            />
+          </div>
+          <div className="md:w-1/2 p-6">
+            <div>
+              <h2 className="text-3xl font-bold mb-2">{product.name}</h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                {product.description}
+              </p>
+              <p className="text-2xl font-bold mb-4">₹{product.price}</p>
+              <p className="mb-4">In Stock: {product.stock}</p>
+              <div className="flex space-x-2 mb-6">
                 <AddToCart
                   product={{
                     id: product.id,
                     price: product.price,
                     name: product.name,
                   }}
-                />{" "}
+                />
                 <AddToWishlist
                   product={{
                     id: product.id,
@@ -142,30 +133,69 @@ const ProductPage: React.FC = () => {
                     name: product.name,
                   }}
                 />
-                {token && (
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button className="my-2">Add Review</Button>
-                    </PopoverTrigger>
-                    <PopoverContent
-                      sideOffset={4}
-                      className="p-4 rounded-xl border-2 border-primary "
-                    >
-                      <AddReviewButton
-                        productId={product.id}
-                        onSuccess={fetchData}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                )}
               </div>
             </div>
+            <Separator className="my-2" />
+            <div className="p">
+              <h3 className="text-2xl font-bold mb-4">Reviews</h3>
+              {token && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button className="mb-4">Add Review</Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-80">
+                    <AddReviewButton
+                      productId={product.id}
+                      onSuccess={fetchData}
+                    />
+                  </PopoverContent>
+                </Popover>
+              )}
+              {(product.reviews as Review[]).length > 0 ? (
+                <ul className="space-y-4">
+                  {(product.reviews as Review[]).map((review) => (
+                    <li
+                      key={review.id}
+                      className="bg-gray-100 dark:bg-gray-700 rounded-lg p-4"
+                    >
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <div className="flex items-center mb-2">
+                            {[...Array(5)].map((_, i) => (
+                              <Star
+                                key={i}
+                                className={`w-5 h-5 ${
+                                  i < review.rating
+                                    ? "text-yellow-400 fill-current"
+                                    : "text-gray-300"
+                                }`}
+                              />
+                            ))}
+                          </div>
+                          <p className="text-gray-700 dark:text-gray-300">
+                            {review.text}
+                          </p>
+                        </div>
+                        {sub && review.createdbyUserId === sub.sub && (
+                          <Button
+                            size="icon"
+                            variant="ghost"
+                            onClick={handleDeleteReview}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-gray-500">No reviews yet.</p>
+              )}
+            </div>
           </div>
-        ) : (
-          <p className="text-red-500">Product not found.</p>
-        )}
-      </div>
-    </div>
+        </div>
+  
   );
 };
 

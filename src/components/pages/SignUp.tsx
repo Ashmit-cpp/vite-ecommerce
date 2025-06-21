@@ -44,7 +44,7 @@ export default function Signup() {
   ): Promise<void> => {
     e.preventDefault();
     try {
-      const response = await fetch(`${getURL()}/users/register`, {
+      const response = await fetch(`${getURL()}/auth-integration/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
