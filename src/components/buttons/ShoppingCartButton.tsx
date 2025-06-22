@@ -10,8 +10,8 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "../ui/drawer";
-import CartComponent from "../pages/Cart";
+} from "@/components/ui/drawer";
+import CartPage from "@/components/pages/cart";
 
 function ShoppingCartButton() {
   const notificationCount = useSelector(
@@ -52,7 +52,7 @@ function ShoppingCartButton() {
             </DrawerTitle>
             <DrawerDescription>Following are the items:</DrawerDescription>
           </DrawerHeader>
-          <CartComponent />
+          <CartPage />
         </DrawerContent>
       </Drawer>
     </div>

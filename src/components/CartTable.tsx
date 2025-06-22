@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { CartData, Product } from "@/lib/types";
 import { getURL } from "@/lib/helper";
+import { useNavigate } from "react-router-dom";
 
 type Item = {
   id: number;
@@ -37,7 +38,7 @@ function CartTable({
   handleRemoveFromCart,
 }: CartTableProps) {
   const { toast } = useToast();
-  
+  const navigate = useNavigate();
   const handleIncreaseQuantity = async (productId: number) => {
     const token = localStorage.getItem("JWT");
     if (!token) {
@@ -131,9 +132,7 @@ function CartTable({
           <TableRow key={item.id} className="">
             <TableCell
               className="font-medium cursor-pointer"
-              onClick={() =>
-                window.open(`/product/${item.product.id}`, "_blank")
-              }
+              onClick={() => navigate(`/product/${item.product.id}`)}
             >
               <div className="flex flex-col sm:flex-row items-center gap-2">
                 <img

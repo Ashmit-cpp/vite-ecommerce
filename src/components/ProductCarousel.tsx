@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
@@ -23,8 +22,15 @@ interface Product {
 
 const ProductCarousel: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [serverStarting, setServerStarting] = useState<boolean>(false);
 
   useEffect(() => {
+    // Start a timer that triggers a "server starting" message if fetching takes longer than 3 seconds
+    const timer = setTimeout(() => {
+      setServerStarting(true);
+    }, 3000);
+
     const fetchData = async () => {
       try {
         const response = await fetch(
@@ -34,22 +40,36 @@ const ProductCarousel: React.FC = () => {
         setProducts(data);
       } catch (error) {
         console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+        clearTimeout(timer);
+        setServerStarting(false);
       }
     };
 
     fetchData();
+
+    return () => clearTimeout(timer);
   }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center p-6">
+        {serverStarting ? (
+          <p>Server is starting, please wait...</p>
+        ) : (
+          <p>Loading products...</p>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="mx-8">
-      <Carousel
-        opts={{
-          loop: true,
-        }}
-      >
+      <Carousel opts={{ loop: true }}>
         <CarouselContent>
           {products.map((product) => (
-            <CarouselItem key={product.id} className=" lg:basis-1/3">
+            <CarouselItem key={product.id} className="lg:basis-1/3">
               <div className="p-1">
                 <Card>
                   <CardContent className="flex flex-col items-center justify-center p-6">
@@ -67,7 +87,6 @@ const ProductCarousel: React.FC = () => {
                       </h2>
                       <p className="text-sm mb-2">{product.description}</p>
                       <p className="text-lg text-green-600">
-                        {" "}
                         ₹{product.price.toFixed(2)}
                       </p>
                     </div>

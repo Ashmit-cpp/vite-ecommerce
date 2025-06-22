@@ -12,12 +12,21 @@ import {
   Menu,
   SquareUserRound,
   TableProperties,
+  UserPlus,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
 function MobileNav() {
-  const { token, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <nav className="md:hidden">
@@ -25,74 +34,78 @@ function MobileNav() {
         <SheetTrigger className="align-middle">
           <Button variant="link" size="icon">
             <Menu />
-          </Button>{" "}
+          </Button>
         </SheetTrigger>
         <SheetContent className="flex flex-col gap-6 bg:white md:hidden">
-          <ul className="flex items-center gap-5 md:flex-between m-w-[90px] md:flex-row flex-col ">
-            <h1 className="font-semibold text-xl ">Navigate</h1>
-            <li>
-              {token ? (
-                <Link to="/wishlist">
-                  <SheetClose>
-                    <Button variant={"link"} className="min-w-32">
-                      {" "}
-                      <BookHeart />
-                      <h1 className="ml-2">Wishlist</h1>
+          <div className="flex flex-col gap-4">
+            <h1 className="font-semibold text-xl">Navigate</h1>
+            
+            {isAuthenticated ? (
+              <>
+                <div className="text-sm text-muted-foreground mb-2">
+                  Welcome, {user?.email}
+                </div>
+                
+                <SheetClose asChild>
+                  <Link to="/wishlist">
+                    <Button variant={"link"} className="min-w-32 justify-start">
+                      <BookHeart className="mr-2 h-4 w-4" />
+                      Wishlist
                     </Button>
-                  </SheetClose>
-                </Link>
-              ) : (
-                <></>
-              )}
-            </li>
-            {token ? (
-              <li>
-                <Link to="/myproducts">
-                  <SheetClose>
-                    <Button variant={"link"} className=" min-w-32">
-                      <TableProperties /> <h1 className="ml-2">My Products</h1>
-                    </Button>
-                  </SheetClose>
-                </Link>
-              </li>
-            ) : (
-              <></>
-            )}
+                  </Link>
+                </SheetClose>
 
-            {token ? (
-              <li>
-                <Link to="/manageaccount">
-                  <SheetClose>
-                    <Button variant={"link"} className=" min-w-32">
-                      <SquareUserRound /> <h1 className="ml-2">My Account</h1>
+                <SheetClose asChild>
+                  <Link to="/myproducts">
+                    <Button variant={"link"} className="min-w-32 justify-start">
+                      <TableProperties className="mr-2 h-4 w-4" />
+                      My Products
                     </Button>
-                  </SheetClose>
-                </Link>
-              </li>
-            ) : (
-              <></>
-            )}
-            <li className="">
-              {" "}
-              {token ? (
-                <SheetClose>
-                  <Button variant="link" className="my-1" onClick={logout}>
-                    <LogOut />
-                    <h1 className="ml-2">Logout</h1>
+                  </Link>
+                </SheetClose>
+
+                <SheetClose asChild>
+                  <Link to="/manageaccount">
+                    <Button variant={"link"} className="min-w-32 justify-start">
+                      <SquareUserRound className="mr-2 h-4 w-4" />
+                      Manage Account
+                    </Button>
+                  </Link>
+                </SheetClose>
+
+                <SheetClose asChild>
+                  <Button 
+                    variant={"link"} 
+                    className="min-w-32 justify-start text-red-600 hover:text-red-700"
+                    onClick={handleLogout}
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Logout
                   </Button>
                 </SheetClose>
-              ) : (
-                <Button variant="link" className="my-1">
-                  <LogIn />
-                  <Link to="/signup">
-                    <SheetClose>
-                      <h1 className="ml-2"> Sign In</h1>
-                    </SheetClose>
+              </>
+            ) : (
+              <>
+                <SheetClose asChild>
+                  <Link to="/login">
+                    <Button variant={"link"} className="min-w-32 justify-start">
+                      <LogIn className="mr-2 h-4 w-4" />
+                      Login
+                    </Button>
                   </Link>
-                </Button>
-              )}
-            </li>
-          </ul>
+                </SheetClose>
+
+                <SheetClose asChild>
+                  <Link to="/signup">
+                    <Button variant={"link"} className="min-w-32 justify-start">
+                      <UserPlus className="mr-2 h-4 w-4" />
+                      Sign Up
+                    </Button>
+                  </Link>
+                </SheetClose>
+              </>
+            )}
+          </div>
         </SheetContent>
       </Sheet>
     </nav>

@@ -1,81 +1,87 @@
-import { BookHeart } from "lucide-react";
+import { BookHeart, User, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
-
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 function NavComponents() {
-  const { token, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <div>
       <ul className="mx-2 hidden md:flex items-center gap-4 font-semibold">
         <li>
-          {token ? (
+          {isAuthenticated ? (
             <Link to="/wishlist">
               <Button size={"icon"} variant={"outline"}>
-                {" "}
                 <BookHeart />
               </Button>
             </Link>
-          ) : (
-            <></>
-          )}
+          ) : null}
         </li>
+        
         <li>
-          {token ? (
-            <NavigationMenu>
-              <NavigationMenuList>
-                <NavigationMenuItem>
-                  <NavigationMenuTrigger>Sell on Acme</NavigationMenuTrigger>
-                  <NavigationMenuContent className="flex flex-wrap align-middle justify-center">
-                    <NavigationMenuLink>
-                      <Link to="/myproducts">
-                        <Button variant={"ghost"} className="m-w-20 border-b-2">
-                          Manage Products
-                        </Button>
-                      </Link>
-                    </NavigationMenuLink>
-
-                    <NavigationMenuLink>
-                      <Link to="/manageaccount">
-                        <Button variant={"ghost"} className="m-w-20 border-b-2">
-                          Manage Account
-                        </Button>
-                      </Link>
-                    </NavigationMenuLink>
-                    <NavigationMenuLink>
-                      <Link to="/contact">
-                        <Button variant={"ghost"}>Help & Support</Button>
-                      </Link>
-                    </NavigationMenuLink>
-                  </NavigationMenuContent>
-                </NavigationMenuItem>
-              </NavigationMenuList>
-            </NavigationMenu>
+          {isAuthenticated ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button size={"icon"} variant={"outline"}>
+                  <User />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>
+                  {user?.email || "My Account"}
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/manageaccount">
+                    Profile Settings
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/myproducts">
+                    My Products
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/wishlist">
+                    Wishlist
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  onClick={handleLogout}
+                  className="text-red-600 focus:text-red-600"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Logout
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
-            <></>
-          )}
-        </li>
-
-        <li className="">
-          {" "}
-          {token ? (
-            <Button className="my-1" onClick={logout}>
-              Logout
-            </Button>
-          ) : (
-            <Button className="my-1">
-              <Link to="/signup">Sign In</Link>
-            </Button>
+            <div className="flex gap-2">
+              <Button asChild variant="outline" size="sm">
+                <Link to="/login">Login</Link>
+              </Button>
+              <Button asChild size="sm">
+                <Link to="/signup">Sign Up</Link>
+              </Button>
+            </div>
           )}
         </li>
       </ul>

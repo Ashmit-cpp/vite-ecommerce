@@ -4,12 +4,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { Label } from "@radix-ui/react-dropdown-menu";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-function Contact() {
+export default function ContactPage() {
   return (
     <div>
       <Card className="p-4 my-24 mx-auto max-w-[750px] space-y-2 opacity-80">
@@ -29,7 +29,7 @@ function Contact() {
                 id="email"
                 placeholder="yourmail@example.com"
                 required
-                type="description"
+                type="email"
               />
             </div>
             <div className="space-y-2">
@@ -50,6 +50,4 @@ function Contact() {
       </Card>
     </div>
   );
-}
-
-export default Contact;
+} 
