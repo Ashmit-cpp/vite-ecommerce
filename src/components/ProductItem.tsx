@@ -3,6 +3,7 @@ import React from "react";
 import { Card, CardContent } from "./ui/card";
 import AddToWishlist from "./buttons/AddToWishlist";
 import AddToCart from "./buttons/AddToCart";
+import { useNavigate } from "react-router-dom";
 
 interface Review {
   id: number;
@@ -25,6 +26,7 @@ interface ProductItemProps {
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
+  const navigate = useNavigate();
   return (
     <ul className="flex flex-wrap justify-evenly gap-2 ">
       <Card key={product.id} className="border mb-2 ">
@@ -34,7 +36,7 @@ const ProductItem: React.FC<ProductItemProps> = ({ product }) => {
               src={product.imageUrl}
               alt={product.name}
               className="my-4 px-2 h-44  cursor-pointer"
-              onClick={() => window.open(`/product/${product.id}`, "_blank")}
+              onClick={() => navigate(`/product/${product.id}`)}
             />
           </div>
 

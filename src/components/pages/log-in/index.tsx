@@ -1,6 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
 import {
   Card,
   CardTitle,
@@ -13,51 +11,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useLoginForm } from "./use-log-in-form";
 
-type FormData = {
-  email: string;
-  password: string;
-};
-
-export default function Login(): JSX.Element {
-  const [formData, setFormData] = useState<FormData>({
-    email: "",
-    password: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { login, error, clearError, isLoading } = useAuth();
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
-    
-    // Clear error when user starts typing
-    if (error) {
-      clearError();
-    }
-  };
-
-  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    
-    if (isSubmitting || isLoading) return;
-
-    try {
-      setIsSubmitting(true);
-      await login(formData.email, formData.password);
-      // Navigation will be handled by the AuthContext
-    } catch (error) {
-      // Error is handled by the AuthContext
-      console.error("Login failed:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const isFormDisabled = isSubmitting || isLoading;
+export default function LogInPage(): JSX.Element {
+  const {
+    formData,
+    isFormDisabled,
+    error,
+    isSubmitting,
+    handleInputChange,
+    handleFormSubmit,
+  } = useLoginForm();
 
   return (
     <div className="flex flex-col justify-center min-h-screen">
@@ -75,7 +39,7 @@ export default function Login(): JSX.Element {
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
             )}
-            
+
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -88,7 +52,7 @@ export default function Login(): JSX.Element {
                 disabled={isFormDisabled}
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <Input
@@ -98,14 +62,11 @@ export default function Login(): JSX.Element {
                 value={formData.password}
                 onChange={handleInputChange}
                 disabled={isFormDisabled}
+                placeholder="********"
               />
             </div>
-            
-            <Button 
-              className="w-full" 
-              type="submit"
-              disabled={isFormDisabled}
-            >
+
+            <Button className="w-full" type="submit" disabled={isFormDisabled}>
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -115,7 +76,7 @@ export default function Login(): JSX.Element {
                 "Login"
               )}
             </Button>
-            
+
             <div className="text-center text-sm">
               Don't have an account?{" "}
               <Link to="/signup" className="underline">
@@ -127,4 +88,4 @@ export default function Login(): JSX.Element {
       </Card>
     </div>
   );
-}
+} 

@@ -1,72 +1,21 @@
-import { useState, ChangeEvent, FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { getURL } from "@/lib/helper";
-import { Link } from "react-router-dom";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
+} from "@/components/ui/card";
+import { useSignUpForm } from "./use-sign-up-form";
+import { Loader2 } from "lucide-react";
 
-type FormData = {
-  name: string;
-  email: string;
-  password: string;
-};
-
-const initialFormData: FormData = {
-  name: "",
-  email: "",
-  password: "",
-};
-
-export default function Signup() {
-  const navigate = useNavigate();
-
-  const [formData, setFormData] = useState<FormData>(initialFormData);
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
-  };
-
-  const handleFormSubmit = async (
-    e: FormEvent<HTMLFormElement>
-  ): Promise<void> => {
-    e.preventDefault();
-    try {
-      const response = await fetch(`${getURL()}/auth-integration/register`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: formData.name,
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Signup response:", data);
-        navigate("/login");
-      } else {
-        console.error("Signup failed:", data.error);
-      }
-    } catch (error) {
-      console.error("Error during signup:", error);
-    }
-  };
+export default function SignUpPage() {
+  const { formData, isSubmitting, handleInputChange, handleFormSubmit } =
+    useSignUpForm();
 
   return (
     <Card className="my-12 mx-auto max-w-[350px] space-y-6 opacity-80">
@@ -84,6 +33,7 @@ export default function Signup() {
               required
               value={formData.name}
               onChange={handleInputChange}
+              disabled={isSubmitting}
             />
           </div>
           <div className="space-y-2">
@@ -95,6 +45,7 @@ export default function Signup() {
               type="email"
               value={formData.email}
               onChange={handleInputChange}
+              disabled={isSubmitting}
             />
           </div>
           <div className="space-y-2">
@@ -105,14 +56,23 @@ export default function Signup() {
               type="password"
               value={formData.password}
               onChange={handleInputChange}
+              disabled={isSubmitting}
+              placeholder="********"
             />
           </div>
-          <Button className="w-full" type="submit">
-            Sign Up
+          <Button className="w-full" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Signing up...
+              </>
+            ) : (
+              "Sign Up"
+            )}
           </Button>
           <Separator className="my-8" />
           <div className="mt-4 text-center text-sm">
-            Already have an account?
+            Already have an account?{" "}
             <Link to={"/login"} className="underline">
               Login
             </Link>
@@ -121,4 +81,4 @@ export default function Signup() {
       </CardContent>
     </Card>
   );
-}
+} 

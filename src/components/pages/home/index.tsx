@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
-import CarouselCard from "../ProductCarousel";
-import { Separator } from "../ui/separator";
+import { Button } from "@/components/ui/button";
+import CarouselCard from "@/components/ProductCarousel";
+import { Separator } from "@/components/ui/separator";
 
-export default function Component() {
+export default function HomePage() {
   const targetContainerRef = useRef<HTMLDivElement>(null);
   const scrollToContainer = () => {
     targetContainerRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -98,4 +98,4 @@ export default function Component() {
       </main>
     </div>
   );
-}
+} 

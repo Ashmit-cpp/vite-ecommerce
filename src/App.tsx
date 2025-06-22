@@ -1,21 +1,21 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ThemeProvider } from "@/components/theme-provider";
 import Header from "./components/Header";
-import Home from "./components/pages/Home";
-import Cart from "./components/pages/Cart";
-import SignUp from "./components/pages/SignUp";
-import SignIn from "./components/pages/LogIn";
-import Searched from "./components/pages/Searched";
+import HomePage from "./components/pages/home";
+import CartPage from "./components/pages/cart";
+import SignUpPage from "./components/pages/sign-up";
+import LogInPage from "./components/pages/log-in";
+import SearchedPage from "./components/pages/searched";
 import Footer from "./components/Footer";
 import { AuthProvider } from "./contexts/AuthContext";
-import Wishlist from "./components/pages/Wishlist";
+import WishlistPage from "./components/pages/wishlist";
 import { Toaster } from "./components/ui/toaster";
-import AddProduct from "./components/pages/AddProduct";
-import MyProducts from "./components/pages/MyProducts";
-import ProductPage from "./components/pages/ProductPage";
-import Contact from "./components/pages/Contact";
-import ManageAccount from "./components/pages/ManageAccount";
-import PaymentSuccess from "./components/pages/PaymentSuccess";
+import AddProductPage from "./components/pages/add-product";
+import MyProductsPage from "./components/pages/my-products";
+import ProductPage from "./components/pages/product-page";
+import ContactPage from "./components/pages/contact";
+import ManageAccountPage from "./components/pages/manage-account";
+import PaymentSuccessPage from "./components/pages/payment-success";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
@@ -29,17 +29,17 @@ function App() {
               <main className="flex-grow">
                 <Routes>
                   {/* Public routes */}
-                  <Route path="/" element={<Home />} />
-                  <Route path="/contact" element={<Contact />} />
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/contact" element={<ContactPage />} />
                   <Route path="/product/:id" element={<ProductPage />} />
-                  <Route path="/searched/:search" element={<Searched />} />
+                  <Route path="/searched/:search" element={<SearchedPage />} />
                   
                   {/* Auth routes (redirect to home if already authenticated) */}
                   <Route 
                     path="/signup" 
                     element={
                       <ProtectedRoute requireAuth={false}>
-                        <SignUp />
+                        <SignUpPage />
                       </ProtectedRoute>
                     } 
                   />
@@ -47,7 +47,7 @@ function App() {
                     path="/login" 
                     element={
                       <ProtectedRoute requireAuth={false}>
-                        <SignIn />
+                        <LogInPage />
                       </ProtectedRoute>
                     } 
                   />
@@ -57,7 +57,7 @@ function App() {
                     path="/cart" 
                     element={
                       <ProtectedRoute>
-                        <Cart />
+                        <CartPage />
                       </ProtectedRoute>
                     } 
                   />
@@ -65,7 +65,7 @@ function App() {
                     path="/addproducts" 
                     element={
                       <ProtectedRoute>
-                        <AddProduct />
+                        <AddProductPage />
                       </ProtectedRoute>
                     } 
                   />
@@ -73,7 +73,7 @@ function App() {
                     path="/myproducts" 
                     element={
                       <ProtectedRoute>
-                        <MyProducts />
+                        <MyProductsPage />
                       </ProtectedRoute>
                     } 
                   />
@@ -81,7 +81,7 @@ function App() {
                     path="/manageaccount" 
                     element={
                       <ProtectedRoute>
-                        <ManageAccount />
+                        <ManageAccountPage />
                       </ProtectedRoute>
                     } 
                   />
@@ -89,7 +89,7 @@ function App() {
                     path="/wishlist" 
                     element={
                       <ProtectedRoute>
-                        <Wishlist />
+                        <WishlistPage />
                       </ProtectedRoute>
                     } 
                   />
@@ -97,7 +97,7 @@ function App() {
                     path="/success" 
                     element={
                       <ProtectedRoute>
-                        <PaymentSuccess />
+                        <PaymentSuccessPage />
                       </ProtectedRoute>
                     } 
                   />

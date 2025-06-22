@@ -1,4 +1,3 @@
-import { useState, ChangeEvent, FormEvent } from "react";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -8,75 +7,11 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../ui/card";
-import { toast } from "../ui/use-toast";
-import { getURL } from "@/lib/helper";
+} from "@/components/ui/card";
+import { useAddProductForm } from "./use-add-product-form";
 
-interface FormData {
-  name: string;
-  description: string;
-  price: number;
-  imageUrl: string;
-  stock: number;
-  //   categories: { name: string }[];
-}
-
-export default function Component(): JSX.Element {
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    description: "",
-    price: 0,
-    imageUrl: "",
-    stock: 0,
-    // categories: [],
-  });
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setFormData({
-      ...formData,
-      [e.target.id]: e.target.value,
-    });
-  };
-
-  const handleFormSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
-
-    const token = localStorage.getItem("JWT");
-    if (!token) {
-      console.error("JWT token not found in localStorage");
-      return;
-    }
-    console.log(formData);
-
-    fetch(`${getURL()}/products/create`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        name: formData.name,
-        description: formData.description,
-        price: formData.price,
-        imageUrl: formData.imageUrl,
-        stock: formData.stock,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data) {
-          toast({
-            title: "Product created",
-          });
-          console.log("Product added:", data);
-        } else {
-          console.error("Adding product failed:", data.error);
-        }
-      })
-      .catch((error) => {
-        console.error("Error while adding product:", error);
-      });
-  };
+export default function AddProductPage(): JSX.Element {
+  const { formData, handleInputChange, handleFormSubmit } = useAddProductForm();
 
   return (
     <Card className="p-4 my-16 mx-auto max-w-[750px] space-y-2 opacity-80">
@@ -102,7 +37,7 @@ export default function Component(): JSX.Element {
               id="description"
               placeholder="Detail about your product"
               required
-              type="description"
+              type="text"
               value={formData.description}
               onChange={handleInputChange}
             />
@@ -141,25 +76,6 @@ export default function Component(): JSX.Element {
             />
           </div>
 
-          {/* <div className="space-y-2">
-            <Label htmlFor="categories">Categories</Label>
-            <Input
-              id="categories"
-              placeholder="Comma-separated categories"
-              required
-              value={formData.categories.map((cat) => cat.name).join(",")}
-              onChange={(e) => {
-                const categories = e.target.value
-                  .split(",")
-                  .map((name) => ({ name }));
-                setFormData({
-                  ...formData,
-                  categories,
-                });
-              }}
-            />
-          </div> */}
-
           <Button className="w-full" type="submit">
             Add product
           </Button>
@@ -167,4 +83,4 @@ export default function Component(): JSX.Element {
       </CardContent>
     </Card>
   );
-}
+} 
